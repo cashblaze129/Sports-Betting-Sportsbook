@@ -45,12 +45,13 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
     };
 
     const signInAddress = async (publicAddress: string, signature: string) => {
+        console.log('here');
         const res = await axios.post('api/v2/users/a-signin', { publicAddress, signature });
         return res;
     };
 
     const signUpAddress = async (publicAddress: string) => {
-        const res = await axios.post('api/v2/users/a-signup', { rReferral: code, publicAddress });
+        const res = await axios.post('api/v2/users/a-signup', { publicAddress });
         return res;
     };
 

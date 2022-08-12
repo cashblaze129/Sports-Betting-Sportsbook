@@ -44,6 +44,7 @@ const MainLayout = ({ children }: any) => {
                 color="inherit"
                 elevation={0}
                 sx={{
+                    zIndex: 1000,
                     background: navType === 'dark' ? '#0f1220' : '#fff',
                     width: '100vw',
                     transition: theme.transitions.create('all'),

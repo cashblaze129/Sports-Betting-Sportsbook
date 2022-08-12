@@ -45,7 +45,7 @@ export const AuthWrapper = styled('div')(({ theme }) => ({
     top: 0,
     left: 0,
     overflow: 'auto',
-    zIndex: 1300,
+    zIndex: 1005,
     backdropFilter: 'blur(5px)'
 }));
 
