@@ -5,7 +5,6 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "build:pro": "env-cmd -f pro.env react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
