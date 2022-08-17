@@ -11,6 +11,7 @@ const config: ConfigProps = {
     outlinedFilled: true,
     navType: 'dark',
     presetColor: 'default',
+    fontColor: '#0eff6f',
     locale: 'en',
     rtlLayout: false,
     timer1: 5000,

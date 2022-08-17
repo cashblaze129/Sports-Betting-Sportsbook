@@ -4,6 +4,7 @@ import { IconReceipt } from '@tabler/icons';
 
 import { useDispatch, useSelector } from 'store';
 import { openBetslip } from 'store/reducers/sports';
+import config from 'config';
 
 const NotificationSection = () => {
     const theme = useTheme();
@@ -33,7 +34,8 @@ const NotificationSection = () => {
                         transition: 'all .2s ease-in-out',
                         borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
                         background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
-                        color: theme.palette.primary.dark,
+                        // color: theme.palette.primary.dark,
+                        color: config.fontColor,
                         '&[aria-controls="menu-list-grow"],&:hover': {
                             borderColor: theme.palette.primary.main,
                             background: theme.palette.primary.main,
