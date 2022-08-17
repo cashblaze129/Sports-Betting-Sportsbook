@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { CardContent, Grid, Tab, Tabs, Typography, useTheme } from '@mui/material';
-import KeyIcon from '@mui/icons-material/KeyTwoTone';
 import SettingsIcon from '@mui/icons-material/SettingsTwoTone';
 import CreditCardIcon from '@mui/icons-material/CreditCardTwoTone';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEventsTwoTone';
@@ -39,11 +38,6 @@ const tabsOption = [
         label: <FormattedMessage id="Preferences" />,
         link: '/user/preferences',
         icon: <SettingsIcon />
-    },
-    {
-        label: <FormattedMessage id="Change Password" />,
-        link: '/user/changepassword',
-        icon: <KeyIcon />
     }
 ];
 

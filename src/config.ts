@@ -1,16 +1,6 @@
-import { ConfigProps, ModeTypes } from 'types/config';
+import { ConfigProps } from 'types/config';
 
-export const mode = ModeTypes.dev;
-
-const urls = {
-    pro: `https://boibook.io`,
-    _dev: `http://185.231.222.151`,
-    dev: `http://localhost:5000`
-};
-
-const url = urls[mode];
-
-export const BASE_URL = url;
+export const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:2020';
 export const BASE_PATH = '';
 export const HOME_PATH = '/sports';
 

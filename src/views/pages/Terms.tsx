@@ -594,8 +594,8 @@ const PagesTerms = () => {
                                 <Typography>
                                     If you have a problem about our services, please contact our customer service department by email at
                                     &nbsp;
-                                    <Link component={Link} href="mailto:admin@boibooktoken.com" underline="none">
-                                        admin@boibooktoken.com
+                                    <Link component={Link} href="mailto:admin@boibooktoken.io" underline="none">
+                                        admin@boibooktoken.io
                                     </Link>
                                     &nbsp;.
                                 </Typography>

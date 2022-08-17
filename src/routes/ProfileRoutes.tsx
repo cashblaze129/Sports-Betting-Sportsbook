@@ -8,7 +8,6 @@ const Wallet = Loadable(lazy(() => import('views/profile/Wallet')));
 const Account = Loadable(lazy(() => import('views/profile/Account')));
 const Referral = Loadable(lazy(() => import('views/profile/Referral')));
 const Preferences = Loadable(lazy(() => import('views/profile/Preferences')));
-const ChangePassword = Loadable(lazy(() => import('views/profile/ChangePassword')));
 
 const ProfileRoutes = {
     path: '/user',
@@ -35,10 +34,6 @@ const ProfileRoutes = {
         {
             path: '/user/preferences',
             element: <Preferences />
-        },
-        {
-            path: '/user/changepassword',
-            element: <ChangePassword />
         }
     ]
 };

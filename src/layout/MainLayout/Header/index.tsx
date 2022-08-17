@@ -1,54 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import {
-    useTheme,
-    Box,
-    Button,
-    ButtonGroup,
-    useMediaQuery,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    CircularProgress,
-    OutlinedInput,
-    Stack,
-    Typography
-} from '@mui/material';
+import { useTheme, Box, Button, ButtonGroup, useMediaQuery, Stack, Typography } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { IconWallet } from '@tabler/icons';
-
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-
-import ReCAPTCHA from 'react-google-recaptcha';
-import { FormattedMessage, useIntl } from 'react-intl';
-
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import Web3 from 'web3';
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
+import { FormattedMessage } from 'react-intl';
 import bs58 from 'bs58';
-
 import useApi from 'hooks/useApi';
-import useConfig from 'hooks/useConfig';
-import useScriptRef from 'hooks/useScriptRef';
-
 import { Login } from 'store/reducers/auth';
 
 import snackbar from 'utils/snackbar';
-import { CoinbaseWallet, injected, switchNetwork, WalletConnect } from 'utils/connectors';
-
-import Metamask from 'assets/images/icons/metamask.svg';
-import AnimateButton from 'ui-component/extended/AnimateButton';
 
 import { HOME_PATH } from 'config';
 import { toNumber } from 'utils/number';
@@ -77,61 +39,11 @@ const Header = () => {
     const dispatch = useDispatch();
     const isMobile = useMediaQuery('(max-width:767px)');
     const { currency, balance, isLoggedIn } = useSelector((state) => state.auth);
-
-    const scriptedRef = useScriptRef();
-    const { formatMessage } = useIntl();
-    const recaptchaInputRef = useRef({}) as any;
-    const { borderRadius, locale } = useConfig();
-    const { account, activate, library, active } = useWeb3React();
-    const { signInAddress, checkAddress, login, signUpAddress } = useApi();
-    const [checked, setChecked] = useState(true);
+    const { signInAddress, checkAddress, signUpAddress } = useApi();
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
-    const [recaptcha, setRecaptcha] = useState<string | null>(null);
-    const [showPassword, setShowPassword] = useState(false);
-
-    // const { connection } = useConnection();
-    // const { publicKey, signTransaction } = useWallet();
 
     const [publicKey, setPublicKey] = useState();
-
-    const loginHandler = async (values: { email: string; password: string }, { setErrors, setStatus, setSubmitting }: any) => {
-        try {
-            await login(values.email, values.password, recaptcha)
-                .then(
-                    ({ data }) => {
-                        console.log(data);
-                        onLogin(data);
-                    },
-                    (err: any) => {
-                        if (scriptedRef.current) {
-                            setStatus({ success: false });
-                            setErrors({ submit: err.message });
-                            setSubmitting(false);
-                        }
-                    }
-                )
-                .catch((error) => {
-                    if (recaptchaInputRef.current) {
-                        recaptchaInputRef.current.reset();
-                    }
-                });
-        } catch (err: any) {
-            if (scriptedRef.current) {
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
-            }
-        }
-    };
-
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event: React.SyntheticEvent) => {
-        event.preventDefault();
-    };
 
     const onLogin = (user: any) => {
         dispatch(Login(user));
@@ -303,22 +215,10 @@ const Header = () => {
                     <ProfileSection />
                 </>
             ) : (
-                <AnimateButton>
-                    <Button
-                        onClick={() => handleLogin()}
-                        variant="outlined"
-                        color="secondary"
-                        sx={{
-                            mr: 2,
-                            ':hover': {
-                                boxShadow: 'none'
-                            }
-                        }}
-                    >
-                        <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
-                        <FormattedMessage id="Select Wallet" />
-                    </Button>
-                </AnimateButton>
+                <LoadingButton loading={loading} variant="outlined" onClick={() => handleLogin()}>
+                    <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
+                    <FormattedMessage id="Select Wallet" />
+                </LoadingButton>
             )}
         </>
     );

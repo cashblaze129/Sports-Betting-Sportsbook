@@ -4,13 +4,16 @@ import { Button, CardMedia, Divider, Grid, Modal, Stack, Typography, CircularPro
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import useApi from 'hooks/useApi';
-import { BalanceProps, CurrencyProps } from 'types/payment';
+import {
+    BalanceProps
+    // CurrencyProps
+} from 'types/payment';
 
 import { dispatch, useSelector } from 'store';
 import { gridSpacing } from 'store/constant';
 import { UpdateBalances } from 'store/reducers/auth';
 
-import snackbar from 'utils/snackbar';
+// import snackbar from 'utils/snackbar';
 import { toNumberTag } from 'utils/number';
 
 import SubCard from 'ui-component/cards/SubCard';
@@ -77,25 +80,25 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         }
     };
 
-    const onDeposit = (acurrency: CurrencyProps) => {
-        if (!acurrency.deposit) {
-            snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
-        } else if (acurrency.type === 0) {
-            setDepositMOpen(true);
-        } else if (acurrency.type === 1) {
-            onDepositCoinPayment();
-        } else {
-            setDepositOpen(true);
-        }
-    };
+    // const onDeposit = (acurrency: CurrencyProps) => {
+    //     if (!acurrency.deposit) {
+    //         snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
+    //     } else if (acurrency.type === 0) {
+    //         setDepositMOpen(true);
+    //     } else if (acurrency.type === 1) {
+    //         onDepositCoinPayment();
+    //     } else {
+    //         setDepositOpen(true);
+    //     }
+    // };
 
-    const onWithdrawal = (acurrency: CurrencyProps) => {
-        if (!acurrency.withdrawal) {
-            snackbar(formatMessage({ id: 'Withdrawal disabled!' }), 'error');
-        } else {
-            setWithdrawalOpen(true);
-        }
-    };
+    // const onWithdrawal = (acurrency: CurrencyProps) => {
+    //     if (!acurrency.withdrawal) {
+    //         snackbar(formatMessage({ id: 'Withdrawal disabled!' }), 'error');
+    //     } else {
+    //         setWithdrawalOpen(true);
+    //     }
+    // };
 
     useEffect(() => {
         getBalances();
@@ -124,7 +127,8 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
             title={formatMessage({ id: 'Payment Methods' })}
             secondary={
                 <AnimateButton>
-                    <Button variant="contained" size="small" onClick={functions.onCurrencyVisible}>
+                    {/* <Button variant="contained" size="small" onClick={functions.onCurrencyVisible}> */}
+                    <Button variant="contained" size="small">
                         <FormattedMessage id="Add / Remove Currency" />
                     </Button>
                 </AnimateButton>
@@ -154,7 +158,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                                                     variant="text"
                                                     color="success"
                                                     size="small"
-                                                    onClick={() => onDeposit(item.currency)}
+                                                    // onClick={() => onDeposit(item.currency)}
                                                 >
                                                     <FormattedMessage id="Deposit" />
                                                 </Button>
@@ -167,7 +171,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                                                     variant="text"
                                                     color="error"
                                                     size="small"
-                                                    onClick={() => onWithdrawal(item.currency)}
+                                                    // onClick={() => onWithdrawal(item.currency)}
                                                 >
                                                     {loading === key + 1 && <CircularProgress size={24} />}&nbsp;
                                                     <FormattedMessage id="Withdrawal" />

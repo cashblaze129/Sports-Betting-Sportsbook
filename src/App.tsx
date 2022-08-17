@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Routes from 'routes';
@@ -16,44 +16,7 @@ import Locales from 'ui-component/Locales';
 import Snackbar from 'ui-component/extended/Snackbar';
 import NavigationScroll from 'layout/NavigationScroll';
 
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import {
-    LedgerWalletAdapter,
-    PhantomWalletAdapter,
-    SlopeWalletAdapter,
-    SolflareWalletAdapter,
-    SolletExtensionWalletAdapter,
-    SolletWalletAdapter,
-    TorusWalletAdapter
-} from '@solana/wallet-adapter-wallets';
-import { clusterApiUrl } from '@solana/web3.js';
-
-require('@solana/wallet-adapter-react-ui/styles.css');
-
 const App = () => {
-    const network = WalletAdapterNetwork.Devnet;
-
-    // You can also provide a custom RPC endpoint
-    // const endpoint = 'https://blue-delicate-wildflower.solana-mainnet.quiknode.pro/2f054b4c3a7d3f8841b584875204e3aa7c42d8ab/';
-    // const endpoint = clusterApiUrl(network);
-    // let endpoint = 'https://solana-api.projectserum.com';
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-    // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
-    // Only the wallets you configure here will be compiled into your application
-    const wallets = useMemo(
-        () => [
-            new PhantomWalletAdapter(),
-            new SlopeWalletAdapter(),
-            new SolflareWalletAdapter({ network }),
-            new TorusWalletAdapter(),
-            new LedgerWalletAdapter(),
-            new SolletWalletAdapter({ network }),
-            new SolletExtensionWalletAdapter({ network })
-        ],
-        [network]
-    );
-
     const dispatch = useDispatch();
     const { pathname } = useLocation();
     const { isLoggedIn, balance, token } = useSelector((state) => state.auth);
@@ -100,20 +63,16 @@ const App = () => {
 
     return (
         <ThemeCustomization>
-            <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets}>
-                    <Locales>
-                        <NavigationScroll>
-                            <APIProvider>
-                                <>
-                                    <Routes />
-                                    <Snackbar />
-                                </>
-                            </APIProvider>
-                        </NavigationScroll>
-                    </Locales>
-                </WalletProvider>
-            </ConnectionProvider>
+            <Locales>
+                <NavigationScroll>
+                    <APIProvider>
+                        <>
+                            <Routes />
+                            <Snackbar />
+                        </>
+                    </APIProvider>
+                </NavigationScroll>
+            </Locales>
         </ThemeCustomization>
     );
 };

@@ -161,7 +161,7 @@ const SportsPage = () => {
                         color: '#fff'
                     }}
                 >
-                    <FormattedMessage id="Events are currently not available" />
+                    <FormattedMessage id="There is no upcoming events." />
                 </Typography>
             );
         }
@@ -176,7 +176,7 @@ const SportsPage = () => {
                 <Card
                     key={key}
                     sx={{
-                        background: '#212637',
+                        background: '#373636',
                         borderRadius: '13px',
                         py: 2,
                         px: { xs: 1, sm: 2 },
@@ -265,7 +265,7 @@ const SportsPage = () => {
                 sx={{
                     p: { xs: 1, sm: 3 },
                     borderRadius: '18px',
-                    background: '#181D2D',
+                    background: '#384635',
                     boxShadow
                 }}
             >

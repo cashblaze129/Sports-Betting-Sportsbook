@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialCurrency = {
     _id: '',
-    icon: 'https://boibooktoken.com/wp-content/uploads/2021/12/200xlogo.png',
+    icon: 'https://boibook.io/solana-sol-logo.png',
     symbol: 'MBT',
     minBet: 1000,
     maxBet: 100000,

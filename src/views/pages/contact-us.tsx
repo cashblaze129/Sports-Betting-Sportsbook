@@ -60,7 +60,7 @@ const ContactUsPage = () => {
                                     sx={{ fontWeight: 400, lineHeight: 1.4, [theme.breakpoints.up('md')]: { my: 0, mx: 12.5 } }}
                                     color="white"
                                 >
-                                    admin@boibooktoken.com
+                                    admin@boibooktoken.io
                                 </Typography>
                             </Grid>
                         </Grid>
