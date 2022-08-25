@@ -45,7 +45,6 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
     };
 
     const signInAddress = async (publicAddress: string, signature: string) => {
-        console.log('here');
         const res = await axios.post('api/v2/users/a-signin', { publicAddress, signature });
         return res;
     };
@@ -95,7 +94,7 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
         return res;
     };
 
-    const depositMetamask = async (transaction: any) => {
+    const depositToken = async (transaction: any) => {
         const res = await axios.post('api/v2/payments/m-deposit', { userId, balanceId, currencyId, ...transaction });
         return res;
     };
@@ -159,7 +158,7 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
                 addCurrency,
                 changeCurrency,
                 deposit,
-                depositMetamask,
+                depositToken,
                 withdrawal,
                 cancelWithdrawal,
                 betSport,

@@ -19,7 +19,6 @@ import { useSelector } from 'store';
 import { SportsItem } from 'ui-component';
 import Transitions from 'ui-component/extended/Transitions';
 import Event from './component/Event';
-import UseIcons from 'utils/Icons';
 
 const SportsPage = () => {
     const theme = useTheme();
@@ -249,13 +248,13 @@ const SportsPage = () => {
                                 <Box className="warraper">
                                     <Box className="cover">
                                         <Box className="back" />
-                                        {UseIcons(item.icon)}
-                                        {/* <i className={`sportsicons sportsicon-${item.SportId}`} /> */}
+                                        {/* {UseIcons(item.icon)} */}
+                                        <i className={`sportsicons sportsicon-${item.SportId}`} />
                                     </Box>
                                 </Box>
-                                {/* <Typography>
+                                {/* <Box sx={{ textAlign: 'center', color: '#0eff6f' }}>
                                     <FormattedMessage id={item.SportName} />
-                                </Typography> */}
+                                </Box> */}
                             </SportsItem>
                         ))}
                     </Stack>

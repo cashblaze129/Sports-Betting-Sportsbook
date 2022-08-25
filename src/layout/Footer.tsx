@@ -89,7 +89,7 @@ const Footer = () => {
                                 <Link href="https://t.me/boibookSupport" target="_blank">
                                     <IconBrandTelegram size={30} />
                                 </Link>
-                                <Link href="https://www.instagram.com/mystic_bets/" target="_blank">
+                                <Link href="https://www.instagram.com/boibook/" target="_blank">
                                     <IconBrandInstagram size={30} />
                                 </Link>
                                 <Link href="https://twitter.com/boibook_" target="_blank">

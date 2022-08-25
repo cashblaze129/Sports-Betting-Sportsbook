@@ -87,38 +87,40 @@ const NavItem = ({ item, level }: NavItemProps) => {
             selected={selectedItem?.findIndex((id) => id === item.id) > -1}
             onClick={() => itemHandler(item.id!)}
         >
-            {itemIcon}
-            <ListItemText
-                sx={{
-                    m: 'auto',
-                    ml: '16px',
-                    minWidth: '150px',
-                    transition: theme.transitions.create('all'),
-                    display: drawerOpen ? 'block' : 'none',
-                    color: drawerOpen ? '#fff' : '#6D7289'
-                }}
-                primary={
-                    <Typography color="inherit" variant="h3">
-                        {item.title}
-                    </Typography>
-                }
-                secondary={
-                    item.caption && (
+            <>
+                {itemIcon}
+                <ListItemText
+                    sx={{
+                        m: 'auto',
+                        ml: '16px',
+                        minWidth: '150px',
+                        transition: theme.transitions.create('all'),
+                        display: drawerOpen ? 'block' : 'none',
+                        color: drawerOpen ? '#fff' : '#6D7289'
+                    }}
+                    primary={
                         <Typography color="inherit" variant="h3">
-                            {item.caption}
+                            {item.title}
                         </Typography>
-                    )
-                }
-            />
-            {item.chip && (
-                <Chip
-                    color={item.chip.color}
-                    variant={item.chip.variant}
-                    size={item.chip.size}
-                    label={item.chip.label}
-                    avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
+                    }
+                    secondary={
+                        item.caption && (
+                            <Typography color="inherit" variant="h3">
+                                {item.caption}
+                            </Typography>
+                        )
+                    }
                 />
-            )}
+                {item.chip && (
+                    <Chip
+                        color={item.chip.color}
+                        variant={item.chip.variant}
+                        size={item.chip.size}
+                        label={item.chip.label}
+                        avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
+                    />
+                )}
+            </>
         </ListItemButton>
     );
 };

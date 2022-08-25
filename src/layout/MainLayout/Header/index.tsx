@@ -7,12 +7,15 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { IconWallet } from '@tabler/icons';
 import { FormattedMessage } from 'react-intl';
 import bs58 from 'bs58';
+import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useWallet } from '@solana/wallet-adapter-react';
+
 import useApi from 'hooks/useApi';
 import { Login } from 'store/reducers/auth';
 
 import snackbar from 'utils/snackbar';
 
-import { HOME_PATH } from 'config';
+import config, { HOME_PATH } from 'config';
 import { toNumber } from 'utils/number';
 
 import { useDispatch, useSelector } from 'store';
@@ -41,9 +44,10 @@ const Header = () => {
     const { currency, balance, isLoggedIn } = useSelector((state) => state.auth);
     const { signInAddress, checkAddress, signUpAddress } = useApi();
     const [loading, setLoading] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
 
-    const [publicKey, setPublicKey] = useState();
+    const [publicKeyAsString, setPublicKeyAsString] = useState('');
+    // const { connection } = useConnection();
+    const { publicKey, wallet, connected, sendTransaction } = useWallet();
 
     const onLogin = (user: any) => {
         dispatch(Login(user));
@@ -90,10 +94,15 @@ const Header = () => {
     };
 
     const solanaLogin = async () => {
-        if (publicKey) {
-            setIsLogin(false);
+        let pubString = '';
+        if (publicKeyAsString) {
+            pubString = publicKeyAsString || '';
+        } else if (connected) {
+            pubString = publicKey?.toString() || '';
+        }
+        if (pubString) {
             setLoading(true);
-            checkAddress(publicKey as string)
+            checkAddress(pubString as string)
                 .then(({ data }: any) => {
                     if (data.status) {
                         handleSignMessage(data.user);
@@ -113,39 +122,59 @@ const Header = () => {
     };
 
     const solanaRegister = () => {
-        if (publicKey) {
-            signUpAddress(publicKey as string)
+        if (publicKeyAsString) {
+            signUpAddress(publicKeyAsString as string)
                 .then(({ data }: any) => {
                     snackbar(data);
                 })
                 .catch((error) => {
                     setLoading(false);
-                    setIsLogin(false);
                 });
         }
     };
 
-    const handleLogin = async () => {
-        setIsLogin(true);
-        if (!publicKey) {
-            // @ts-ignore
-            const { solana } = window;
+    // const handleLogin = async () => {
+    //     if (!publicKey) {
+    //         // @ts-ignore
+    //         const { solana } = window;
 
-            if (solana) {
-                try {
-                    const response = await solana.connect();
-                    setPublicKey(response.publicKey.toString());
-                } catch (err) {
-                    // { code: 4001, message: 'User rejected the request.' }
-                }
-            }
-        }
-    };
+    //         if (solana) {
+    //             try {
+    //                 const response = await solana.connect();
+    //                 setPublicKeyAsString(response.publicKey.toString());
+    //             } catch (err) {
+    //                 // { code: 4001, message: 'User rejected the request.' }
+    //             }
+    //         }
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     if (publicKey && isLogin) solanaLogin();
+    //     // eslint-disable-next-line
+    // }, [publicKey, isLogin]);
 
     useEffect(() => {
-        if (publicKey && isLogin) solanaLogin();
+        if (publicKey && !isLoggedIn) {
+            setPublicKeyAsString(publicKey.toString());
+        }
         // eslint-disable-next-line
-    }, [publicKey, isLogin]);
+    }, [publicKey]);
+
+    useEffect(() => {
+        if (publicKeyAsString) {
+            solanaLogin();
+        }
+        // eslint-disable-next-line
+    }, [publicKeyAsString]);
+
+    useEffect(() => {
+        console.log(isLoggedIn);
+        if (!isLoggedIn) {
+            setPublicKeyAsString('');
+        }
+        // eslint-disable-next-line
+    }, [isLoggedIn]);
 
     return (
         <>
@@ -215,10 +244,47 @@ const Header = () => {
                     <ProfileSection />
                 </>
             ) : (
-                <LoadingButton loading={loading} variant="outlined" onClick={() => handleLogin()}>
-                    <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
-                    <FormattedMessage id="Select Wallet" />
-                </LoadingButton>
+                <WalletModalProvider>
+                    <Box
+                        sx={{
+                            '& button': {
+                                backgroundColor: config.bgColor,
+                                color: config.fontColor,
+                                border: `1px solid ${config.fontColor}`
+                            }
+                        }}
+                    >
+                        {publicKeyAsString || connected ? (
+                            <LoadingButton
+                                loading={loading}
+                                sx={{ backgroundColor: config.bgColor, color: config.fontColor, border: `1px solid ${config.fontColor}` }}
+                                variant="outlined"
+                                onClick={() => solanaLogin()}
+                            >
+                                <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
+                                <FormattedMessage id="Sign Wallet" />
+                            </LoadingButton>
+                        ) : (
+                            <Box
+                                sx={{
+                                    '& button': { height: '40px', fontSize: '0.875rem' },
+                                    '& img': { width: '20px !important', height: '20px !important' }
+                                }}
+                            >
+                                <WalletMultiButton />
+                            </Box>
+                        )}
+                    </Box>
+                </WalletModalProvider>
+                // <LoadingButton
+                //     loading={loading}
+                //     sx={{ backgroundColor: config.bgColor, color: config.fontColor, border: `1px solid ${config.fontColor}` }}
+                //     variant="outlined"
+                //     onClick={() => handleLogin()}
+                // >
+                //     <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
+                //     <FormattedMessage id="Select Wallet" />
+                // </LoadingButton>
             )}
         </>
     );

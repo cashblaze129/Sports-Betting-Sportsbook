@@ -447,7 +447,7 @@ export const OddWarraper = ({
                 onClick={onClick}
                 className={`arrow-${update}`}
                 sx={{
-                    background: '#3F4357',
+                    background: config.bgColor,
                     borderRadius: '3px',
                     width: '100%',
                     display: 'flex',
@@ -491,7 +491,7 @@ export const OddWarraper = ({
                         color: '#fff'
                     },
                     ...(active && {
-                        background: '#2196f3',
+                        background: config.fontColor,
                         '& path': {
                             fill: '#fff'
                         },

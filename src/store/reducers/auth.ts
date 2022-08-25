@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialCurrency = {
     _id: '',
     icon: 'https://boibook.io/solana-sol-logo.png',
-    symbol: 'MBT',
-    minBet: 1000,
+    symbol: 'SOL',
+    minBet: 10,
     maxBet: 100000,
     price: 0.1
 };

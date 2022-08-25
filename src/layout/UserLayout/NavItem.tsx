@@ -10,6 +10,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutlineTwoTone';
 import { FormattedMessage } from 'react-intl';
 
 import useConfig from 'hooks/useConfig';
+import config from 'config';
 
 function a11yProps(index: number) {
     return {
@@ -84,8 +85,11 @@ const NavItem = () => {
                         borderRadius: `${borderRadius}px`
                     },
                     '& button.Mui-selected': {
-                        color: theme.palette.primary.main,
-                        background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50]
+                        color: config.fontColor,
+                        background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
+                        '& p': {
+                            color: config.fontColor
+                        }
                     },
                     '& button > svg': {
                         marginBottom: '0px !important',

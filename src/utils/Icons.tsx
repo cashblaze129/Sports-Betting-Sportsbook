@@ -1,6 +1,7 @@
 import { IconContext } from 'react-icons';
-import { IoIosFootball } from 'react-icons/io';
-import { GiAmericanFootballBall, GiAmericanFootballHelmet, GiBasketballBall, GiBoxingGlove, GiDeathStar } from 'react-icons/gi';
+import { IoIosFootball, IoIosBaseball } from 'react-icons/io';
+import { GiAmericanFootballBall, GiAmericanFootballHelmet, GiBasketballBall, GiDeathStar } from 'react-icons/gi';
+import { RiBoxingFill } from 'react-icons/ri';
 
 const UseIcons = (icon: string) => {
     if (icon) {
@@ -10,7 +11,8 @@ const UseIcons = (icon: string) => {
                 {icon === 'icehockey' ? <GiAmericanFootballHelmet /> : null}
                 {icon === 'basketball' ? <GiBasketballBall /> : null}
                 {icon === 'americanfootball' ? <GiAmericanFootballBall /> : null}
-                {icon === 'boxing' ? <GiBoxingGlove /> : null}
+                {icon === 'boxing' ? <RiBoxingFill /> : null}
+                {icon === 'baseball' ? <IoIosBaseball /> : null}
             </IconContext.Provider>
         );
     }

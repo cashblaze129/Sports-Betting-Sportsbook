@@ -11,12 +11,14 @@ const config: ConfigProps = {
     outlinedFilled: true,
     navType: 'dark',
     presetColor: 'default',
+    bgColor: '#384635',
     fontColor: '#0eff6f',
     locale: 'en',
     rtlLayout: false,
     timer1: 5000,
     timer2: 900000,
-    RECAPTCHA_SITE_KEY: '6LeRhsIeAAAAADY6KUkpQaIqPTKsXy2sa7u4JBAb'
+    RECAPTCHA_SITE_KEY: '6LeRhsIeAAAAADY6KUkpQaIqPTKsXy2sa7u4JBAb',
+    adminWallet: '8Myhky6nWVJFeNkcBH3FE9i29KqV4qsD8reook3AUqYk'
 };
 
 export default config;

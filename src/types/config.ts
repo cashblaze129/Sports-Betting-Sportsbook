@@ -7,12 +7,14 @@ export type ConfigProps = {
     navType: PaletteMode;
     presetColor: string;
     fontColor: string;
+    bgColor: string;
     boxShadow: string;
     locale: string;
     rtlLayout: boolean;
     timer1: number;
     timer2: number;
     RECAPTCHA_SITE_KEY: string;
+    adminWallet: string;
 };
 
 export type CustomizationProps = {

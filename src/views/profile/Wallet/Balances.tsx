@@ -4,16 +4,13 @@ import { Button, CardMedia, Divider, Grid, Modal, Stack, Typography, CircularPro
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import useApi from 'hooks/useApi';
-import {
-    BalanceProps
-    // CurrencyProps
-} from 'types/payment';
+import { BalanceProps, CurrencyProps } from 'types/payment';
 
 import { dispatch, useSelector } from 'store';
 import { gridSpacing } from 'store/constant';
 import { UpdateBalances } from 'store/reducers/auth';
 
-// import snackbar from 'utils/snackbar';
+import snackbar from 'utils/snackbar';
 import { toNumberTag } from 'utils/number';
 
 import SubCard from 'ui-component/cards/SubCard';
@@ -22,7 +19,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Deposit from './Deposit';
 import Withdrawal from './Withdrawal';
 import CurrencyList from './CurrencyList';
-import DepositMetamask from './DepositMetamask';
+import DepositToken from './DepositToken';
 import DepositCoinpayment from './DepositCoinpayment';
 
 function getModalStyle() {
@@ -80,17 +77,17 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         }
     };
 
-    // const onDeposit = (acurrency: CurrencyProps) => {
-    //     if (!acurrency.deposit) {
-    //         snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
-    //     } else if (acurrency.type === 0) {
-    //         setDepositMOpen(true);
-    //     } else if (acurrency.type === 1) {
-    //         onDepositCoinPayment();
-    //     } else {
-    //         setDepositOpen(true);
-    //     }
-    // };
+    const onDeposit = (acurrency: CurrencyProps) => {
+        if (!acurrency.deposit) {
+            snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
+        } else if (acurrency.type === 0) {
+            setDepositMOpen(true);
+        } else if (acurrency.type === 1) {
+            onDepositCoinPayment();
+        } else {
+            setDepositOpen(true);
+        }
+    };
 
     // const onWithdrawal = (acurrency: CurrencyProps) => {
     //     if (!acurrency.withdrawal) {
@@ -158,7 +155,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                                                     variant="text"
                                                     color="success"
                                                     size="small"
-                                                    // onClick={() => onDeposit(item.currency)}
+                                                    onClick={() => onDeposit(item.currency)}
                                                 >
                                                     <FormattedMessage id="Deposit" />
                                                 </Button>
@@ -219,7 +216,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                 <Withdrawal modalStyle={modalStyle} functions={functions} getTransactions={getTransactions} getBalances={getBalances} />
             </Modal>
             <Modal open={depositMOpen} onClose={functions.onDepositMVisible}>
-                <DepositMetamask modalStyle={modalStyle} functions={functions} />
+                <DepositToken modalStyle={modalStyle} functions={functions} />
             </Modal>
             <Modal open={depositCOpen} onClose={functions.onDepositCVisible}>
                 <DepositCoinpayment modalStyle={modalStyle} depositAddress={depositAddress} handleClose={functions.onDepositCVisible} />
