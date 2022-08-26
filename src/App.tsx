@@ -36,7 +36,13 @@ const App = () => {
     const { pathname } = useLocation();
     const { isLoggedIn, balance, token } = useSelector((state) => state.auth);
 
-    const network = WalletAdapterNetwork.Devnet;
+    let network: any;
+
+    if (BASE_URL?.indexOf('localhost') !== -1) {
+        network = WalletAdapterNetwork.Devnet;
+    } else {
+        network = WalletAdapterNetwork.Mainnet;
+    }
 
     // You can also provide a custom RPC endpoint
     // const endpoint = 'https://blue-delicate-wildflower.solana-mainnet.quiknode.pro/2f054b4c3a7d3f8841b584875204e3aa7c42d8ab/';
