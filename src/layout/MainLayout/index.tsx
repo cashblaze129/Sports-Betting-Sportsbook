@@ -15,6 +15,7 @@ import Header from './Header';
 import MobileMenu from './MobileMenu';
 import Auth from '../AuthLayout';
 import Betslip from 'views/sports/component/Betslip';
+import AdArea from './Ad';
 
 const MainLayout = ({ children }: any) => {
     const theme = useTheme();
@@ -56,6 +57,7 @@ const MainLayout = ({ children }: any) => {
             {/* <Sidebar /> */}
             <Betslip />
             <Main theme={theme} open={drawerOpen} dWidth={dWidth}>
+                <AdArea />
                 <Container maxWidth="lg">
                     <Box sx={{ minHeight: 'calc(100vh - 72px)' }}>
                         {children && children}

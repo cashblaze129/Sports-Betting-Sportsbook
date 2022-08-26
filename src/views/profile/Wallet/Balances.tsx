@@ -77,17 +77,17 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         }
     };
 
-    const onDeposit = (acurrency: CurrencyProps) => {
-        if (!acurrency.deposit) {
-            snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
-        } else if (acurrency.type === 0) {
-            setDepositMOpen(true);
-        } else if (acurrency.type === 1) {
-            onDepositCoinPayment();
-        } else {
-            setDepositOpen(true);
-        }
-    };
+    // const onDeposit = (acurrency: CurrencyProps) => {
+    //     if (!acurrency.deposit) {
+    //         snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
+    //     } else if (acurrency.type === 0) {
+    //         setDepositMOpen(true);
+    //     } else if (acurrency.type === 1) {
+    //         onDepositCoinPayment();
+    //     } else {
+    //         setDepositOpen(true);
+    //     }
+    // };
 
     // const onWithdrawal = (acurrency: CurrencyProps) => {
     //     if (!acurrency.withdrawal) {
@@ -155,7 +155,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                                                     variant="text"
                                                     color="success"
                                                     size="small"
-                                                    onClick={() => onDeposit(item.currency)}
+                                                    // onClick={() => onDeposit(item.currency)}
                                                 >
                                                     <FormattedMessage id="Deposit" />
                                                 </Button>

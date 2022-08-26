@@ -2,22 +2,16 @@ export interface CurrencyProps {
     _id: string;
     symbol: string;
     name?: string;
-    payment?: string;
-    adminAddress?: string;
-    contractAddress?: string;
-    abi?: any;
     betLimit?: number;
-    price: number;
     maxBet?: number;
     minBet?: number;
     minDeposit?: number;
     minWithdraw?: number;
     icon?: string;
-    buyUrl?: string;
-    type?: number;
     status?: boolean;
     deposit?: boolean;
     withdrawal?: boolean;
+    tokenMintAccount?: string;
 }
 
 export interface BalanceProps {

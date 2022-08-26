@@ -624,7 +624,7 @@ class Roulette extends Component<PropsType, StateType> {
                         <Typography>
                             <FormattedMessage id="Bet Amount" />
                         </Typography>
-                        <Typography>${toNumber(Number(totalBet) * currency.price, 5, true)}</Typography>
+                        {/* <Typography>${toNumber(Number(totalBet) * currency.price, 5, true)}</Typography> */}
                     </Stack>
                     <OutlinedInput
                         id="amount"

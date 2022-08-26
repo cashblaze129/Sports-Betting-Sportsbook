@@ -81,7 +81,7 @@ const Withdrawal = forwardRef(({ modalStyle, functions, getTransactions, getBala
     };
 
     useEffect(() => {
-        if (currency.type === 1) setMethod(1);
+        setMethod(1);
     }, [currency]);
 
     useEffect(() => {
@@ -142,17 +142,15 @@ const Withdrawal = forwardRef(({ modalStyle, functions, getTransactions, getBala
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </Grid>
-                        {currency.type === 2 && (
-                            <Grid item xs={12}>
-                                <Autocomplete
-                                    disablePortal
-                                    onChange={(e, value) => setMethod(value?.value || 0)}
-                                    options={withdrawalOptions}
-                                    value={withdrawalOptions.find((e) => e.value === method)}
-                                    renderInput={(params) => <TextField {...params} label={formatMessage({ id: 'Method' })} />}
-                                />
-                            </Grid>
-                        )}
+                        <Grid item xs={12}>
+                            <Autocomplete
+                                disablePortal
+                                onChange={(e, value) => setMethod(value?.value || 0)}
+                                options={withdrawalOptions}
+                                value={withdrawalOptions.find((e) => e.value === method)}
+                                renderInput={(params) => <TextField {...params} label={formatMessage({ id: 'Method' })} />}
+                            />
+                        </Grid>
                         <Grid item xs={12}>
                             <Alert variant="outlined" severity="warning" sx={{ borderColor: theme.palette.warning.main }}>
                                 <FormattedMessage id="Minimum Withdrawal" />: {currency.minWithdraw} {currency.symbol}

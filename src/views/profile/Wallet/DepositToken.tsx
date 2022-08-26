@@ -21,7 +21,7 @@ import { web3 as solWeb3, Wallet } from '@project-serum/anchor';
 // import { createMint, getOrCreateAssociatedTokenAccount, mintTo, transfer } from '@solana/spl-token';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 import Web3 from 'web3';
 import { BigNumber } from '@ethersproject/bignumber';
@@ -39,7 +39,7 @@ import { UpdateInfo } from 'store/reducers/auth';
 
 import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import SolanaIcon from 'assets/images/icons/SOL.png';
+import config from 'config';
 
 const ethereum = 'ether';
 
@@ -60,6 +60,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const [amount, setAmount] = useState<number | string>('');
 
     const { publicKey, wallet, connected, sendTransaction } = useWallet();
+    const { connection } = useConnection();
 
     const handleClick = async () => {
         await switchNetwork();
@@ -77,8 +78,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             amounti: amounti.toString(),
             amount,
             from: account,
-            address: currency.contractAddress,
-            receiver: currency.adminAddress,
+            address: currency.tokenMintAccount,
+            receiver: config.adminWallet,
             txn_id
         })
             .then(({ data }) => {
@@ -89,13 +90,9 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             });
     };
 
-    const handleTransfer = async (
-        tokenMintAddress: string,
-        solWallet: Wallet,
-        to: string,
-        connection: solWeb3.Connection,
-        tAmount: number
-    ) => {
+    const handleTransfer = async (tokenMintAddress: string) => {
+        const solWallet: any = wallet?.adapter;
+
         const mintPublicKey = new solWeb3.PublicKey(tokenMintAddress);
         const mintToken = new Token(
             connection,
@@ -105,7 +102,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         );
 
         const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(solWallet.publicKey);
-
+        const to = config.adminWallet;
         const destPublicKey = new solWeb3.PublicKey(to);
 
         // Get the derived address of the destination wallet which will hold the custom token
@@ -140,7 +137,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 associatedDestinationTokenAddr,
                 solWallet.publicKey,
                 [],
-                tAmount
+                Number(amount)
             )
         );
 
@@ -159,7 +156,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         } else if (amount === '' || Number(amount) === 0 || Number(amount) < Number(currency.minDeposit)) {
             snackbar(formatMessage({ id: 'Please input valid amount.' }), 'error');
         } else {
-            console.log(wallet);
+            // let tx = await handleTransfer(currency.tokenMintAccount);
+            console.log(wallet?.adapter?.publicKey);
             // const web3 = new Web3(library.provider);
             // if (currency.contractAddress === ethereum) {
             //     console.log('over here');
@@ -203,39 +201,39 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         }
     };
 
-    const getBalance = async () => {
-        if (account !== user?.cryptoAccount) {
-            Api.updateUserInfo({ cryptoAccount: account, update: false }).then(({ data }) => {
-                dispatch(UpdateInfo(data));
-            });
-        }
-        if (account && currency.abi) {
-            try {
-                const web3 = new Web3(library.provider);
-                if (currency.contractAddress === ethereum) {
-                    const balances = await web3.eth.getBalance(account);
-                    const amounti = formatUnits(balances, 18);
-                    setBalance(Number(amounti));
-                } else {
-                    const contract = new web3.eth.Contract(currency.abi, currency.contractAddress);
-                    const balances = await contract.methods.balanceOf(account).call();
-                    const decimals = await contract.methods.decimals().call();
-                    const amounti = formatUnits(balances, decimals);
-                    setBalance(Number(amounti));
-                }
-            } catch (error) {
-                window.location.reload();
-                console.log(error);
-            }
-        }
-    };
+    // const getBalance = async () => {
+    //     if (account !== user?.cryptoAccount) {
+    //         Api.updateUserInfo({ cryptoAccount: account, update: false }).then(({ data }) => {
+    //             dispatch(UpdateInfo(data));
+    //         });
+    //     }
+    //     if (account && currency.abi) {
+    //         try {
+    //             const web3 = new Web3(library.provider);
+    //             if (currency.contractAddress === ethereum) {
+    //                 const balances = await web3.eth.getBalance(account);
+    //                 const amounti = formatUnits(balances, 18);
+    //                 setBalance(Number(amounti));
+    //             } else {
+    //                 const contract = new web3.eth.Contract(currency.abi, currency.contractAddress);
+    //                 const balances = await contract.methods.balanceOf(account).call();
+    //                 const decimals = await contract.methods.decimals().call();
+    //                 const amounti = formatUnits(balances, decimals);
+    //                 setBalance(Number(amounti));
+    //             }
+    //         } catch (error) {
+    //             window.location.reload();
+    //             console.log(error);
+    //         }
+    //     }
+    // };
 
-    useEffect(() => {
-        if (active) {
-            getBalance();
-        }
-        // eslint-disable-next-line
-    }, [active, currency]);
+    // useEffect(() => {
+    //     if (active) {
+    //         getBalance();
+    //     }
+    //     // eslint-disable-next-line
+    // }, [active, currency]);
 
     useEffect(() => {
         if (user?.cryptoAccount) handleClick();

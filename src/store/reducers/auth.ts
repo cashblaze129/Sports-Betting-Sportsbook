@@ -7,7 +7,8 @@ const initialCurrency = {
     symbol: 'SOL',
     minBet: 10,
     maxBet: 100000,
-    price: 0.1
+    price: 0.1,
+    tokenMintAccount: ''
 };
 
 const initialUser = {

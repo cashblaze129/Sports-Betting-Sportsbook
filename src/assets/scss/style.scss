@@ -6,6 +6,11 @@
 @import 'fontawesome.scss';
 @import 'games.scss';
 
+@font-face {
+    font-family: "SilkFont";
+    src: url("../fonts/Silkscreen-Regular.ttf") format("truetype");
+  }
+
 // ==============================|| LIGHT BOX ||============================== //
 .slick-arrow:before {
     color: $grey500;
@@ -222,6 +227,32 @@ nav {
     color: #bdc8f0;
     font-family: 'Roboto', sans-serif;
     line-height: 1.75;
+}
+
+.referal-txt {
+    color: #c4b3ef;
+    animation-name: bgAnimation;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bgAnimation {
+    0% {
+        color: #c4b3ef;
+    }
+    25% {
+        color: #0eff6f;
+    }
+    50% {
+        color: #c4b3ef;
+    }
+    75% {
+        color: #0eff6f;
+    }
+    100% {
+        color: #c4b3ef;
+    }
 }
 
 ::-webkit-scrollbar-thumb {

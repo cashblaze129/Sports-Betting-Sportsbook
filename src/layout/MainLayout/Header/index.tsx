@@ -68,10 +68,8 @@ const Header = () => {
     };
 
     const handleAuthenticate = (publicAddress: PublicKey, signature: []) => {
-        console.log('over here');
         signInAddress(publicAddress.toBase58(), bs58.encode(signature))
             .then(({ data }) => {
-                console.log(data);
                 setLoading(false);
                 onLogin(data);
             })
@@ -105,6 +103,7 @@ const Header = () => {
             checkAddress(pubString as string)
                 .then(({ data }: any) => {
                     if (data.status) {
+                        console.log(data);
                         handleSignMessage(data.user);
                     } else {
                         setTimeout(() => {

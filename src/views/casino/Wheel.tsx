@@ -230,7 +230,7 @@ const Wheel = () => {
                     <Typography>
                         <FormattedMessage id="Bet Amount" />
                     </Typography>
-                    <Typography>${toNumber(Number(amount) * currency.price, 5, true)}</Typography>
+                    {/* <Typography>${toNumber(Number(amount) * currency.price, 5, true)}</Typography> */}
                 </Stack>
                 <OutlinedInput
                     id="amount"
