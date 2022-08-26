@@ -16,7 +16,7 @@ import Metamask from 'assets/images/icons/metamask.svg';
 import Coinbase from 'assets/images/icons/coinbase.svg';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
-const ConnectMetamask = () => {
+const ConnectSolana = () => {
     const Api = useApi();
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -210,4 +210,4 @@ const ConnectMetamask = () => {
     );
 };
 
-export default ConnectMetamask;
+export default ConnectSolana;

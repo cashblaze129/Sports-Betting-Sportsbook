@@ -10,7 +10,7 @@ import { useSelector } from 'store';
 
 import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import Metamask from 'assets/images/icons/metamask.svg';
+import SolIcon from 'assets/images/icons/SOL.png';
 
 interface Props extends CardProps {
     modalStyle: React.CSSProperties;
@@ -78,12 +78,12 @@ const CurrencyList = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                                         borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 20 : theme.palette.grey[100]
                                     }}
                                 >
-                                    <img src={Metamask} alt="metamask" width={20} height={20} style={{ marginRight: '1rem' }} />
-                                    <FormattedMessage id="Metamask Wallet" />
+                                    <img src={SolIcon} alt="metamask" width={20} height={20} style={{ marginRight: '1rem' }} />
+                                    <FormattedMessage id="Solana Wallet" />
                                 </Button>
                             </AnimateButton>
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <AnimateButton>
                                 <Button
                                     onClick={OtherWallet}
@@ -116,7 +116,7 @@ const CurrencyList = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                                     <FormattedMessage id="Other Wallet" />
                                 </Button>
                             </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </CardContent>
             </MainCard>

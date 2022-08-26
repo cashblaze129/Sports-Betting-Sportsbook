@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialCurrency = {
     _id: '',
-    icon: 'https://boibook.io/solana-sol-logo.png',
+    icon: 'https://boibook.io/SOL.png',
     symbol: 'SOL',
     minBet: 10,
     maxBet: 100000,

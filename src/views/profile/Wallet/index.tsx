@@ -9,7 +9,7 @@ import { TransactionsProps } from 'types/payment';
 
 import Balances from './Balances';
 import Transaction from './Transaction';
-// import ConnectMetamask from './ConnectMetamask';
+// import ConnectSolana from './ConnectSolana';
 
 const Wallet = () => {
     const Api = useApi();
@@ -42,7 +42,7 @@ const Wallet = () => {
                 <Balances getTransactions={getTransactions} />
             </Grid>
             {/* <Grid item xs={12}>
-                <ConnectMetamask />
+                <ConnectSolana />
             </Grid> */}
             <Grid item xs={12}>
                 <Transaction transactions={transactions} getTransactions={getTransactions} />

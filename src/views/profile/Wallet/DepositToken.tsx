@@ -90,7 +90,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             });
     };
 
-    const handleTransfer = async (tokenMintAddress: string) => {
+    const handleTransfer = async (tokenMintAddress: any) => {
+        console.log('111');
         const solWallet: any = wallet?.adapter;
 
         const mintPublicKey = new solWeb3.PublicKey(tokenMintAddress);
@@ -100,11 +101,13 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             TOKEN_PROGRAM_ID,
             solWallet.payer // the wallet owner will pay to transfer and to create recipients associated token account if it does not yet exist.
         );
-
+        console.log('222');
+        console.log(mintToken);
         const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(solWallet.publicKey);
         const to = config.adminWallet;
         const destPublicKey = new solWeb3.PublicKey(to);
 
+        console.log('333');
         // Get the derived address of the destination wallet which will hold the custom token
         const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
             mintToken.associatedProgramId,
@@ -113,10 +116,12 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             destPublicKey
         );
 
+        console.log('444');
         const receiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
 
         const instructions: solWeb3.TransactionInstruction[] = [];
 
+        console.log('555');
         if (receiverAccount === null) {
             instructions.push(
                 Token.createAssociatedTokenAccountInstruction(
@@ -141,6 +146,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             )
         );
 
+        console.log('666');
         const transaction = new solWeb3.Transaction().add(...instructions);
         transaction.feePayer = solWallet.publicKey;
         transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
@@ -156,8 +162,9 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         } else if (amount === '' || Number(amount) === 0 || Number(amount) < Number(currency.minDeposit)) {
             snackbar(formatMessage({ id: 'Please input valid amount.' }), 'error');
         } else {
-            // let tx = await handleTransfer(currency.tokenMintAccount);
-            console.log(wallet?.adapter?.publicKey);
+            const tx = await handleTransfer(currency.tokenMintAccount);
+            console.log(tx);
+            // console.log(wallet?.adapter?.publicKey);
             // const web3 = new Web3(library.provider);
             // if (currency.contractAddress === ethereum) {
             //     console.log('over here');

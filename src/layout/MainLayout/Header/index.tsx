@@ -50,8 +50,11 @@ const Header = () => {
     const { publicKey, wallet, connected, sendTransaction } = useWallet();
 
     const onLogin = (user: any) => {
+        console.log('onlogin111');
         dispatch(Login(user));
+        console.log('onlogin222');
         dispatch(ChangePage(''));
+        console.log('onlogin333');
         snackbar(
             <>
                 You have successfully logged in as a user to boibook.
