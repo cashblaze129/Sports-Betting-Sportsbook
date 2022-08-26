@@ -42,7 +42,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const isMobile = useMediaQuery('(max-width:767px)');
     const { currency, balance, isLoggedIn } = useSelector((state) => state.auth);
-    const { signInAddress, checkAddress, signUpAddress } = useApi();
+    const { logout, signInAddress, checkAddress, signUpAddress } = useApi();
     const [loading, setLoading] = useState(false);
 
     const [publicKeyAsString, setPublicKeyAsString] = useState('');
@@ -50,11 +50,8 @@ const Header = () => {
     const { publicKey, wallet, connected, sendTransaction } = useWallet();
 
     const onLogin = (user: any) => {
-        console.log('onlogin111');
         dispatch(Login(user));
-        console.log('onlogin222');
         dispatch(ChangePage(''));
-        console.log('onlogin333');
         snackbar(
             <>
                 You have successfully logged in as a user to boibook.
@@ -162,6 +159,13 @@ const Header = () => {
         }
         // eslint-disable-next-line
     }, [publicKey]);
+
+    useEffect(() => {
+        if (isLoggedIn && !connected) {
+            logout();
+        }
+        // eslint-disable-next-line
+    }, [isLoggedIn]);
 
     useEffect(() => {
         if (publicKeyAsString) {

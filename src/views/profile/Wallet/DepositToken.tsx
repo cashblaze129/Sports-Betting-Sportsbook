@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState, useCallback } from 'react';
 import {
     Alert,
     Button,
@@ -156,14 +156,62 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         await connection.confirmTransaction(transactionSignature);
     };
 
+    // Solana transfer
+    const transferSOL = async () => {
+        const txWallet: any = wallet?.adapter;
+
+        // Detecing and storing the phantom wallet of the user (creator in this case)
+        const provider = window?.solana;
+
+        // I have hardcoded my secondary wallet address here. You can take this address either from user input or your DB or wherever
+        const recieverWallet = new solWeb3.PublicKey(config.adminWallet);
+
+        // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+        const transaction = new solWeb3.Transaction().add(
+            solWeb3.SystemProgram.transfer({
+                fromPubkey: txWallet.publicKey,
+                toPubkey: recieverWallet,
+                lamports: solWeb3.LAMPORTS_PER_SOL
+            })
+        );
+
+        // Setting the variables for the transaction
+        transaction.feePayer = await txWallet.publicKey;
+        const blockhashObj = await connection.getRecentBlockhash();
+        transaction.recentBlockhash = await blockhashObj.blockhash;
+
+        // Transaction constructor initialized successfully
+        if (transaction) {
+            console.log('Txn created successfully');
+        }
+
+        // Request creator to sign the transaction (allow the transaction)
+        const signed = await provider.signTransaction(transaction);
+
+        // The signature is generated
+        const signature = await connection.sendRawTransaction(signed.serialize());
+        // Confirm whether the transaction went through or not
+        await connection.confirmTransaction(signature);
+
+        // Signature chhap diya idhar
+        return signature;
+    };
+
     const onDepositToken = async () => {
         if (!connected) {
             snackbar(formatMessage({ id: 'Please connect wallet.' }), 'error');
         } else if (amount === '' || Number(amount) === 0 || Number(amount) < Number(currency.minDeposit)) {
             snackbar(formatMessage({ id: 'Please input valid amount.' }), 'error');
         } else {
-            const tx = await handleTransfer(currency.tokenMintAccount);
-            console.log(tx);
+            setLoading(true);
+            if (currency.symbol === 'SOL') {
+                const tx = await transferSOL();
+                console.log(tx);
+            } else {
+                const tx = await handleTransfer(currency.tokenMintAccount);
+                console.log(tx);
+            }
+            setLoading(false);
             // console.log(wallet?.adapter?.publicKey);
             // const web3 = new Web3(library.provider);
             // if (currency.contractAddress === ethereum) {
