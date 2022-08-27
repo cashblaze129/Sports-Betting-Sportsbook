@@ -39,7 +39,8 @@ const App = () => {
     let network: any;
 
     if (BASE_URL?.indexOf('localhost') !== -1) {
-        network = WalletAdapterNetwork.Testnet;
+        // network = WalletAdapterNetwork.Testnet;
+        network = WalletAdapterNetwork.Devnet;
     } else {
         network = WalletAdapterNetwork.Mainnet;
     }
