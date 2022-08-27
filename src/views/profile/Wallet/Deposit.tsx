@@ -1,11 +1,9 @@
-import { forwardRef, useState } from 'react';
-import { Box, Button, CardContent, CardProps, CircularProgress, Grid, IconButton, useTheme } from '@mui/material';
+import { forwardRef } from 'react';
+import { Button, CardContent, CardProps, Grid, IconButton, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CreditCardIcon from '@mui/icons-material/CreditCardTwoTone';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import useApi from 'hooks/useApi';
 import { useSelector } from 'store';
 
 import MainCard from 'ui-component/cards/MainCard';
@@ -18,26 +16,11 @@ interface Props extends CardProps {
 }
 
 const CurrencyList = forwardRef(({ modalStyle, functions }: Props, ref: React.Ref<HTMLDivElement>) => {
-    const Api = useApi();
     const theme = useTheme();
     const { formatMessage } = useIntl();
     const { currency } = useSelector((store) => store.auth);
-    const [loading, setLoading] = useState<boolean>(false);
 
-    const OtherWallet = () => {
-        setLoading(true);
-        Api.deposit()
-            .then(({ data }) => {
-                functions.onDepositCoinPayment(data.address);
-                functions.onDepositVisible();
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-    };
-
-    const MetamaskWallet = () => {
+    const SolanaWallet = () => {
         functions.onDepositMVisible();
         functions.onDepositVisible();
     };
@@ -67,7 +50,7 @@ const CurrencyList = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                         <Grid item xs={12}>
                             <AnimateButton>
                                 <Button
-                                    onClick={MetamaskWallet}
+                                    onClick={SolanaWallet}
                                     disableElevation
                                     fullWidth
                                     size="large"

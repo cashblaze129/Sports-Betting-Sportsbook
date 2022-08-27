@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState, useCallback } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import {
     Alert,
     Button,
@@ -14,25 +14,16 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { web3 as solWeb3, Wallet } from '@project-serum/anchor';
-
-// import { clusterApiUrl, Connection, Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
-// import { createMint, getOrCreateAssociatedTokenAccount, mintTo, transfer } from '@solana/spl-token';
+import { web3 as solWeb3 } from '@project-serum/anchor';
+import * as splToken from '@solana/spl-token';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-
-import Web3 from 'web3';
-import { BigNumber } from '@ethersproject/bignumber';
-import { formatUnits, parseUnits } from '@ethersproject/units';
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 
 import useApi from 'hooks/useApi';
 
 import snackbar from 'utils/snackbar';
 import { toNumberTag } from 'utils/number';
-import { injected, switchNetwork } from 'utils/connectors';
 
 import { useDispatch, useSelector } from 'store';
 import { UpdateInfo } from 'store/reducers/auth';
@@ -40,8 +31,6 @@ import { UpdateInfo } from 'store/reducers/auth';
 import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import config from 'config';
-
-const ethereum = 'ether';
 
 interface Props extends CardProps {
     modalStyle: React.CSSProperties;
@@ -53,110 +42,58 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const theme = useTheme();
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
-    const { user, currency } = useSelector((state) => state.auth);
-    const { account, activate, active, library } = useWeb3React();
-    const [balance, setBalance] = useState<number>(0);
+    const { currency } = useSelector((state) => state.auth);
+    const balance: number = 0;
     const [loading, setLoading] = useState<boolean>(false);
     const [amount, setAmount] = useState<number | string>('');
 
-    const { publicKey, wallet, connected, sendTransaction } = useWallet();
+    const { publicKey, wallet, connected }: any = useWallet();
     const { connection } = useConnection();
 
-    const handleClick = async () => {
-        await switchNetwork();
-        if (!active) {
-            activate(injected, undefined, true).catch((error) => {
-                if (error instanceof UnsupportedChainIdError) {
-                    activate(injected);
-                }
-            });
-        }
-    };
-
-    const depositToken = (txn_id: string, amounti: BigNumber) => {
+    const depositToken = (signature: string, amounti: Number) => {
         Api.depositToken({
             amounti: amounti.toString(),
             amount,
-            from: account,
+            from: publicKey?.toString(),
             address: currency.tokenMintAccount,
             receiver: config.adminWallet,
-            txn_id
+            signature
         })
             .then(({ data }) => {
-                console.log(data);
+                snackbar(formatMessage({ id: 'Success! Please wait for a minute.' }), 'success');
+                setLoading(false);
+                functions.onDepositMVisible();
             })
             .catch(() => {
                 setLoading(false);
             });
     };
 
-    const handleTransfer = async (tokenMintAddress: any) => {
-        console.log('111');
-        const solWallet: any = wallet?.adapter;
-
-        const mintPublicKey = new solWeb3.PublicKey(tokenMintAddress);
-        const mintToken = new Token(
-            connection,
-            mintPublicKey,
-            TOKEN_PROGRAM_ID,
-            solWallet.payer // the wallet owner will pay to transfer and to create recipients associated token account if it does not yet exist.
-        );
-        console.log('222');
-        console.log(mintToken);
-        const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(solWallet.publicKey);
-        const to = config.adminWallet;
-        const destPublicKey = new solWeb3.PublicKey(to);
-
-        console.log('333');
-        // Get the derived address of the destination wallet which will hold the custom token
-        const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
-            mintToken.associatedProgramId,
-            mintToken.programId,
-            mintPublicKey,
-            destPublicKey
-        );
-
-        console.log('444');
-        const receiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
-
-        const instructions: solWeb3.TransactionInstruction[] = [];
-
-        console.log('555');
-        if (receiverAccount === null) {
-            instructions.push(
-                Token.createAssociatedTokenAccountInstruction(
-                    mintToken.associatedProgramId,
-                    mintToken.programId,
-                    mintPublicKey,
-                    associatedDestinationTokenAddr,
-                    destPublicKey,
-                    solWallet.publicKey
-                )
-            );
-        }
-
-        instructions.push(
-            Token.createTransferInstruction(
-                TOKEN_PROGRAM_ID,
+    const handleTransferToken = async (tokenMintAddress: any) => {
+        const toWalletPubKey = new solWeb3.PublicKey(config.adminWallet);
+        // Construct my token class
+        const myMint = new solWeb3.PublicKey(tokenMintAddress);
+        const myToken = new splToken.Token(connection, myMint, splToken.TOKEN_PROGRAM_ID, wallet);
+        // Create associated token accounts for my token if they don't exist yet
+        const fromTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(publicKey);
+        const toTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(toWalletPubKey);
+        // Add token transfer instructions to transaction
+        const transaction = new solWeb3.Transaction().add(
+            splToken.Token.createTransferInstruction(
+                splToken.TOKEN_PROGRAM_ID,
                 fromTokenAccount.address,
-                associatedDestinationTokenAddr,
-                solWallet.publicKey,
+                toTokenAccount.address,
+                publicKey,
                 [],
-                Number(amount)
+                0
             )
         );
-
-        console.log('666');
-        const transaction = new solWeb3.Transaction().add(...instructions);
-        transaction.feePayer = solWallet.publicKey;
-        transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-
-        const transactionSignature = await connection.sendRawTransaction(transaction.serialize(), { skipPreflight: true });
-
-        await connection.confirmTransaction(transactionSignature);
+        // Sign transaction, broadcast, and confirm
+        const signature = await solWeb3.sendAndConfirmTransaction(connection, transaction, [wallet]);
+        return signature;
     };
 
-    // Solana transfer
+    // Sol transfer
     const transferSOL = async () => {
         const txWallet: any = wallet?.adapter;
 
@@ -171,7 +108,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             solWeb3.SystemProgram.transfer({
                 fromPubkey: txWallet.publicKey,
                 toPubkey: recieverWallet,
-                lamports: solWeb3.LAMPORTS_PER_SOL
+                lamports: Number(amount) * solWeb3.LAMPORTS_PER_SOL
             })
         );
 
@@ -204,96 +141,31 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             snackbar(formatMessage({ id: 'Please input valid amount.' }), 'error');
         } else {
             setLoading(true);
+            let signature: any;
             if (currency.symbol === 'SOL') {
-                const tx = await transferSOL();
-                console.log(tx);
+                signature = await transferSOL();
             } else {
-                const tx = await handleTransfer(currency.tokenMintAccount);
-                console.log(tx);
+                signature = await handleTransferToken(currency.tokenMintAccount);
+                setLoading(false);
             }
-            setLoading(false);
-            // console.log(wallet?.adapter?.publicKey);
-            // const web3 = new Web3(library.provider);
-            // if (currency.contractAddress === ethereum) {
-            //     console.log('over here');
-            //     // const decimals = 18;
-            //     if (balance < Number(amount)) {
-            //         snackbar(formatMessage({ id: 'Balances not enough.' }), 'error');
-            //     } else {
-            //         console.log('else 1');
-            //         // setLoading(true);
-            //         // const amounti = parseUnits(amount.toString(), decimals) as BigNumber;
-            //         // web3.eth.sendTransaction({ from: account, to: currency.adminAddress, value: amounti.toString() }, (error, txn_id) => {
-            //         //     if (error) {
-            //         //         setLoading(false);
-            //         //     } else {
-            //         //         depositToken(txn_id, amounti);
-            //         //     }
-            //         // });
-            //     }
-            // } else {
-            //     console.log('else 2');
-            //     // const contract = new web3.eth.Contract(currency.abi, currency.contractAddress);
-            //     // if (balance < Number(amount)) {
-            //     //     snackbar(formatMessage({ id: 'Balances not enough.' }), 'error');
-            //     // } else {
-            //     //     setLoading(true);
-            //     //     const decimals = await contract.methods.decimals().call();
-            //     //     const amounti = parseUnits(amount.toString(), decimals);
-            //     //     const gasLimit = await contract.methods.transfer(currency.adminAddress, amounti).estimateGas({ from: account });
-            //     //     const gasPrice = await web3.eth.getGasPrice();
-            //     //     contract.methods
-            //     //         .transfer(currency.adminAddress, amounti)
-            //     //         .send({ from: account, gasLimit, gasPrice }, (error: any, txn_id: string) => {
-            //     //             if (error) {
-            //     //                 setLoading(false);
-            //     //             } else {
-            //     //                 depositToken(txn_id, amounti);
-            //     //             }
-            //     //         });
-            //     // }
-            // }
+            if (signature) {
+                depositToken(signature, Number(amount));
+            }
         }
     };
 
-    // const getBalance = async () => {
-    //     if (account !== user?.cryptoAccount) {
-    //         Api.updateUserInfo({ cryptoAccount: account, update: false }).then(({ data }) => {
-    //             dispatch(UpdateInfo(data));
-    //         });
-    //     }
-    //     if (account && currency.abi) {
-    //         try {
-    //             const web3 = new Web3(library.provider);
-    //             if (currency.contractAddress === ethereum) {
-    //                 const balances = await web3.eth.getBalance(account);
-    //                 const amounti = formatUnits(balances, 18);
-    //                 setBalance(Number(amounti));
-    //             } else {
-    //                 const contract = new web3.eth.Contract(currency.abi, currency.contractAddress);
-    //                 const balances = await contract.methods.balanceOf(account).call();
-    //                 const decimals = await contract.methods.decimals().call();
-    //                 const amounti = formatUnits(balances, decimals);
-    //                 setBalance(Number(amounti));
-    //             }
-    //         } catch (error) {
-    //             window.location.reload();
-    //             console.log(error);
-    //         }
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (active) {
-    //         getBalance();
-    //     }
-    //     // eslint-disable-next-line
-    // }, [active, currency]);
+    const getBalance = async () => {
+        Api.updateUserInfo({ cryptoAccount: publicKey.toString(), update: false }).then(({ data }) => {
+            dispatch(UpdateInfo(data));
+        });
+    };
 
     useEffect(() => {
-        if (user?.cryptoAccount) handleClick();
+        if (connected) {
+            getBalance();
+        }
         // eslint-disable-next-line
-    }, [user]);
+    }, [connected, currency]);
 
     return (
         <div ref={ref} tabIndex={-1}>

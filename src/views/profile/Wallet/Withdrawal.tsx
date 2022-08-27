@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import {
     Alert,
-    Autocomplete,
     Button,
     CardContent,
     CardProps,
@@ -27,26 +26,12 @@ import { toNumberTag } from 'utils/number';
 import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
-import Metamask from 'assets/images/icons/metamask.svg';
-
 interface Props extends CardProps {
     modalStyle: React.CSSProperties;
     functions: any;
     getTransactions: Function;
     getBalances: Function;
 }
-
-const withdrawalOptions = [
-    {
-        value: 0,
-        label: 'Metamask',
-        icon: <img src={Metamask} alt="metamask" title="metamask" width="24px" />
-    },
-    {
-        value: 1,
-        label: 'Other Wallet'
-    }
-];
 
 const Withdrawal = forwardRef(({ modalStyle, functions, getTransactions, getBalances }: Props, ref: React.Ref<HTMLDivElement>) => {
     const Api = useApi();
@@ -140,15 +125,6 @@ const Withdrawal = forwardRef(({ modalStyle, functions, getTransactions, getBala
                                 label={formatMessage({ id: 'Wallet address' })}
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Autocomplete
-                                disablePortal
-                                onChange={(e, value) => setMethod(value?.value || 0)}
-                                options={withdrawalOptions}
-                                value={withdrawalOptions.find((e) => e.value === method)}
-                                renderInput={(params) => <TextField {...params} label={formatMessage({ id: 'Method' })} />}
                             />
                         </Grid>
                         <Grid item xs={12}>

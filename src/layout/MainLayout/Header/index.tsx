@@ -47,7 +47,7 @@ const Header = () => {
 
     const [publicKeyAsString, setPublicKeyAsString] = useState('');
     // const { connection } = useConnection();
-    const { publicKey, wallet, connected, sendTransaction } = useWallet();
+    const { publicKey, connected } = useWallet();
 
     const onLogin = (user: any) => {
         dispatch(Login(user));

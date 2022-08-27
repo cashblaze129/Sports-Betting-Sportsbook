@@ -85,18 +85,18 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         }
     };
 
-    // const onWithdrawal = (acurrency: CurrencyProps) => {
-    //     if (!acurrency.withdrawal) {
-    //         snackbar(formatMessage({ id: 'Withdrawal disabled!' }), 'error');
-    //     } else {
-    //         setWithdrawalOpen(true);
-    //     }
-    // };
+    const onWithdrawal = (acurrency: CurrencyProps) => {
+        if (!acurrency.withdrawal) {
+            snackbar(formatMessage({ id: 'Withdrawal disabled!' }), 'error');
+        } else {
+            setWithdrawalOpen(true);
+        }
+    };
 
     useEffect(() => {
         getBalances();
         // eslint-disable-next-line
-    }, []);
+    }, [auth]);
 
     useEffect(() => {
         const cbalance = balances.find((balance) => balance.disabled === false && balance.status === true);
@@ -163,7 +163,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
                                                     variant="text"
                                                     color="error"
                                                     size="small"
-                                                    // onClick={() => onWithdrawal(item.currency)}
+                                                    onClick={() => onWithdrawal(item.currency)}
                                                 >
                                                     {loading === key + 1 && <CircularProgress size={24} />}&nbsp;
                                                     <FormattedMessage id="Withdrawal" />
