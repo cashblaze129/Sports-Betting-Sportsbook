@@ -75,6 +75,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             });
     };
 
+    // Spl token transfer
     const handleTransferToken = async (tokenMintAddress: any) => {
         const mintPublicKey = new solWeb3.PublicKey(tokenMintAddress);
 
