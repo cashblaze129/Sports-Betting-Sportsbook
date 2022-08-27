@@ -14,9 +14,6 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { web3 as solWeb3 } from '@project-serum/anchor';
-import * as splToken from '@solana/spl-token';
-
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
@@ -32,10 +29,19 @@ import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import config from 'config';
 
+// New
+import { web3 as solWeb3 } from '@project-serum/anchor';
+
+import { Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+
 interface Props extends CardProps {
     modalStyle: React.CSSProperties;
     functions: any;
 }
+
+const opts: any = {
+    preflightCommitment: 'processed'
+};
 
 const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Ref<HTMLDivElement>) => {
     const Api = useApi();
@@ -47,7 +53,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const [loading, setLoading] = useState<boolean>(false);
     const [amount, setAmount] = useState<number | string>('');
 
-    const { publicKey, wallet, connected }: any = useWallet();
+    const { publicKey, wallet, connected, signTransaction }: any = useWallet();
     const { connection } = useConnection();
 
     const depositToken = (signature: string, amounti: Number) => {
@@ -70,43 +76,66 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     };
 
     const handleTransferToken = async (tokenMintAddress: any) => {
-        console.log('1');
-        const toWalletPubKey = new solWeb3.PublicKey(config.adminWallet);
-        console.log('2');
-        // Construct my token class
-        const myMint = new solWeb3.PublicKey(tokenMintAddress);
-        console.log('3');
-        const myToken = new splToken.Token(connection, myMint, splToken.TOKEN_PROGRAM_ID, wallet);
-        console.log('4');
-        // Create associated token accounts for my token if they don't exist yet
-        const fromTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(publicKey);
-        console.log('5');
-        const toTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(toWalletPubKey);
-        console.log('6');
-        // Add token transfer instructions to transaction
-        const transaction = new solWeb3.Transaction().add(
-            splToken.Token.createTransferInstruction(
-                splToken.TOKEN_PROGRAM_ID,
+        const mintPublicKey = new solWeb3.PublicKey(tokenMintAddress);
+
+        const txWallet: any = wallet?.adapter;
+
+        const mintToken = new Token(connection, mintPublicKey, TOKEN_PROGRAM_ID, txWallet);
+
+        const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(publicKey);
+        const instructions: solWeb3.TransactionInstruction[] = [];
+
+        const dest = config.adminWallet;
+        const destPublicKey = new solWeb3.PublicKey(dest);
+
+        const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
+            mintToken.associatedProgramId,
+            mintToken.programId,
+            mintPublicKey,
+            destPublicKey
+        );
+        const receiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
+
+        if (receiverAccount === null) {
+            instructions.push(
+                Token.createAssociatedTokenAccountInstruction(
+                    mintToken.associatedProgramId,
+                    mintToken.programId,
+                    mintPublicKey,
+                    associatedDestinationTokenAddr,
+                    destPublicKey,
+                    publicKey
+                )
+            );
+        }
+        instructions.push(
+            Token.createTransferInstruction(
+                TOKEN_PROGRAM_ID,
                 fromTokenAccount.address,
-                toTokenAccount.address,
+                associatedDestinationTokenAddr,
                 publicKey,
                 [],
-                0
+                Number(amount) * solWeb3.LAMPORTS_PER_SOL
             )
         );
-        console.log('7');
-        // Sign transaction, broadcast, and confirm
-        const signature = await solWeb3.sendAndConfirmTransaction(connection, transaction, [wallet]);
-        console.log('8');
-        return signature;
+
+        const transaction = new solWeb3.Transaction().add(...instructions);
+
+        transaction.feePayer = publicKey;
+        transaction.recentBlockhash = (await connection.getRecentBlockhash(opts.preflightCommitment)).blockhash;
+
+        await signTransaction(transaction);
+
+        const rawTx = transaction.serialize();
+
+        const txId = await solWeb3.sendAndConfirmRawTransaction(connection, rawTx, opts);
+
+        return txId;
     };
 
     // Sol transfer
     const transferSOL = async () => {
         const txWallet: any = wallet?.adapter;
-
-        // Detecing and storing the phantom wallet of the user (creator in this case)
-        const provider = window?.solana;
 
         // I have hardcoded my secondary wallet address here. You can take this address either from user input or your DB or wherever
         const recieverWallet = new solWeb3.PublicKey(config.adminWallet);
@@ -131,7 +160,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         }
 
         // Request creator to sign the transaction (allow the transaction)
-        const signed = await provider.signTransaction(transaction);
+        const signed = await signTransaction(transaction);
 
         // The signature is generated
         const signature = await connection.sendRawTransaction(signed.serialize());

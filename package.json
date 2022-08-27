@@ -17,7 +17,7 @@
         "@mui/icons-material": "^5.6.2",
         "@mui/lab": "^5.0.0-alpha.95",
         "@mui/material": "^5.10.2",
-        "@project-serum/anchor": "^0.25.0",
+        "@project-serum/anchor": "^0.22.1",
         "@reduxjs/toolkit": "^1.8.1",
         "@solana/spl-token": "^0.1.8",
         "@solana/wallet-adapter-base": "^0.9.3",
