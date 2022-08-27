@@ -70,13 +70,19 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     };
 
     const handleTransferToken = async (tokenMintAddress: any) => {
+        console.log('1');
         const toWalletPubKey = new solWeb3.PublicKey(config.adminWallet);
+        console.log('2');
         // Construct my token class
         const myMint = new solWeb3.PublicKey(tokenMintAddress);
+        console.log('3');
         const myToken = new splToken.Token(connection, myMint, splToken.TOKEN_PROGRAM_ID, wallet);
+        console.log('4');
         // Create associated token accounts for my token if they don't exist yet
         const fromTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(publicKey);
+        console.log('5');
         const toTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(toWalletPubKey);
+        console.log('6');
         // Add token transfer instructions to transaction
         const transaction = new solWeb3.Transaction().add(
             splToken.Token.createTransferInstruction(
@@ -88,8 +94,10 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 0
             )
         );
+        console.log('7');
         // Sign transaction, broadcast, and confirm
         const signature = await solWeb3.sendAndConfirmTransaction(connection, transaction, [wallet]);
+        console.log('8');
         return signature;
     };
 
