@@ -49,8 +49,8 @@ const Header = () => {
     // const { connection } = useConnection();
     const { publicKey, connected } = useWallet();
 
-    const onLogin = (user: any) => {
-        dispatch(Login(user));
+    const onLogin = (userInfo: any) => {
+        dispatch(Login(userInfo));
         dispatch(ChangePage(''));
         snackbar(
             <>
@@ -103,7 +103,6 @@ const Header = () => {
             checkAddress(pubString as string)
                 .then(({ data }: any) => {
                     if (data.status) {
-                        console.log(data);
                         handleSignMessage(data.user);
                     } else {
                         setTimeout(() => {
@@ -132,28 +131,21 @@ const Header = () => {
         }
     };
 
-    // const handleLogin = async () => {
-    //     if (!publicKey) {
-    //         // @ts-ignore
-    //         const { solana } = window;
-
-    //         if (solana) {
-    //             try {
-    //                 const response = await solana.connect();
-    //                 setPublicKeyAsString(response.publicKey.toString());
-    //             } catch (err) {
-    //                 // { code: 4001, message: 'User rejected the request.' }
-    //             }
-    //         }
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (publicKey && isLogin) solanaLogin();
-    //     // eslint-disable-next-line
-    // }, [publicKey, isLogin]);
+    const logoutFunc = () => {
+        logout();
+        localStorage.clear();
+        if (window) {
+            // @ts-ignore
+            window?.location.reload();
+        }
+    };
 
     useEffect(() => {
+        if (publicKeyAsString) {
+            if (publicKey?.toString() !== publicKeyAsString) {
+                logoutFunc();
+            }
+        }
         if (publicKey && !isLoggedIn) {
             setPublicKeyAsString(publicKey.toString());
         }
@@ -173,14 +165,6 @@ const Header = () => {
         }
         // eslint-disable-next-line
     }, [publicKeyAsString]);
-
-    useEffect(() => {
-        console.log(isLoggedIn);
-        if (!isLoggedIn) {
-            setPublicKeyAsString('');
-        }
-        // eslint-disable-next-line
-    }, [isLoggedIn]);
 
     return (
         <>

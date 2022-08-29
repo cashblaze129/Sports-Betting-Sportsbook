@@ -2,7 +2,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
-    key: 'mystic-bets-v2',
+    key: 'boi-book-v1',
     storage,
     whitelist: ['auth']
 };

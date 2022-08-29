@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { web3 as solWeb3 } from '@project-serum/anchor';
 
 import useApi from 'hooks/useApi';
 
@@ -28,9 +29,6 @@ import { UpdateInfo } from 'store/reducers/auth';
 import MainCard from 'ui-component/cards/MainCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import config from 'config';
-
-// New
-import { web3 as solWeb3 } from '@project-serum/anchor';
 
 import { Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
