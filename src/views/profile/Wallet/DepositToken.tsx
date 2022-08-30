@@ -46,8 +46,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const theme = useTheme();
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
-    const { currency } = useSelector((state) => state.auth);
-    const balance: number = 0;
+    const { currency }: any = useSelector((state) => state.auth);
+    const [balance, setBalance] = useState(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [amount, setAmount] = useState<number | string>('');
 
@@ -194,6 +194,24 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         Api.updateUserInfo({ cryptoAccount: publicKey.toString(), update: false }).then(({ data }) => {
             dispatch(UpdateInfo(data));
         });
+        if (currency) {
+            try {
+                let tokenBalance: any;
+                if (currency.symbol === 'SOL') {
+                    tokenBalance = (await connection.getBalance(publicKey)) / solWeb3.LAMPORTS_PER_SOL;
+                } else {
+                    const mintPubkey = new solWeb3.PublicKey(currency.tokenMintAccount);
+                    const mintToken = new Token(connection, mintPubkey, TOKEN_PROGRAM_ID, wallet);
+                    const tokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(publicKey);
+                    const tokenAccountBalance: any = await connection.getTokenAccountBalance(tokenAccount.address);
+                    tokenBalance = tokenAccountBalance.value.amount / 10 ** tokenAccountBalance.value.decimals;
+                }
+                setBalance(tokenBalance);
+            } catch (error) {
+                console.log(error);
+                // window.location.reload();
+            }
+        }
     };
 
     useEffect(() => {
