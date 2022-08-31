@@ -234,15 +234,14 @@ const SportsPage = () => {
 
     return (
         <Transitions in direction="up" type="slide">
-            <Box className="sports-items">
+            <Box className="sports-items" sx={{ overflow: 'auto' }}>
                 <PerfectScrollbar aria-setsize={1}>
                     <Stack
                         direction="row"
                         spacing={2}
                         sx={{
                             display: 'flex',
-                            justifyContent: isMobile === true ? 'normal' : 'center',
-                            overflow: 'auto'
+                            justifyContent: isMobile === true ? 'normal' : 'center'
                         }}
                     >
                         {sportsLists.map((item, key) => (
