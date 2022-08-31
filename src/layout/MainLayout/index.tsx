@@ -9,6 +9,7 @@ import { drawerWidth } from 'store/constant';
 
 import { Main } from 'ui-component';
 import Footer from 'layout/Footer';
+import { isMobile } from 'react-device-detect';
 
 import Header from './Header';
 // import Sidebar from './Sidebar';
@@ -20,7 +21,7 @@ import Advertisement from './Advertisement';
 const MainLayout = ({ children }: any) => {
     const theme = useTheme();
     const { boxShadow } = useConfig();
-    const isMobile = useMediaQuery('(max-width:767px)');
+    // const isMobile = useMediaQuery('(max-width:767px)');
     const isDesktop = useMediaQuery('(min-width:1440px)');
     const { drawerOpen } = useSelector((state) => state.menu);
     const { betslipOpen } = useSelector((state) => state.sports);

@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { FormattedMessage } from 'react-intl';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { isMobile } from 'react-device-detect';
 
 import useConfig from 'hooks/useConfig';
 import config from 'config';
@@ -235,7 +236,15 @@ const SportsPage = () => {
         <Transitions in direction="up" type="slide">
             <Box className="sports-items">
                 <PerfectScrollbar aria-setsize={1}>
-                    <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: isMobile === true ? 'normal' : 'center',
+                            overflow: 'auto'
+                        }}
+                    >
                         {sportsLists.map((item, key) => (
                             <SportsItem
                                 key={key}
@@ -248,13 +257,9 @@ const SportsPage = () => {
                                 <Box className="warraper">
                                     <Box className="cover">
                                         <Box className="back" />
-                                        {/* {UseIcons(item.icon)} */}
                                         <i className={`sportsicons sportsicon-${item.SportId}`} />
                                     </Box>
                                 </Box>
-                                {/* <Box sx={{ textAlign: 'center', color: '#0eff6f' }}>
-                                    <FormattedMessage id={item.SportName} />
-                                </Box> */}
                             </SportsItem>
                         ))}
                     </Stack>
@@ -264,7 +269,6 @@ const SportsPage = () => {
                 sx={{
                     p: { xs: 1, sm: 3 },
                     borderRadius: '18px',
-                    // background: '#384635',
                     boxShadow
                 }}
             >
