@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link as NavLink } from 'react-router-dom';
 
 import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 import { IconBrandTwitter, IconBrandInstagram, IconBrandTelegram, IconBrandDiscord } from '@tabler/icons';
@@ -7,8 +6,6 @@ import { IconBrandTwitter, IconBrandInstagram, IconBrandTelegram, IconBrandDisco
 import { FormattedMessage } from 'react-intl';
 
 import Axios from 'utils/axios';
-import { useDispatch } from 'store';
-import { ChangePage } from 'store/reducers/menu';
 import LogoSection from './MainLayout/LogoSection';
 
 interface Currency {
@@ -18,7 +15,6 @@ interface Currency {
 }
 
 const Footer = () => {
-    const dispatch = useDispatch();
     const [currencies, setCurrencies] = useState<Currency[]>([]);
 
     useEffect(() => {
@@ -37,8 +33,6 @@ const Footer = () => {
             }}
         >
             <Grid container columnSpacing={{ xs: 5, sm: 10, md: 20 }} sx={{ mb: 3 }} rowSpacing={2}>
-                {/* <Grid item sm={12} md={12}>
-                </Grid> */}
                 <Grid
                     item
                     sm={12}
@@ -52,45 +46,10 @@ const Footer = () => {
                     }}
                 >
                     <LogoSection />
-                    {/* <Typography>
-                        <FormattedMessage id="site-details" />
-                    </Typography> */}
                 </Grid>
                 <Grid item sm={12} md={7}>
                     <Grid container columnSpacing={{ xs: 3, sm: 5, md: 10 }} rowSpacing={2}>
-                        <Grid item sm={12} md={4}>
-                            <Typography onClick={() => dispatch(ChangePage('login'))} className="h6" sx={{ cursor: 'pointer' }}>
-                                <FormattedMessage id="Sign in" />
-                            </Typography>
-                            <Typography onClick={() => dispatch(ChangePage('register'))} className="h6" sx={{ cursor: 'pointer' }}>
-                                <FormattedMessage id="Sign up" />
-                            </Typography>
-                            <Typography
-                                to="/pages/terms"
-                                component={NavLink}
-                                className="h6"
-                                style={{ textDecoration: 'none', display: 'block' }}
-                            >
-                                <FormattedMessage id="Docs" />
-                            </Typography>
-                            <Typography
-                                to="/pages/contact-us"
-                                component={NavLink}
-                                className="h6"
-                                style={{ textDecoration: 'none', display: 'block' }}
-                            >
-                                <FormattedMessage id="Contact us" />
-                            </Typography>
-                            {/* <Typography
-                                to="/pages/privacy-policy"
-                                component={NavLink}
-                                className="h6"
-                                style={{ textDecoration: 'none', display: 'block' }}
-                            >
-                                <FormattedMessage id="Privacy Policy" />
-                            </Typography> */}
-                        </Grid>
-                        <Grid item sm={12} md={8}>
+                        <Grid item sm={12} md={12}>
                             <Typography variant="h5" mb={1.5}>
                                 <FormattedMessage id="Get in touch" />
                             </Typography>

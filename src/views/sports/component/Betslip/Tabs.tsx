@@ -259,7 +259,7 @@ const BetTabs = () => {
             </Tabs>
             <Divider />
             <Stack my={1} px={1.5} direction="row" justifyContent="flex-end">
-                <Button onClick={clearAllHandler} size="small">
+                <Button onClick={clearAllHandler} size="small" sx={{ color: 'white' }}>
                     <FormattedMessage id="Clear all" />
                 </Button>
             </Stack>
@@ -268,7 +268,7 @@ const BetTabs = () => {
                     <PerfectScrollbar
                         component="div"
                         style={{
-                            background: '#191d2e',
+                            // background: '#191d2e',
                             padding: '0 14px'
                         }}
                     >
@@ -310,7 +310,7 @@ const BetTabs = () => {
                                                 </Stack>
                                             }
                                         />
-                                        <CardContent sx={{ background: '#212637', p: 1.5 }} style={{ paddingBottom: '12px' }}>
+                                        <CardContent sx={{ background: '#373636', p: 1.5 }} style={{ paddingBottom: '12px' }}>
                                             <Typography variant="body2">
                                                 {bet.marketName && <FormattedMessage id={bet.marketName} />}
                                             </Typography>
@@ -318,7 +318,7 @@ const BetTabs = () => {
                                                 <Typography variant="body2" color="white">
                                                     {bet.oddName}
                                                 </Typography>
-                                                <OddNum odd={bet.odds} color="primary" />
+                                                <OddNum odd={bet.odds} color="white" />
                                             </Stack>
                                             {(bet.finished === true || bet.updated === true) && (
                                                 <Typography color="error">
@@ -331,7 +331,7 @@ const BetTabs = () => {
                             ))
                         )}
                     </PerfectScrollbar>
-                    <Stack sx={{ background: '#212637', p: 2 }}>
+                    <Stack sx={{ background: '#272727', p: 2 }}>
                         <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
                             <FacebookShareButton url={`${BASE_URL}/bets/${betsId}`} quote="Follow or Fade boibook.io">
                                 <FacebookIcon size={40} round />
@@ -360,7 +360,7 @@ const BetTabs = () => {
                     <PerfectScrollbar
                         component="div"
                         style={{
-                            background: '#191d2e',
+                            // background: '#191d2e',
                             padding: '0 14px'
                         }}
                     >
@@ -375,7 +375,7 @@ const BetTabs = () => {
                                 >
                                     <CardHeader
                                         sx={{
-                                            background: '#3F4357',
+                                            background: '#272727',
                                             p: 1.5,
                                             '& .MuiCardHeader-title': {
                                                 fontSize: '14px'
@@ -396,7 +396,7 @@ const BetTabs = () => {
                                             </Typography>
                                         }
                                     />
-                                    <CardContent sx={{ background: '#212637', p: 1.5 }} style={{ paddingBottom: '12px' }}>
+                                    <CardContent sx={{ background: '#373636', p: 1.5 }} style={{ paddingBottom: '12px' }}>
                                         <Typography variant="body2">
                                             {item.marketName && <FormattedMessage id={item.marketName} />}
                                         </Typography>
@@ -404,7 +404,7 @@ const BetTabs = () => {
                                             <Typography variant="body2" color="white">
                                                 {item.oddName}
                                             </Typography>
-                                            <OddNum odd={item.odds} color="primary" />
+                                            <OddNum odd={item.odds} color="white" />
                                         </Stack>
                                         {!activeTab && (
                                             <Stack direction="row" justifyContent="space-between">
@@ -445,7 +445,7 @@ const BetTabs = () => {
                             </Transitions>
                         ))}
                     </PerfectScrollbar>
-                    <Stack sx={{ background: '#212637', p: 2 }}>
+                    <Stack sx={{ background: '#272727', p: 2 }}>
                         {activeTab ? (
                             <>
                                 <OutlinedInput

@@ -49,7 +49,7 @@ const Betslip = () => {
                     '& .MuiDrawer-paper': {
                         width: dWidth,
                         transition: theme.transitions.create('all'),
-                        background: '#191d2e',
+                        background: '#384635',
                         borderLeft: 'none',
                         boxShadow
                     }
@@ -63,7 +63,7 @@ const Betslip = () => {
                         flexDirection: 'row',
                         position: 'relative',
                         alignItems: 'center',
-                        background: '#212637',
+                        background: '#272727',
                         justifyContent: 'space-between',
                         boxShadow
                     }}

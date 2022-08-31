@@ -46,7 +46,7 @@ const MainLayout = ({ children }: any) => {
                 elevation={0}
                 sx={{
                     zIndex: 1000,
-                    background: navType === 'dark' ? '#272727' : '#fff',
+                    background: navType === 'dark' ? '#373636' : '#fff',
                     width: '100vw',
                     transition: theme.transitions.create('all'),
                     boxShadow
