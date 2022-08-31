@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Box, Grid, Link, Stack, Typography } from '@mui/material';
-import { IconBrandTwitter, IconBrandInstagram, IconBrandTelegram, IconBrandDiscord } from '@tabler/icons';
+import { IconBrandTwitter, IconBrandDiscord, IconLink } from '@tabler/icons';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -54,17 +54,14 @@ const Footer = () => {
                                 <FormattedMessage id="Get in touch" />
                             </Typography>
                             <Stack direction="row" spacing={2}>
-                                <Link href="https://discord.gg/NCjZKTeW6J" target="_blank">
+                                <Link href="https://discord.gg/tpffqv29mG" target="_blank">
                                     <IconBrandDiscord size={30} />
                                 </Link>
-                                <Link href="https://t.me/boibookSupport" target="_blank">
-                                    <IconBrandTelegram size={30} />
-                                </Link>
-                                <Link href="https://www.instagram.com/boibook/" target="_blank">
-                                    <IconBrandInstagram size={30} />
-                                </Link>
-                                <Link href="https://twitter.com/boibook_" target="_blank">
+                                <Link href="https://twitter.com/WAGBOIS" target="_blank">
                                     <IconBrandTwitter size={30} />
+                                </Link>
+                                <Link href="https://www.dabois.site/" target="_blank">
+                                    <IconLink size={30} />
                                 </Link>
                             </Stack>
                             <Typography variant="h5" mt={3}>
