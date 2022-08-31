@@ -30,6 +30,7 @@ const Footer = () => {
     return (
         <Box
             sx={{
+                marginTop: '24px',
                 '@media (max-width:767px)': {
                     marginBottom: '70px'
                 }
@@ -38,7 +39,18 @@ const Footer = () => {
             <Grid container columnSpacing={{ xs: 5, sm: 10, md: 20 }} sx={{ mb: 3 }} rowSpacing={2}>
                 {/* <Grid item sm={12} md={12}>
                 </Grid> */}
-                <Grid item sm={12} md={5}>
+                <Grid
+                    item
+                    sm={12}
+                    md={5}
+                    sx={{
+                        '@media (max-width:767px)': {
+                            '& img': {
+                                width: '100%'
+                            }
+                        }
+                    }}
+                >
                     <LogoSection />
                     {/* <Typography>
                         <FormattedMessage id="site-details" />
@@ -59,7 +71,7 @@ const Footer = () => {
                                 className="h6"
                                 style={{ textDecoration: 'none', display: 'block' }}
                             >
-                                <FormattedMessage id="Terms" />
+                                <FormattedMessage id="Docs" />
                             </Typography>
                             <Typography
                                 to="/pages/contact-us"
@@ -69,14 +81,14 @@ const Footer = () => {
                             >
                                 <FormattedMessage id="Contact us" />
                             </Typography>
-                            <Typography
+                            {/* <Typography
                                 to="/pages/privacy-policy"
                                 component={NavLink}
                                 className="h6"
                                 style={{ textDecoration: 'none', display: 'block' }}
                             >
                                 <FormattedMessage id="Privacy Policy" />
-                            </Typography>
+                            </Typography> */}
                         </Grid>
                         <Grid item sm={12} md={8}>
                             <Typography variant="h5" mb={1.5}>
