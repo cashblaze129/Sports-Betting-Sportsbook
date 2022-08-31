@@ -19,7 +19,7 @@ import Advertisement from './Advertisement';
 
 const MainLayout = ({ children }: any) => {
     const theme = useTheme();
-    const { navType, boxShadow } = useConfig();
+    const { boxShadow } = useConfig();
     const isMobile = useMediaQuery('(max-width:767px)');
     const isDesktop = useMediaQuery('(min-width:1440px)');
     const { drawerOpen } = useSelector((state) => state.menu);
@@ -46,7 +46,6 @@ const MainLayout = ({ children }: any) => {
                 elevation={0}
                 sx={{
                     zIndex: 1000,
-                    background: navType === 'dark' ? '#373636' : '#fff',
                     width: '100vw',
                     transition: theme.transitions.create('all'),
                     boxShadow

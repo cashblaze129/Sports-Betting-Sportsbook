@@ -182,7 +182,7 @@ const InplayPage = () => {
                 <Card
                     key={key}
                     sx={{
-                        background: '#212637',
+                        background: config.dark3,
                         borderRadius: '13px',
                         py: 2,
                         px: { xs: 1, sm: 2 },

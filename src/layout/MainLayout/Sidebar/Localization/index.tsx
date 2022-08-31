@@ -80,7 +80,7 @@ const Localization = () => {
                 <Box sx={{ transition: theme.transitions.create('all') }}>
                     <Box
                         sx={{
-                            background: '#212637',
+                            // background: '#212637',
                             py: 1.5,
                             px: drawerOpen ? 2 : 1.5,
                             borderRadius: drawerOpen ? '50px' : '20px',

@@ -163,7 +163,7 @@ const EventsPage = () => {
             <Breadcrumbs
                 aria-label="breadcrumb"
                 sx={{
-                    background: '#212637',
+                    background: config.dark3,
                     borderRadius: 1,
                     mb: 1,
                     p: 2,
@@ -391,7 +391,7 @@ const SportsEvent = ({ market, event, sports, activeOdds, setActiveOdds }: Sport
     return (
         <Card
             sx={{
-                background: '#212637',
+                background: config.dark3,
                 borderRadius: 1,
                 mb: 1,
                 boxShadow

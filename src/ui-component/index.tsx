@@ -176,7 +176,7 @@ export const SportsItem = styled('div', {
             '& .back': {
                 width: 0,
                 height: 0,
-                background: '#384635',
+                // background: '#384635',
                 transition: 'all 0.3s',
                 borderRadius: '15px'
             },
@@ -447,7 +447,7 @@ export const OddWarraper = ({
                 onClick={onClick}
                 className={`arrow-${update}`}
                 sx={{
-                    background: config.bgColor,
+                    background: config.dark2,
                     borderRadius: '3px',
                     width: '100%',
                     display: 'flex',
@@ -491,7 +491,7 @@ export const OddWarraper = ({
                         color: '#fff'
                     },
                     ...(active && {
-                        background: config.fontColor,
+                        background: config.grey2,
                         '& path': {
                             fill: '#fff'
                         },

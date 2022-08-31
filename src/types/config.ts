@@ -6,8 +6,10 @@ export type ConfigProps = {
     outlinedFilled: boolean;
     navType: PaletteMode;
     presetColor: string;
-    fontColor: string;
-    bgColor: string;
+    grey2: string;
+    dark1: string;
+    dark2: string;
+    dark3: string;
     boxShadow: string;
     locale: string;
     rtlLayout: boolean;

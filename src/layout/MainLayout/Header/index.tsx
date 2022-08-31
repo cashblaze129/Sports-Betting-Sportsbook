@@ -205,7 +205,7 @@ const Header = () => {
                                 'rgba(0, 0, 0, 0.2) 0px -1px 3px 0px, rgba(0, 0, 0, 0.12) 0px -1px 2px 0px, rgba(255, 255, 255, 0.04) 0px -1px 0px 0px inset'
                         }}
                     >
-                        <Button sx={{ background: '#272727' }}>
+                        <Button sx={{ background: '#373636' }}>
                             <Stack direction="row" alignItems="center" spacing={0.5}>
                                 <Typography
                                     className="text-ellipse"
@@ -244,16 +244,16 @@ const Header = () => {
                     <Box
                         sx={{
                             '& button': {
-                                backgroundColor: config.bgColor,
+                                backgroundColor: config.dark2,
                                 color: 'white',
-                                border: `1px solid ${config.fontColor}`
+                                border: `1px solid ${config.grey2}`
                             }
                         }}
                     >
                         {publicKeyAsString || connected ? (
                             <LoadingButton
                                 loading={loading}
-                                sx={{ backgroundColor: config.bgColor, color: 'white', border: `1px solid ${config.fontColor}` }}
+                                sx={{ backgroundColor: config.dark2, color: 'white', border: `1px solid ${config.grey2}` }}
                                 variant="outlined"
                                 onClick={() => solanaLogin()}
                             >
@@ -274,7 +274,7 @@ const Header = () => {
                 </WalletModalProvider>
                 // <LoadingButton
                 //     loading={loading}
-                //     sx={{ backgroundColor: config.bgColor, color: 'white', border: `1px solid ${config.fontColor}` }}
+                //     sx={{ backgroundColor: config.dark2, color: 'white', border: `1px solid ${config.grey2}` }}
                 //     variant="outlined"
                 //     onClick={() => handleLogin()}
                 // >

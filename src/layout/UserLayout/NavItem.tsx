@@ -85,10 +85,10 @@ const NavItem = () => {
                         borderRadius: `${borderRadius}px`
                     },
                     '& button.Mui-selected': {
-                        color: config.fontColor,
+                        color: config.grey2,
                         background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
                         '& p': {
-                            color: config.fontColor
+                            color: config.grey2
                         }
                     },
                     '& button > svg': {

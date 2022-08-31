@@ -78,7 +78,7 @@ const Sidebar = () => {
                             width: '100%',
                             height: '100%',
                             position: 'absolute',
-                            background: '#212637',
+                            // background: '#212637',
                             borderTopRightRadius: matchUpMd ? radius : '0'
                         }}
                     />
@@ -166,7 +166,7 @@ const Sidebar = () => {
                                         sx={{
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            background: '#212637',
+                                            // background: '#212637',
                                             borderRadius: '20px',
                                             boxShadow,
                                             cursor: 'pointer',
