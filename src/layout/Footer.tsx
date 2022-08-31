@@ -36,13 +36,13 @@ const Footer = () => {
             }}
         >
             <Grid container columnSpacing={{ xs: 5, sm: 10, md: 20 }} sx={{ mb: 3 }} rowSpacing={2}>
-                <Grid item sm={12} md={12}>
-                    <LogoSection />
-                </Grid>
+                {/* <Grid item sm={12} md={12}>
+                </Grid> */}
                 <Grid item sm={12} md={5}>
-                    <Typography>
+                    <LogoSection />
+                    {/* <Typography>
                         <FormattedMessage id="site-details" />
-                    </Typography>
+                    </Typography> */}
                 </Grid>
                 <Grid item sm={12} md={7}>
                     <Grid container columnSpacing={{ xs: 3, sm: 5, md: 10 }} rowSpacing={2}>
