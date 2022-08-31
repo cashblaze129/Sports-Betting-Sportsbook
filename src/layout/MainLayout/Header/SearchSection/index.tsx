@@ -3,7 +3,6 @@ import { useTheme, Avatar, Modal, Box, Paper, IconButton, InputBase } from '@mui
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'store';
 import { updateSearch } from 'store/reducers/sports';
-import config from 'config';
 
 const SearchSection = () => {
     const theme = useTheme();
@@ -25,7 +24,7 @@ const SearchSection = () => {
                     borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
                     background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
                     // color: theme.palette.primary.dark,
-                    color: config.fontColor,
+                    color: 'white',
                     '&[aria-controls="menu-list-grow"],&:hover': {
                         borderColor: theme.palette.primary.main,
                         background: theme.palette.primary.main,

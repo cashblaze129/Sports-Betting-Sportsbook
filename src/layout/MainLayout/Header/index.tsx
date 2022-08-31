@@ -15,7 +15,7 @@ import { Login } from 'store/reducers/auth';
 
 import snackbar from 'utils/snackbar';
 
-import config, { HOME_PATH } from 'config';
+import config from 'config';
 import { toNumber } from 'utils/number';
 
 import { useDispatch, useSelector } from 'store';
@@ -178,14 +178,20 @@ const Header = () => {
                 }}
             >
                 <Box component="span" sx={{ display: 'block', flexGrow: 1 }}>
-                    <a href={HOME_PATH} style={{ display: 'flex' }}>
+                    <Box
+                        component="button"
+                        sx={{ display: 'flex', bgcolor: 'transparent', cursor: 'pointer', boxShadow: 'none', border: 0 }}
+                        onClick={() => {
+                            navigate('/sports/1');
+                        }}
+                    >
                         <img
                             alt="Logo"
                             draggable={false}
                             src={isMobile ? Logo2Img : Logo1Img}
                             style={{ height: '79px', userSelect: 'none', padding: isMobile ? '20px 0' : '0px' }}
                         />
-                    </a>
+                    </Box>
                 </Box>
             </Box>
             <Box sx={{ flexGrow: 1 }} />
@@ -239,7 +245,7 @@ const Header = () => {
                         sx={{
                             '& button': {
                                 backgroundColor: config.bgColor,
-                                color: config.fontColor,
+                                color: 'white',
                                 border: `1px solid ${config.fontColor}`
                             }
                         }}
@@ -247,7 +253,7 @@ const Header = () => {
                         {publicKeyAsString || connected ? (
                             <LoadingButton
                                 loading={loading}
-                                sx={{ backgroundColor: config.bgColor, color: config.fontColor, border: `1px solid ${config.fontColor}` }}
+                                sx={{ backgroundColor: config.bgColor, color: 'white', border: `1px solid ${config.fontColor}` }}
                                 variant="outlined"
                                 onClick={() => solanaLogin()}
                             >
@@ -268,7 +274,7 @@ const Header = () => {
                 </WalletModalProvider>
                 // <LoadingButton
                 //     loading={loading}
-                //     sx={{ backgroundColor: config.bgColor, color: config.fontColor, border: `1px solid ${config.fontColor}` }}
+                //     sx={{ backgroundColor: config.bgColor, color: 'white', border: `1px solid ${config.fontColor}` }}
                 //     variant="outlined"
                 //     onClick={() => handleLogin()}
                 // >
