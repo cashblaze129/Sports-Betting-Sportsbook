@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { SportsLockIcon } from './SvgIcon';
 import headerBackground from 'assets/images/landing/header-bg.jpg';
 import MainCard, { MainCardProps } from './cards/MainCard';
+import { isMobile } from 'react-device-detect';
 
 interface MainStyleProps {
     theme: Theme;
@@ -433,7 +434,7 @@ export const OddWarraper = ({
     active?: boolean;
     sx?: any;
 }) => (
-    <Box gridColumn={gridColumn}>
+    <Box gridColumn={isMobile === true ? 'span 12' : gridColumn}>
         <Box
             sx={{
                 width: '100%',
