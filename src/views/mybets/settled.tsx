@@ -115,7 +115,7 @@ const MybetsSettled = () => {
                                     </Stack>
                                 }
                             />
-                            <CardContent sx={{ background: '#212637', p: 1.5 }} style={{ paddingBottom: '12px' }}>
+                            <CardContent sx={{ p: 1.5 }} style={{ paddingBottom: '12px' }}>
                                 {activeOdds.indexOf(item?._id || '') !== -1 && (
                                     <Transitions in direction="left" type="slide">
                                         {(item.bettings as any[]).map((bettting, index) => (

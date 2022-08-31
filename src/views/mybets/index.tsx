@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import moment from 'moment';
 
-import { BASE_URL } from 'config';
+import config, { BASE_URL } from 'config';
 
 import useApi from 'hooks/useApi';
 import useConfig from 'hooks/useConfig';
@@ -72,6 +72,7 @@ const MybetsActive = () => {
                     <Transitions in direction="left" type="slide">
                         <Card
                             sx={{
+                                background: config.dark1,
                                 mb: 1,
                                 boxShadow
                             }}
@@ -79,7 +80,7 @@ const MybetsActive = () => {
                         >
                             <CardHeader
                                 sx={{
-                                    background: '#3F4357',
+                                    background: config.dark2,
                                     p: 1.5,
                                     '& .MuiCardHeader-title': {
                                         fontSize: '14px'
@@ -115,7 +116,7 @@ const MybetsActive = () => {
                                     </Stack>
                                 }
                             />
-                            <CardContent sx={{ background: '#212637', p: 1.5 }} style={{ paddingBottom: '12px' }}>
+                            <CardContent sx={{ p: 1.5 }} style={{ paddingBottom: '12px' }}>
                                 {activeOdds.indexOf(item?._id || '') !== -1 && (
                                     <Transitions in direction="left" type="slide">
                                         {(item.bettings as any[]).map((bettting, index) => (

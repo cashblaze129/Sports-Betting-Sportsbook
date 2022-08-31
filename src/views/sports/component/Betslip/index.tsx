@@ -63,7 +63,7 @@ const Betslip = () => {
                         flexDirection: 'row',
                         position: 'relative',
                         alignItems: 'center',
-                        background: '#272727',
+                        background: '#191919',
                         justifyContent: 'space-between',
                         boxShadow
                     }}

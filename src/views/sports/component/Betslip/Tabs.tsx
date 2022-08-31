@@ -26,7 +26,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { TwitterShareButton, FacebookShareButton, TelegramShareButton, FacebookIcon, TelegramIcon, TwitterIcon } from 'react-share';
 
-import { BASE_URL } from 'config';
+import config, { BASE_URL } from 'config';
 import { BetslipProps } from 'types/sports';
 
 import useApi from 'hooks/useApi';
@@ -331,7 +331,7 @@ const BetTabs = () => {
                             ))
                         )}
                     </PerfectScrollbar>
-                    <Stack sx={{ background: '#272727', p: 2 }}>
+                    <Stack sx={{ background: config.dark1, p: 2 }}>
                         <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
                             <FacebookShareButton url={`${BASE_URL}/bets/${betsId}`} quote="Follow or Fade boibook.io">
                                 <FacebookIcon size={40} round />
@@ -375,7 +375,7 @@ const BetTabs = () => {
                                 >
                                     <CardHeader
                                         sx={{
-                                            background: '#272727',
+                                            background: config.dark2,
                                             p: 1.5,
                                             '& .MuiCardHeader-title': {
                                                 fontSize: '14px'
@@ -445,7 +445,7 @@ const BetTabs = () => {
                             </Transitions>
                         ))}
                     </PerfectScrollbar>
-                    <Stack sx={{ background: '#272727', p: 2 }}>
+                    <Stack sx={{ background: config.dark1, p: 2 }}>
                         {activeTab ? (
                             <>
                                 <OutlinedInput

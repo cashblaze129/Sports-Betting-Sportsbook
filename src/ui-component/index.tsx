@@ -695,7 +695,7 @@ export const WTabs = styled(Tabs)({
     '& .MuiTabs-flexContainer': {
         boxShadow: config.boxShadow,
         border: 'none',
-        background: '#212946',
+        background: config.dark1,
         borderRadius: '100px',
         padding: '6px',
         overflow: 'hidden'
@@ -712,7 +712,7 @@ export const WTab = styled(Tab)({
     opacity: 0.5,
     '&.Mui-selected': {
         boxShadow: config.boxShadow,
-        background: '#29314f',
+        background: config.dark2,
         borderRadius: '100px',
         overflow: 'hidden',
         color: '#fff',
