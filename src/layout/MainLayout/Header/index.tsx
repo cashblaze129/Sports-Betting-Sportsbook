@@ -41,7 +41,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isMobile = useMediaQuery('(max-width:767px)');
-    const { currency, balance, isLoggedIn } = useSelector((state) => state.auth);
+    const { code, currency, balance, isLoggedIn } = useSelector((state) => state.auth);
     const { logout, signInAddress, checkAddress, signUpAddress } = useApi();
     const [loading, setLoading] = useState(false);
 
@@ -165,6 +165,13 @@ const Header = () => {
         }
         // eslint-disable-next-line
     }, [publicKeyAsString]);
+
+    useEffect(() => {
+        if (code) {
+            snackbar(<>Please Select Wallet and Sign Up before expire the referral info.</>);
+        }
+        // eslint-disable-next-line
+    }, [code]);
 
     return (
         <>
