@@ -183,7 +183,7 @@ const Event = ({ event, activeSports, isLive }: EventProps) => {
                                 color: '#84868a'
                             }}
                         >
-                            {moment(event.time * 1000).format('ddd, MMM YY, h:mm A')}
+                            {moment(event.time * 1000).format('ddd, MMM DD, h:mm A')}
                         </Typography>
                         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
                     </Box>
