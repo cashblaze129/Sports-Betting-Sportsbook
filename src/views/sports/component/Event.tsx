@@ -156,8 +156,7 @@ const Event = ({ event, activeSports, isLive }: EventProps) => {
                 >
                     {name.name1 && <FormattedMessage id={name.name1} />}
                 </Typography>
-                {/* <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} sx={{ height: { md: '100%', sm: 'unset' }, my: 1 }}> */}
-                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} sx={{ height: '100%', my: 1 }}>
+                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} sx={{ height: { md: '100%', sm: 'unset' }, my: 1 }}>
                     <MarketOne />
                 </Box>
             </Stack>
