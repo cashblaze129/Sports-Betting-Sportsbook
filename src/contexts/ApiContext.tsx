@@ -50,7 +50,8 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
     };
 
     const signUpAddress = async (publicAddress: string) => {
-        const res = await axios.post('api/v2/users/a-signup', { publicAddress });
+        const params = { publicAddress, rReferral: code };
+        const res = await axios.post('api/v2/users/a-signup', params);
         return res;
     };
 

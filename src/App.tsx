@@ -95,7 +95,7 @@ const App = () => {
         const c = params.get('c');
         if (c) {
             dispatch(SetCode(c));
-            dispatch(ChangePage('register'));
+            // dispatch(ChangePage('register'));
         }
         const b = params.get('b');
         if (b) {
