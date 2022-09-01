@@ -54,6 +54,9 @@ const Snackbar = () => {
             {/* default snackbar */}
             {variant === 'default' && (
                 <MuiSnackbar
+                    sx={{
+                        zIndex: 14000
+                    }}
                     anchorOrigin={anchorOrigin}
                     open={open}
                     autoHideDuration={6000}
@@ -76,6 +79,9 @@ const Snackbar = () => {
             {/* alert snackbar */}
             {variant === 'alert' && (
                 <MuiSnackbar
+                    sx={{
+                        zIndex: 14000
+                    }}
                     TransitionComponent={animation[transition]}
                     anchorOrigin={anchorOrigin}
                     open={open}

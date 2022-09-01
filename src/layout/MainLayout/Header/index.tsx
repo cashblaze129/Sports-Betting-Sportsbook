@@ -25,7 +25,7 @@ import Logo1Img from 'assets/images/logo/logo.png';
 import Logo2Img from 'assets/images/logo/200xlogo.png';
 import PhantomLogo from 'assets/images/icons/phantom-logo.png';
 
-import SearchSection from './SearchSection';
+// import SearchSection from './SearchSection';
 import ProfileSection from './ProfileSection';
 import BetslipSection from './BetslipSection';
 import { PublicKey } from '@solana/web3.js';
@@ -235,7 +235,7 @@ const Header = () => {
                         </Button>
                     </ButtonGroup>
                     <Box sx={{ flexGrow: 1 }} />
-                    <SearchSection />
+                    {/* <SearchSection /> */}
                     {!isMobile && <BetslipSection />}
                     <ProfileSection />
                 </>

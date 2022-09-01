@@ -37,7 +37,7 @@ import { toNumber } from 'utils/number';
 import { abbreviate, addRemoveBetslip } from 'utils/sports';
 
 import { useDispatch, useSelector } from 'store';
-import { ChangePage } from 'store/reducers/menu';
+// import { ChangePage } from 'store/reducers/menu';
 import { clearAll, setBetslip } from 'store/reducers/sports';
 
 import Transitions from 'ui-component/extended/Transitions';
@@ -550,7 +550,14 @@ const BetTabs = () => {
                                     )}
                                 </>
                             ) : (
-                                <Button sx={{ mt: 1 }} variant="contained" fullWidth onClick={() => dispatch(ChangePage('login'))}>
+                                <Button
+                                    sx={{ mt: 1 }}
+                                    variant="contained"
+                                    fullWidth
+                                    onClick={() => {
+                                        snackbar(<>Please Sign in from Menu</>);
+                                    }}
+                                >
                                     <FormattedMessage id="Sign in" />
                                 </Button>
                             )}
