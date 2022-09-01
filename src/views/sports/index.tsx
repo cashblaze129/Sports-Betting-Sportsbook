@@ -1,12 +1,12 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Badge, Box, Card, CircularProgress, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import { Badge, Box, Card, CircularProgress, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { FormattedMessage } from 'react-intl';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { isMobile } from 'react-device-detect';
+// import { isMobile } from 'react-device-detect';
 
 import useConfig from 'hooks/useConfig';
 import config from 'config';
@@ -26,6 +26,7 @@ const SportsPage = () => {
     const { boxShadow } = useConfig();
     const params: SportsParamsProps = useParams();
     const navigate = useNavigate();
+    const isMobile = useMediaQuery('(max-width:767px)');
     const { search } = useSelector((store) => store.sports);
     const [activeSports, setActiveSports] = useState<number>(Number(params?.sportsId) || 0);
     const [activeSportsData, setActiveSportsData] = useState<SportsListProps>(inintSportsData);

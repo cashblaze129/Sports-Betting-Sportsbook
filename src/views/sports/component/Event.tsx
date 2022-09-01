@@ -1,16 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import {
-    Box,
-    Divider,
-    IconButton,
-    Stack,
-    Typography
-    // useMediaQuery
-} from '@mui/material';
+import { Box, Divider, IconButton, Stack, Typography, useMediaQuery } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import moment from 'moment';
-import { isMobile } from 'react-device-detect';
+// import { isMobile } from 'react-device-detect';
 
 import { BASE_URL } from 'config';
 import useConfig from 'hooks/useConfig';
@@ -29,8 +22,8 @@ const Event = ({ event, activeSports, isLive }: EventProps) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    // const { drawerOpen } = useSelector((state) => state.menu);
-    // const isMobile = useMediaQuery(`(max-width:${drawerOpen ? 1024 : 767}px)`);
+    const { drawerOpen } = useSelector((state) => state.menu);
+    const isMobile = useMediaQuery(`(max-width:${drawerOpen ? 1024 : 767}px)`);
     const { betslipData } = useSelector((state) => state.sports);
     const { marketOne } = getMarkets(event, activeSports);
     const name = getName(activeSports);
@@ -163,7 +156,7 @@ const Event = ({ event, activeSports, isLive }: EventProps) => {
                 >
                     {name.name1 && <FormattedMessage id={name.name1} />}
                 </Typography>
-                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} sx={{ height: '100%', my: 1 }}>
+                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} sx={{ height: { md: '100%', sm: 'unset' }, my: 1 }}>
                     <MarketOne />
                 </Box>
             </Stack>

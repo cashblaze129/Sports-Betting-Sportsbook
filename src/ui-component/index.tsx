@@ -1,11 +1,10 @@
-import { Avatar, Badge, BadgeProps, Box, styled, Tab, Tabs, Theme, Typography } from '@mui/material';
+import { Avatar, Badge, BadgeProps, Box, styled, Tab, Tabs, Theme, Typography, useMediaQuery } from '@mui/material';
 import config from 'config';
 import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SportsLockIcon } from './SvgIcon';
 import headerBackground from 'assets/images/landing/header-bg.jpg';
 import MainCard, { MainCardProps } from './cards/MainCard';
-import { isMobile } from 'react-device-detect';
 
 interface MainStyleProps {
     theme: Theme;
@@ -433,93 +432,96 @@ export const OddWarraper = ({
     onClick?: any;
     active?: boolean;
     sx?: any;
-}) => (
-    <Box gridColumn={isMobile === true ? 'span 12' : gridColumn}>
-        <Box
-            sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
+}) => {
+    const isMobile = useMediaQuery('(max-width:767px)');
+
+    return (
+        <Box gridColumn={isMobile === true ? 'span 12' : gridColumn}>
             <Box
-                onClick={onClick}
-                className={`arrow-${update}`}
                 sx={{
-                    background: config.dark2,
-                    borderRadius: '3px',
                     width: '100%',
+                    height: '100%',
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    minHeight: '2rem',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    padding: '5px 20px',
-                    transition: 'transform 0.1s',
-                    boxShadow: config.boxShadow,
-                    '&:hover': {
-                        background: '#2196f309',
-                        '& path': {
-                            fill: '#fff'
-                        },
-                        '& .odd-num': {
-                            color: '#fff'
-                        },
-                        '& .odd-attr': {
-                            color: '#fff'
-                        }
-                    },
-                    '& svg': {
-                        width: '20px'
-                    },
-                    '&:active': {
-                        transform: 'scale(0.95)'
-                    },
-                    '& .odd-attr': {
-                        fontWeight: '700',
-                        fontSize: '12px',
-                        lineHeight: '100%',
-                        color: '#76C841',
-                        mr: 0.5
-                    },
-                    '& .odd-num': {
-                        fontWeight: '700',
-                        fontSize: '14px',
-                        lineHeight: '100%',
-                        color: '#fff'
-                    },
-                    ...(active && {
-                        background: config.grey2,
-                        '& path': {
-                            fill: '#fff'
-                        },
-                        '& .odd-num': {
-                            fontWeight: '700',
-                            fontSize: '12px',
-                            lineHeight: '100%',
-                            color: '#fff',
-                            mr: 0.5
-                        },
-                        '& .odd-attr': {
-                            fontWeight: '700',
-                            fontSize: '12px',
-                            lineHeight: '100%',
-                            color: '#fff',
-                            mr: 0.5
-                        }
-                    }),
-                    ...sx
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}
             >
-                {children}
+                <Box
+                    onClick={onClick}
+                    className={`arrow-${update}`}
+                    sx={{
+                        background: config.dark2,
+                        borderRadius: '3px',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        minHeight: '2rem',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        padding: '5px 20px',
+                        transition: 'transform 0.1s',
+                        boxShadow: config.boxShadow,
+                        '&:hover': {
+                            background: '#2196f309',
+                            '& path': {
+                                fill: '#fff'
+                            },
+                            '& .odd-num': {
+                                color: '#fff'
+                            },
+                            '& .odd-attr': {
+                                color: '#fff'
+                            }
+                        },
+                        '& svg': {
+                            width: '20px'
+                        },
+                        '&:active': {
+                            transform: 'scale(0.95)'
+                        },
+                        '& .odd-attr': {
+                            fontWeight: '700',
+                            fontSize: '12px',
+                            lineHeight: '100%',
+                            color: '#76C841',
+                            mr: 0.5
+                        },
+                        '& .odd-num': {
+                            fontWeight: '700',
+                            fontSize: '14px',
+                            lineHeight: '100%',
+                            color: '#fff'
+                        },
+                        ...(active && {
+                            background: config.grey2,
+                            '& path': {
+                                fill: '#fff'
+                            },
+                            '& .odd-num': {
+                                fontWeight: '700',
+                                fontSize: '12px',
+                                lineHeight: '100%',
+                                color: '#fff',
+                                mr: 0.5
+                            },
+                            '& .odd-attr': {
+                                fontWeight: '700',
+                                fontSize: '12px',
+                                lineHeight: '100%',
+                                color: '#fff',
+                                mr: 0.5
+                            }
+                        }),
+                        ...sx
+                    }}
+                >
+                    {children}
+                </Box>
             </Box>
         </Box>
-    </Box>
-);
-
+    );
+};
 export const Lock = () => (
     <>
         <OddWarraper gridColumn="span 6" update={undefined} sx={{ justifyContent: 'center' }}>

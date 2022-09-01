@@ -5,7 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconReceipt } from '@tabler/icons';
 
 import { FormattedMessage } from 'react-intl';
-import { isMobile } from 'react-device-detect';
 
 import useConfig from 'hooks/useConfig';
 
@@ -20,7 +19,7 @@ const Betslip = () => {
     const theme = useTheme();
     const { boxShadow } = useConfig();
     const dispatch = useDispatch();
-    // const isMobile = useMediaQuery('(max-width:767px)');
+    const isMobile = useMediaQuery('(max-width:767px)');
     const isDesktop = useMediaQuery('(min-width:1440px)');
 
     const { betslipData, betslipOpen } = useSelector((state) => state.sports);
