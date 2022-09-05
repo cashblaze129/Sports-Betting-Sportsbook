@@ -126,6 +126,7 @@ const BetTabs = () => {
 
     const maxBet = currency?.maxBet || 0;
     const minBet = currency?.minBet || 0;
+    const betLimit = currency?.betLimit || 0;
     const odds = activeTab === 0 ? totalOdds : multiplyOdds;
     const stake = activeTab === 0 ? totalStake : amount;
     const potential = activeTab === 0 ? totalPayout : multiplyMany;
@@ -143,11 +144,20 @@ const BetTabs = () => {
         if (activeTab === 0) {
             for (const i in betslipData) {
                 if (betslipData[i].stake <= maxBet && betslipData[i].stake >= minBet) {
+                    const perPotential = Number(betslipData[i].odds) * Number(betslipData[i].stake);
+                    if (perPotential > betLimit) {
+                        setAError(
+                            `Your bet exceeds the maximum in ${betslipData[i].oddName} odd. Maximum ${symbol} Bet Limit is ${abbreviate(
+                                betLimit
+                            )} ${symbol}.`
+                        );
+                        return;
+                    }
                     betData.push({
                         bets: [betslipData[i]],
                         odds: betslipData[i].odds,
                         stake: betslipData[i].stake,
-                        potential: Number(betslipData[i].odds) * Number(betslipData[i].stake),
+                        potential: perPotential,
                         userId,
                         currency: currencyId,
                         betType: betslipData[i].SportId,
@@ -160,7 +170,11 @@ const BetTabs = () => {
             }
         } else if (stake <= maxBet && stake >= minBet) {
             // eslint-disable-next-line
-            const betslip = betslipData.map((item) => item.eventId).reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
+            const betslip = betslipData.map((item: any) => item.eventId).reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
+            if (potential > betLimit) {
+                setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
+                return;
+            }
             const betslipdata = Object.values(betslip) as any;
             if (betslipdata.find((e: number) => e > 1)) {
                 setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));

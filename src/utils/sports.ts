@@ -390,6 +390,7 @@ export const convertBetslipData = ({ event, odd, oddType, sports }: SelectOddPro
         odds: Number(odd[`${oddType}_od`]),
         oddData: odd,
         stake: 0,
+        potential: 0,
         sports
     };
 };

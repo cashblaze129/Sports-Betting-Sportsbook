@@ -164,6 +164,7 @@ export interface BetslipProps {
     odds: number;
     sports: SportsListProps;
     stake: number;
+    potential: number;
 }
 
 export interface SportsProps {
