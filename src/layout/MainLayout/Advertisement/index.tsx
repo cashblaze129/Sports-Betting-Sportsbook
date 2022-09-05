@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay } from 'swiper';
 import Axios from 'utils/axios';
@@ -17,6 +17,7 @@ interface AdvertisementProps {
 }
 
 export default function Advertisement() {
+    const isMobile = useMediaQuery('(max-width:767px)');
     const [advertisements, setAdvertisements] = useState<AdvertisementProps[]>([]);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function Advertisement() {
     return (
         <Box
             sx={{
-                height: '120px',
+                height: isMobile ? '10vh' : '20vh',
                 marginTop: '-10px',
                 marginBottom: '10px'
             }}
@@ -43,7 +44,11 @@ export default function Advertisement() {
             >
                 {advertisements.map((aditem, index) => (
                     <SwiperSlide key={index}>
-                        <img src={`${BASE_URL}/${aditem.uri}`} alt={aditem.title} style={{ height: '120px', width: '100%' }} />
+                        <img
+                            src={`${BASE_URL}/${aditem.uri}`}
+                            alt={aditem.title}
+                            style={{ height: isMobile ? '10vh' : '20vh', width: '100%' }}
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
