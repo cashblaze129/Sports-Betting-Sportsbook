@@ -104,7 +104,7 @@ const MybetsActive = () => {
                                             <StatusBadge status={item.status} />
                                         </Stack>
                                         <Stack direction="row" alignItems="center" spacing={1}>
-                                            {moment(item.createdAt).format('ddd, MMM YY, h:mm A')}
+                                            {moment(item.createdAt).format('ddd, MMM DD, h:mm A')}
                                             <IconButton onClick={() => onActive(item?._id || '')} size="small">
                                                 {activeOdds.indexOf(item?._id || '') !== -1 ? (
                                                     <KeyboardArrowDownIcon />
