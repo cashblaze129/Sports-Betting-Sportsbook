@@ -10,6 +10,7 @@ export type UserProfile = {
     publicAddress?: string;
     oddsformat?: string;
     rReferral?: string;
+    pReferral?: string;
 };
 
 export type APIContextType = {

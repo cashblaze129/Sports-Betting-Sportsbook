@@ -16,6 +16,7 @@ const initialUser = {
     email: '',
     username: '',
     iReferral: '',
+    pReferral: '',
     avatar: ''
 };
 

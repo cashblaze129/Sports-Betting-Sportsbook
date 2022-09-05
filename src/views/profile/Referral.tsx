@@ -29,7 +29,7 @@ const Referral = () => {
     const Api = useApi();
     const { boxShadow } = useConfig();
     const { formatMessage } = useIntl();
-    const { user } = useSelector((state) => state.auth);
+    const { user }: any = useSelector((state) => state.auth);
     const [loading, setLoading] = useState<boolean>(false);
     const [referral, setReferral] = useState<ReferralProps>(initReferral);
 
@@ -49,6 +49,11 @@ const Referral = () => {
         getReferral();
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        console.log(user);
+        // eslint-disable-next-line
+    }, [user]);
 
     if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '18px', boxShadow }} />;
 
@@ -78,7 +83,8 @@ const Referral = () => {
                             </Typography>
                             <Stack direction="row" justifyContent="space-between" mt={2}>
                                 <Typography variant="subtitle2">
-                                    <FormattedMessage id="You're earning 5 % of the winning bets your referrals play." />
+                                    You&apos;re earning {user.pReferral * 100 || 2} % of the winning bets your referrals play.
+                                    {/* <FormattedMessage id="You're earning 5 % of the winning bets your referrals play." /> */}
                                 </Typography>
                                 <Typography className="h6">{toNumberTag(referral.rewards, 2)} USD</Typography>
                             </Stack>
@@ -96,7 +102,11 @@ const Referral = () => {
                 </SubCard>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <SubCard title={formatMessage({ id: 'Invite your friends to boibook and earn 5 % of their winning bets.' })}>
+                <SubCard
+                    title={formatMessage({
+                        id: `Invite your friends to boibook and earn ${user.pReferral * 100 || 2} % of their winning bets.`
+                    })}
+                >
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12}>
                             <TextField
