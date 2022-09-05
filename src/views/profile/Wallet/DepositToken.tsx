@@ -134,40 +134,46 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
 
     // Sol transfer
     const transferSOL = async () => {
-        const txWallet: any = wallet?.adapter;
+        try {
+            const txWallet: any = wallet?.adapter;
 
-        // I have hardcoded my secondary wallet address here. You can take this address either from user input or your DB or wherever
-        const recieverWallet = new solWeb3.PublicKey(config.adminWallet);
+            // I have hardcoded my secondary wallet address here. You can take this address either from user input or your DB or wherever
+            const recieverWallet = new solWeb3.PublicKey(config.adminWallet);
 
-        // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
-        const transaction = new solWeb3.Transaction().add(
-            solWeb3.SystemProgram.transfer({
-                fromPubkey: txWallet.publicKey,
-                toPubkey: recieverWallet,
-                lamports: Number(amount) * solWeb3.LAMPORTS_PER_SOL
-            })
-        );
+            // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+            const transaction = new solWeb3.Transaction().add(
+                solWeb3.SystemProgram.transfer({
+                    fromPubkey: txWallet.publicKey,
+                    toPubkey: recieverWallet,
+                    lamports: Number(amount) * solWeb3.LAMPORTS_PER_SOL
+                })
+            );
 
-        // Setting the variables for the transaction
-        transaction.feePayer = await txWallet.publicKey;
-        const blockhashObj = await connection.getRecentBlockhash();
-        transaction.recentBlockhash = await blockhashObj.blockhash;
+            // Setting the variables for the transaction
+            transaction.feePayer = await txWallet.publicKey;
+            const blockhashObj = await connection.getRecentBlockhash();
+            transaction.recentBlockhash = await blockhashObj.blockhash;
 
-        // Transaction constructor initialized successfully
-        if (transaction) {
-            console.log('Txn created successfully');
+            // Transaction constructor initialized successfully
+            if (transaction) {
+                console.log('Txn created successfully');
+            }
+
+            // Request creator to sign the transaction (allow the transaction)
+            const signed = await signTransaction(transaction);
+
+            // The signature is generated
+            const signature = await connection.sendRawTransaction(signed.serialize());
+            // Confirm whether the transaction went through or not
+            await connection.confirmTransaction(signature);
+
+            // Signature chhap diya idhar
+            return signature;
+        } catch (err) {
+            console.log(err);
+            snackbar(formatMessage({ id: 'Sorry, something went wrong. Please contract with support team.' }), 'error');
+            return '';
         }
-
-        // Request creator to sign the transaction (allow the transaction)
-        const signed = await signTransaction(transaction);
-
-        // The signature is generated
-        const signature = await connection.sendRawTransaction(signed.serialize());
-        // Confirm whether the transaction went through or not
-        await connection.confirmTransaction(signature);
-
-        // Signature chhap diya idhar
-        return signature;
     };
 
     const onDepositToken = async () => {
