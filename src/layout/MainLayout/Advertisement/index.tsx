@@ -12,6 +12,7 @@ SwiperCore.use([Autoplay]);
 
 interface AdvertisementProps {
     title: string;
+    hyperlink: string;
     uri: string;
     status: boolean;
 }
@@ -44,11 +45,13 @@ export default function Advertisement() {
             >
                 {advertisements.map((aditem, index) => (
                     <SwiperSlide key={index}>
-                        <img
-                            src={`${BASE_URL}/${aditem.uri}`}
-                            alt={aditem.title}
-                            style={{ height: isMobile ? '10vh' : '20vh', width: '100%' }}
-                        />
+                        <a href={`${aditem.hyperlink}`} target="__brank">
+                            <img
+                                src={`${BASE_URL}/${aditem.uri}`}
+                                alt={aditem.title}
+                                style={{ height: isMobile ? '10vh' : '20vh', width: '100%' }}
+                            />
+                        </a>
                     </SwiperSlide>
                 ))}
             </Swiper>
