@@ -167,7 +167,7 @@ const Header = () => {
     }, [publicKeyAsString]);
 
     useEffect(() => {
-        if (code) {
+        if (code && code !== '' && !isLoggedIn) {
             snackbar(<>Please Select Wallet and Sign Up before expire the referral info.</>);
         }
         // eslint-disable-next-line
