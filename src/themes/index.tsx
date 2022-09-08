@@ -28,7 +28,7 @@ export default function ThemeCustomization({ children }: Props) {
 
     const theme: Theme = useMemo<Theme>(() => Palette(navType, presetColor), [navType, presetColor]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const themeTypography: TypographyVariantsOptions = useMemo<TypographyVariantsOptions>(
         () => Typography(theme, borderRadius, fontFamily),
         [theme, borderRadius, fontFamily]
