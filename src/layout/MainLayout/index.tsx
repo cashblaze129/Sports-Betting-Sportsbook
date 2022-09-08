@@ -58,8 +58,8 @@ const MainLayout = ({ children }: any) => {
             {/* <Sidebar /> */}
             <Betslip />
             <Main theme={theme} open={drawerOpen} dWidth={dWidth}>
-                <Advertisement />
                 <Container maxWidth="lg">
+                    <Advertisement />
                     <Box sx={{ minHeight: 'calc(100vh - 72px)' }}>
                         {children && children}
                         {!children && <Outlet />}

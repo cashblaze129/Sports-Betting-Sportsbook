@@ -107,7 +107,7 @@ const App = () => {
     return (
         <ThemeCustomization>
             <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets} autoConnect>
+                <WalletProvider wallets={wallets}>
                     <Locales>
                         <NavigationScroll>
                             <APIProvider>

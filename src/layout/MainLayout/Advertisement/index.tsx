@@ -31,8 +31,11 @@ export default function Advertisement() {
         <Box
             sx={{
                 height: isMobile ? '10vh' : '20vh',
-                marginTop: '-10px',
-                marginBottom: '10px'
+                marginTop: '20px',
+                marginBottom: '30px',
+                '& img': {
+                    borderRadius: '18px'
+                }
             }}
         >
             <Swiper
@@ -42,10 +45,11 @@ export default function Advertisement() {
                 loop
                 autoplay={{ delay: 5000 }}
                 className="mySwiper"
+                style={{ borderRadius: '18px' }}
             >
                 {advertisements.map((aditem, index) => (
                     <SwiperSlide key={index}>
-                        <a href={`${aditem.hyperlink}`} target="__brank">
+                        <a href={`${aditem.hyperlink}`} target="__brank" style={{ height: '100%' }}>
                             <img
                                 src={`${BASE_URL}/${aditem.uri}`}
                                 alt={aditem.title}

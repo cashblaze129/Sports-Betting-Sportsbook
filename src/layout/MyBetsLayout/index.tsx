@@ -14,7 +14,8 @@ const MyBetsLayout = () => {
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const tabChangeHandler = (event: React.SyntheticEvent, index: number) => {
-        navigate(index === 0 ? '/my-bets' : '/my-bets/settled');
+        const routeContent = ['/my-bets', '/my-bets/settled', '/my-bets/history'];
+        navigate(routeContent[index]);
         setActiveTab(index);
     };
 
@@ -45,6 +46,7 @@ const MyBetsLayout = () => {
             <WTabs value={activeTab} onChange={tabChangeHandler} aria-label="icon">
                 <WTab label={<FormattedMessage id="Active" />} iconPosition="start" />
                 <WTab label={<FormattedMessage id="Settled" />} iconPosition="start" />
+                <WTab label={<FormattedMessage id="history" />} iconPosition="start" />
             </WTabs>
             <Outlet />
         </>
