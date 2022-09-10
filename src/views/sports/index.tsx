@@ -1,16 +1,16 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Badge, Box, Card, CircularProgress, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Badge, Box, Card, CircularProgress, IconButton, Stack, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 // import { isMobile } from 'react-device-detect';
 
 import useConfig from 'hooks/useConfig';
 import config from 'config';
-import { inintSportsData, SportsListProps, SportsMatchProps, SportsParamsProps } from 'types/sports';
+import { inintSportsData, SportsListProps, SportsMatchProps, SportsParamsProps, TabProps } from 'types/sports';
 
 import Axios from 'utils/axios';
 import { checkUpdate } from 'utils/sports';
@@ -19,16 +19,50 @@ import Loader from 'ui-component/Loader';
 import { useSelector } from 'store';
 import { SportsItem } from 'ui-component';
 import Transitions from 'ui-component/extended/Transitions';
+import {
+    FutureIcon,
+    InplaysIcon,
+    // NexthoursIcon 
+} from 'ui-component/SvgIcon';
 import Event from './component/Event';
+
+const tabs = [
+    {
+        index: 0,
+        title: 'LIVE',
+        status: 'LIVE',
+        icon: <InplaysIcon />
+    },
+    // {
+    //     index: 1,
+    //     title: 'Next 1 hour',
+    //     status: 'HOUR',
+    //     icon: <NexthoursIcon />
+    // },
+    // {
+    //     index: 2,
+    //     title: 'Next 24hrs',
+    //     status: 'TODAY',
+    //     icon: <NexthoursIcon />
+    // },
+    {
+        index: 1,
+        title: 'Future',
+        status: 'PRE',
+        icon: <FutureIcon />
+    }
+];
 
 const SportsPage = () => {
     const theme = useTheme();
     const { boxShadow } = useConfig();
+    const { formatMessage } = useIntl();
     const params: SportsParamsProps = useParams();
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:767px)');
     const { search } = useSelector((store) => store.sports);
     const [activeSports, setActiveSports] = useState<number>(Number(params?.sportsId) || 0);
+    const [activeTab, setActiveTab] = useState<TabProps | undefined>(tabs[params.tabId || 1]);
     const [activeSportsData, setActiveSportsData] = useState<SportsListProps>(inintSportsData);
     const [sportsLists, setSportsLists] = useState<SportsListProps[]>([]);
     const [sportsMatchs, setSportsMatchs] = useState<SportsMatchProps[]>([]);
@@ -42,17 +76,23 @@ const SportsPage = () => {
         if (!activeSports) {
             setActiveSports(data[0].SportId);
             setActiveSportsData(data[0]);
-            navigate(`/sports/${data[0].SportId}`, { replace: true });
+            navigate(`/sports/${data[0].SportId}/${activeTab?.index || 0}`, { replace: true });
         } else {
             setActiveSportsData(data.find((e) => e.SportId === activeSports) || inintSportsData);
         }
+    };
+
+    const tabChangeHandler = (event: React.SyntheticEvent, index: number) => {
+        setActiveTab(tabs.find((e: TabProps) => e.index === index));
+        setSportsMatchs([]);
+        navigate(`/sports/${activeSports}/${index}`, { replace: true });
     };
 
     const activeSportsHandler = (SportId: number) => {
         setActiveSports(SportId);
         setActiveSportsData(sportsLists.find((e) => e.SportId === SportId) || inintSportsData);
         setSportsMatchs([]);
-        navigate(`/sports/${SportId}`, { replace: true });
+        navigate(`/sports/${SportId}/0`, { replace: true });
     };
 
     const activeLeagueHandler = (LeagueId: number) => {
@@ -81,7 +121,7 @@ const SportsPage = () => {
         setLoading(true);
         Axios.post('api/v1/sports/matchs', {
             SportId: activeSports,
-            EventStatus: 'PRE'
+            EventStatus: activeTab?.status
         })
             .then(({ data }) => {
                 updateMatchs(data, sportsMatchs, activeSports, setSportsMatchs);
@@ -99,13 +139,14 @@ const SportsPage = () => {
     };
 
     const getSportMatchsTimer = useCallback(() => {
+        if (!activeTab?.status) return;
         Axios.post('api/v1/sports/matchs', {
             SportId: activeSports,
-            EventStatus: 'PRE'
+            EventStatus: activeTab?.status
         }).then(({ data }) => {
             updateMatchs(data, sportsMatchs, activeSports, setSportsMatchs);
         });
-    }, [activeSports, sportsMatchs, updateMatchs]);
+    }, [activeSports, activeTab, sportsMatchs, updateMatchs]);
 
     useEffect(() => {
         let unmounted = false;
@@ -127,7 +168,7 @@ const SportsPage = () => {
             unmounted = true;
         };
         // eslint-disable-next-line
-    }, [activeSports]);
+    }, [activeSports, activeTab]);
 
     useEffect(() => {
         let unmounted = false;
@@ -265,6 +306,45 @@ const SportsPage = () => {
                     </Stack>
                 </PerfectScrollbar>
             </Box>
+            <Tabs
+                value={activeTab?.index || 0}
+                onChange={tabChangeHandler}
+                aria-label="icon"
+                variant="scrollable"
+                scrollButtons="auto"
+                sx={{
+                    ml: 2,
+                    mt: 1,
+                    minHeight: '45px',
+                    width: 'calc(100% - 32px)',
+                    '& .MuiTabs-indicator': {
+                        background: '#fff'
+                    }
+                }}
+            >
+                {tabs.map((item, key) => (
+                    <Tab
+                        key={key}
+                        icon={item.icon}
+                        label={formatMessage({ id: item.title })}
+                        iconPosition="start"
+                        sx={{
+                            minHeight: '45px',
+                            opacity: '0.5',
+                            color: '#fff',
+                            fontWeight: '600',
+                            '& svg': {
+                                mt: -0.2,
+                                mr: 0.5
+                            },
+                            '&.Mui-selected': {
+                                color: '#fff',
+                                opacity: '1'
+                            }
+                        }}
+                    />
+                ))}
+            </Tabs>
             <Card
                 sx={{
                     p: { xs: 1, sm: 3 },
