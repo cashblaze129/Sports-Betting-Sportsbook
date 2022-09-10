@@ -62,7 +62,7 @@ const SportsPage = () => {
     const isMobile = useMediaQuery('(max-width:767px)');
     const { search } = useSelector((store) => store.sports);
     const [activeSports, setActiveSports] = useState<number>(Number(params?.sportsId) || 0);
-    const [activeTab, setActiveTab] = useState<TabProps | undefined>(tabs[params.tabId || 1]);
+    const [activeTab, setActiveTab] = useState<TabProps | undefined>(tabs[params.tabId || 0]);
     const [activeSportsData, setActiveSportsData] = useState<SportsListProps>(inintSportsData);
     const [sportsLists, setSportsLists] = useState<SportsListProps[]>([]);
     const [sportsMatchs, setSportsMatchs] = useState<SportsMatchProps[]>([]);
