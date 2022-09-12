@@ -82,6 +82,13 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         const mintToken = new Token(connection, mintPublicKey, TOKEN_PROGRAM_ID, txWallet);
 
         const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(publicKey);
+
+        const tokenAccountBalance: any = await connection.getTokenAccountBalance(
+            fromTokenAccount.address
+        );
+
+        console.log(solWeb3.LAMPORTS_PER_SOL);
+
         const instructions: solWeb3.TransactionInstruction[] = [];
 
         const dest = config.adminWallet;
@@ -114,7 +121,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 associatedDestinationTokenAddr,
                 publicKey,
                 [],
-                Number(amount) * solWeb3.LAMPORTS_PER_SOL
+                Number(amount) * 10 ** tokenAccountBalance.value.decimals
             )
         );
 
