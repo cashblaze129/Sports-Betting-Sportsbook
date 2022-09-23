@@ -47,6 +47,8 @@ const Withdrawal = forwardRef(({ modalStyle, functions, getTransactions, getBala
     const withdrawalHandler = async () => {
         if (balance < amount) {
             snackbar(formatMessage({ id: 'Balances not enough.' }), 'error');
+        } else if (!address) {
+            snackbar(formatMessage({ id: 'Address is invalid.' }), 'error');
         } else if (Number(currency.minWithdraw) > amount) {
             snackbar(`Minimum withdraw ${currency.minWithdraw} ${currency.symbol}`, 'error');
         } else {

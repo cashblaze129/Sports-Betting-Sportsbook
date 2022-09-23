@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import {
+    Box,
     Alert,
     Button,
     CardContent,
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { web3 as solWeb3 } from '@project-serum/anchor';
@@ -222,7 +224,6 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 setBalance(tokenBalance);
             } catch (error) {
                 console.log(error);
-                // window.location.reload();
             }
         }
     };
@@ -255,56 +256,83 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 }
             >
                 <CardContent sx={{ mb: 2, pt: 0 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
-                            <Stack
-                                spacing={1}
-                                direction="row"
-                                alignItems="center"
-                                sx={{ cursor: 'pointer' }}
-                                onClick={() => setAmount(balance)}
-                            >
-                                <img src={currency.icon} alt="solana icon" width={20} height={20} />
-                                <Typography className="h6">
-                                    {toNumberTag(balance)} {currency.symbol} <FormattedMessage id="Available" />
-                                </Typography>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                type="number"
-                                fullWidth
-                                label={formatMessage({ id: 'Deposit amount' })}
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Alert variant="outlined" severity="warning" sx={{ borderColor: theme.palette.warning.main }}>
-                                <FormattedMessage id="Minimum Deposit" />: {currency.minDeposit} {currency.symbol}
-                            </Alert>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <AnimateButton>
-                                <Button
-                                    disabled={loading || amount === '' || Number(amount) === 0}
-                                    disableElevation
-                                    fullWidth
-                                    onClick={onDepositToken}
-                                    size="large"
-                                    variant="outlined"
-                                    sx={{
-                                        color: 'grey.700',
-                                        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
-                                        borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 20 : theme.palette.grey[100]
-                                    }}
-                                >
-                                    {loading && <CircularProgress size={20} sx={{ mr: 1 }} />}
-                                    <FormattedMessage id="Deposit" />
-                                </Button>
-                            </AnimateButton>
-                        </Grid>
-                    </Grid>
+                    {
+                        connected ? (
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={12}>
+                                    <Stack
+                                        spacing={1}
+                                        direction="row"
+                                        alignItems="center"
+                                        sx={{ cursor: 'pointer' }}
+                                        onClick={() => setAmount(balance)}
+                                    >
+                                        <img src={currency.icon} alt="solana icon" width={20} height={20} />
+                                        <Typography className="h6">
+                                            {toNumberTag(balance)} {currency.symbol} <FormattedMessage id="Available" />
+                                        </Typography>
+                                    </Stack>
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField
+                                        type="number"
+                                        fullWidth
+                                        label={formatMessage({ id: 'Deposit amount' })}
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Alert variant="outlined" severity="warning" sx={{ borderColor: theme.palette.warning.main }}>
+                                        <FormattedMessage id="Minimum Deposit" />: {currency.minDeposit} {currency.symbol}
+                                    </Alert>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <AnimateButton>
+                                        <Button
+                                            disabled={loading || amount === '' || Number(amount) === 0}
+                                            disableElevation
+                                            fullWidth
+                                            onClick={onDepositToken}
+                                            size="large"
+                                            variant="outlined"
+                                            sx={{
+                                                color: 'grey.700',
+                                                backgroundColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
+                                                borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 20 : theme.palette.grey[100]
+                                            }}
+                                        >
+                                            {loading && <CircularProgress size={20} sx={{ mr: 1 }} />}
+                                            <FormattedMessage id="Deposit" />
+                                        </Button>
+                                    </AnimateButton>
+                                </Grid>
+                            </Grid>
+                        ) : (
+                            <Grid container sx={{ justifyContent: 'center' }}>
+                                <WalletModalProvider>
+                                    <Box
+                                        sx={{
+                                            '& button': {
+                                                backgroundColor: config.dark2,
+                                                color: 'white',
+                                                border: `1px solid ${config.grey2}`
+                                            }
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                '& button': { height: '40px', fontSize: '0.875rem' },
+                                                '& img': { width: '20px !important', height: '20px !important' }
+                                            }}
+                                        >
+                                            <WalletMultiButton />
+                                        </Box>
+                                    </Box>
+                                </WalletModalProvider>
+                            </Grid>
+                        )
+                    }
                 </CardContent>
             </MainCard>
         </div>

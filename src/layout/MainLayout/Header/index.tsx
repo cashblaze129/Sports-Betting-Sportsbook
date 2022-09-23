@@ -152,12 +152,12 @@ const Header = () => {
         // eslint-disable-next-line
     }, [publicKey]);
 
-    useEffect(() => {
-        if (isLoggedIn && !connected) {
-            logout();
-        }
-        // eslint-disable-next-line
-    }, [isLoggedIn]);
+    // useEffect(() => {
+    //     if (isLoggedIn && !connected) {
+    //         logout();
+    //     }
+    //     // eslint-disable-next-line
+    // }, [isLoggedIn]);
 
     useEffect(() => {
         if (publicKeyAsString) {

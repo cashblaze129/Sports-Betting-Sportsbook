@@ -91,7 +91,7 @@ const market_names = {
     '18_2': 'Spread',
     '18_3': 'Total Points',
     '18_4': 'Money Line',
-    '18_5': 'Spread',
+    '18_5': 'Spread(Half)',
     '18_6': 'Total Points',
     '18_7': 'Quarter - Winner(2 - Way)',
     '18_8': 'Quarter - Handicap',
