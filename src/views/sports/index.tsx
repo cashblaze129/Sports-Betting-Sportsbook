@@ -61,8 +61,9 @@ const SportsPage = () => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:767px)');
     const { search } = useSelector((store) => store.sports);
-    const [activeSports, setActiveSports] = useState<number>(Number(params?.sportsId) || 0);
-    const [activeTab, setActiveTab] = useState<TabProps | undefined>(tabs[params.tabId || 0]);
+    const initActiveTabIndex = 1;
+    const [activeSports, setActiveSports] = useState<number>(Number(params?.sportsId) || initActiveTabIndex);
+    const [activeTab, setActiveTab] = useState<TabProps | undefined>(tabs[params.tabId || initActiveTabIndex]);
     const [activeSportsData, setActiveSportsData] = useState<SportsListProps>(inintSportsData);
     const [sportsLists, setSportsLists] = useState<SportsListProps[]>([]);
     const [sportsMatchs, setSportsMatchs] = useState<SportsMatchProps[]>([]);
@@ -76,7 +77,7 @@ const SportsPage = () => {
         if (!activeSports) {
             setActiveSports(data[0].SportId);
             setActiveSportsData(data[0]);
-            navigate(`/sports/${data[0].SportId}/${activeTab?.index || 0}`, { replace: true });
+            navigate(`/sports/${data[0].SportId}/${activeTab?.index || initActiveTabIndex}`, { replace: true });
         } else {
             setActiveSportsData(data.find((e) => e.SportId === activeSports) || inintSportsData);
         }
@@ -92,7 +93,7 @@ const SportsPage = () => {
         setActiveSports(SportId);
         setActiveSportsData(sportsLists.find((e) => e.SportId === SportId) || inintSportsData);
         setSportsMatchs([]);
-        navigate(`/sports/${SportId}/0`, { replace: true });
+        navigate(`/sports/${SportId}/${initActiveTabIndex}`, { replace: true });
     };
 
     const activeLeagueHandler = (LeagueId: number) => {
