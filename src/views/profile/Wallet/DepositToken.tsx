@@ -56,10 +56,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const { publicKey, wallet, connected, signTransaction }: any = useWallet();
     const { connection } = useConnection();
 
-    const depositToken = (signature: string, amounti: Number) => {
+    const depositToken = (signature: string) => {
         Api.depositToken({
-            amounti: amounti.toString(),
-            amount,
             from: publicKey?.toString(),
             address: currency.tokenMintAccount,
             receiver: config.adminWallet,
@@ -88,8 +86,6 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         const tokenAccountBalance: any = await connection.getTokenAccountBalance(
             fromTokenAccount.address
         );
-
-        console.log(solWeb3.LAMPORTS_PER_SOL);
 
         const instructions: solWeb3.TransactionInstruction[] = [];
 
@@ -200,7 +196,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                 setLoading(false);
             }
             if (signature) {
-                depositToken(signature, Number(amount));
+                depositToken(signature);
             }
         }
     };
