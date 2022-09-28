@@ -63,7 +63,7 @@ const MybetsActive = () => {
         // eslint-disable-next-line
     }, []);
 
-    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '18px', boxShadow }} />;
+    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '8px', boxShadow }} />;
 
     return (
         <Grid container spacing={1}>

@@ -92,7 +92,7 @@ const EventsPage = () => {
             clearInterval(timer);
         };
     }, [getSportOddsTimer]);
-    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '18px', boxShadow }} />;
+    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '8px', boxShadow }} />;
     if (!markets.length) return <Typography>Events are currently not available</Typography>;
     return (
         <Transitions in direction="up" type="slide">

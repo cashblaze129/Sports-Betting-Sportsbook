@@ -31,11 +31,8 @@ export default function Advertisement() {
         <Box
             sx={{
                 height: isMobile ? '10vh' : '20vh',
-                marginTop: '20px',
-                marginBottom: '30px',
-                '& img': {
-                    borderRadius: '18px'
-                }
+                marginTop: '-8px',
+                marginBottom: '30px'
             }}
         >
             <Swiper
@@ -45,7 +42,6 @@ export default function Advertisement() {
                 loop
                 autoplay={{ delay: 5000 }}
                 className="mySwiper"
-                style={{ borderRadius: '18px' }}
             >
                 {advertisements.map((aditem, index) => (
                     <SwiperSlide key={index}>

@@ -220,7 +220,7 @@ const SportsPage = () => {
                     key={key}
                     sx={{
                         // background: '#373636',
-                        borderRadius: '13px',
+                        borderRadius: '8px',
                         py: 2,
                         px: { xs: 1, sm: 2 },
                         boxShadow
@@ -349,7 +349,7 @@ const SportsPage = () => {
             <Card
                 sx={{
                     p: { xs: 1, sm: 3 },
-                    borderRadius: '18px',
+                    borderRadius: '8px',
                     boxShadow
                 }}
             >

@@ -183,7 +183,7 @@ const InplayPage = () => {
                     key={key}
                     sx={{
                         background: config.dark3,
-                        borderRadius: '13px',
+                        borderRadius: '8px',
                         py: 2,
                         px: { xs: 1, sm: 2 },
                         boxShadow
@@ -292,7 +292,7 @@ const InplayPage = () => {
                 sx={{
                     mt: 2,
                     p: { xs: 1, sm: 3 },
-                    borderRadius: '18px',
+                    borderRadius: '8px',
                     background: '#181D2D',
                     boxShadow
                 }}

@@ -42,13 +42,13 @@ const CasinoPage = () => {
             });
     }, []);
 
-    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '18px', boxShadow }} />;
+    if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '8px', boxShadow }} />;
 
     return (
         <Card
             sx={{
                 p: { xs: 0, sm: 3 },
-                borderRadius: '18px',
+                borderRadius: '8px',
                 background: '#181D2D',
                 boxShadow
             }}
