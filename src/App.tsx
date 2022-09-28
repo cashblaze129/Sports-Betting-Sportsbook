@@ -11,6 +11,7 @@ import { APIProvider } from 'contexts/ApiContext';
 import { useDispatch, useSelector } from 'store';
 import { ChangePage } from 'store/reducers/menu';
 import { Logout, SetBetsId, SetCode, UpdateBalance } from 'store/reducers/auth';
+import { setRecentBets } from 'store/reducers/sports';
 
 import Locales from 'ui-component/Locales';
 import Snackbar from 'ui-component/extended/Snackbar';
@@ -28,6 +29,7 @@ import {
     TorusWalletAdapter
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
+import Axios from 'utils/axios';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
@@ -80,12 +82,18 @@ const App = () => {
                     dispatch(UpdateBalance(data.balance));
                 }
             });
+            socket.on('bet', (data) => {
+                Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+                    dispatch(setRecentBets(data))
+                });
+            });
         }
         return () => {
             if (socket) {
                 socket.off('logout');
                 socket.off('reload');
                 socket.off('balance');
+                socket.off('bet');
             }
         };
     }, [token, balance, isLoggedIn, dispatch]);
@@ -103,6 +111,12 @@ const App = () => {
             dispatch(ChangePage('bets'));
         }
     }, [pathname, dispatch]);
+
+    useEffect(() => {
+        Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+            dispatch(setRecentBets(data))
+        });
+    }, [])
 
     return (
         <ThemeCustomization>

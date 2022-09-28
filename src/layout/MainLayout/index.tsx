@@ -17,14 +17,14 @@ import MobileMenu from './MobileMenu';
 import Auth from '../AuthLayout';
 import Betslip from 'views/sports/component/Betslip';
 import Advertisement from './Advertisement';
-// import RecentBets from './RecentBets';
-// import Twitterfeed from './Twitterfeed';
+import RecentBets from './RecentBets';
+import Twitterfeed from './Twitterfeed';
 
 const MainLayout = ({ children }: any) => {
     const theme = useTheme();
     const { boxShadow } = useConfig();
     const isMobile = useMediaQuery('(max-width:767px)');
-    // const isTablet = useMediaQuery('(max-width:1000px)');
+    const isTablet = useMediaQuery('(max-width:1000px)');
     const isDesktop = useMediaQuery('(min-width:1440px)');
     const { drawerOpen } = useSelector((state) => state.menu);
     const { betslipOpen } = useSelector((state) => state.sports);
@@ -62,7 +62,7 @@ const MainLayout = ({ children }: any) => {
             <Betslip />
             <Main theme={theme} open={drawerOpen} dWidth={dWidth}>
                 <Advertisement />
-                {/* <Grid container>
+                <Grid container>
                     <Grid item lg={2} md={3}>
                         <Twitterfeed />
                     </Grid>
@@ -75,14 +75,8 @@ const MainLayout = ({ children }: any) => {
                     <Grid item lg={2} md={3}>
                         <RecentBets />
                     </Grid>
-                </Grid> */}
+                </Grid>
                 <Container>
-                    <Grid item lg={8} md={6}>
-                        <Box sx={{ minHeight: 'calc(100vh - 72px)' }}>
-                            {children && children}
-                            {!children && <Outlet />}
-                        </Box>
-                    </Grid>
                     <Footer />
                 </Container>
             </Main>
