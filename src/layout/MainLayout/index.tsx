@@ -60,19 +60,19 @@ const MainLayout = ({ children }: any) => {
             </AppBar>
             {/* <Sidebar /> */}
             <Betslip />
-            <Main theme={theme} open={drawerOpen} dWidth={dWidth}>
+            <Main theme={theme} open={drawerOpen} dWidth={dWidth} sx={{ background: '#111111' }}>
                 <Advertisement />
                 <Grid container>
-                    <Grid item lg={2} md={3}>
+                    <Grid item lg={2} sm={12} xs={12} sx={{ marginBottom: '20px', marginTop: { lg: '180px' }, p: 1 }}>
                         <Twitterfeed />
                     </Grid>
-                    <Grid item lg={8} md={6}>
+                    <Grid item lg={8} sm={12} xs={12}>
                         <Box sx={{ minHeight: 'calc(100vh - 72px)' }}>
                             {children && children}
                             {!children && <Outlet />}
                         </Box>
                     </Grid>
-                    <Grid item lg={2} md={3}>
+                    <Grid item lg={2} sm={12} xs={12} sx={{ marginTop: { lg: '180px' }, p: 1 }}>
                         <RecentBets />
                     </Grid>
                 </Grid>

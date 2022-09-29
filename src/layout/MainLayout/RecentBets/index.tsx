@@ -14,6 +14,11 @@ export default function RecentBets() {
     const { boxShadow } = useConfig();
     const recentBets: any = useSelector((state: any) => state.sports.recentBets);
 
+    const colorEffect = (num: any) => {
+        const color = Number(num) >= 3 ? Number(num) >= 10 ? "#70bf3d" : "#ffab00" : "#fff";
+        return color;
+    }
+
     return (
         <Card
             sx={{
@@ -72,7 +77,7 @@ export default function RecentBets() {
                                                 <Typography variant="body2" color="primary">
                                                     Bet:&nbsp;
                                                 </Typography>
-                                                <Typography variant="body2" className="text-ellipse" color="#fff" sx={{ maxWidth: '100px' }}>
+                                                <Typography variant="body2" className="text-ellipse" color={colorEffect(toNumber(rBet.stake))} sx={{ maxWidth: '100px' }}>
                                                     {toNumber(rBet.stake)}
                                                 </Typography>
                                                 <img width="16px" src={rBet.currency.icon} alt="icon" />

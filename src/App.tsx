@@ -82,7 +82,7 @@ const App = () => {
                     dispatch(UpdateBalance(data.balance));
                 }
             });
-            socket.on('bet', (data) => {
+            socket.on('bet', () => {
                 Axios.post('api/v2/sports/recents-history').then(({ data }) => {
                     dispatch(setRecentBets(data))
                 });
