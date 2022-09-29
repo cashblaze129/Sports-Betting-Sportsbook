@@ -330,6 +330,7 @@ export const EventBreadcrumbs = styled('div', {
     overflow: 'hidden',
     transition: 'all 0.1s',
     backgroundColor: '#181D2D',
+    minHeight: '200px',
     boxShadow: config.boxShadow,
     '& .css-nen11g-MuiStack-root': {
         position: 'relative',
