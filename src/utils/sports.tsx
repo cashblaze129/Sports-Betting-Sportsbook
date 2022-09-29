@@ -1,3 +1,5 @@
+import { Card, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import {
     BetslipProps,
     LockProps,
@@ -421,4 +423,29 @@ export const abbreviate = (value: any, decimal = 2) => {
     const suffix = ['K', 'M', 'G', 'T'];
     if (length < 4) return Number(value.toFixed(4).replace(/0{1,2}$/, '')).toFixed(decimal);
     return Number((value / Math.pow(1000, index)).toFixed(1).replace(/\.0$/, '')).toFixed(decimal) + suffix[index - 1];
+};
+
+
+export const eventsNotAvailable = () => {
+    return (
+        <Card
+            sx={{
+                p: 3,
+                borderRadius: '8px',
+                background: '#272727'
+            }}
+        >
+            <Typography
+                sx={{
+                    textAlign: 'center',
+                    fontWeight: '700',
+                    fontSize: '16px',
+                    lineHeight: '100%',
+                    color: '#fff'
+                }}
+            >
+                <FormattedMessage id="Events are currently not available" />
+            </Typography>
+        </Card>
+    );
 };

@@ -13,7 +13,7 @@ import config from 'config';
 import { inintSportsData, SportsListProps, SportsMatchProps, SportsParamsProps, TabProps } from 'types/sports';
 
 import Axios from 'utils/axios';
-import { checkUpdate } from 'utils/sports';
+import { checkUpdate, eventsNotAvailable } from 'utils/sports';
 
 import Loader from 'ui-component/Loader';
 import { useSelector } from 'store';
@@ -194,19 +194,7 @@ const SportsPage = () => {
             );
         }
         if (!sportsMatchs.length) {
-            return (
-                <Typography
-                    sx={{
-                        textAlign: 'center',
-                        fontWeight: '700',
-                        fontSize: '16px',
-                        lineHeight: '100%',
-                        color: '#fff'
-                    }}
-                >
-                    <FormattedMessage id="There is no upcoming events." />
-                </Typography>
-            );
+            return eventsNotAvailable();
         }
         return sportsMatchs.map((item, key) => {
             const events = item.events.filter(
@@ -273,7 +261,7 @@ const SportsPage = () => {
     };
 
     if (pageLoading) return <Loader />;
-    if (!sportsLists.length) return <Typography>Events are currently not available</Typography>;
+    if (!sportsLists.length) return eventsNotAvailable();
 
     return (
         <Transitions in direction="up" type="slide">

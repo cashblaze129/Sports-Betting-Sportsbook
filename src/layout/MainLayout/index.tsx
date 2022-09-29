@@ -63,16 +63,16 @@ const MainLayout = ({ children }: any) => {
             <Main theme={theme} open={drawerOpen} dWidth={dWidth} sx={{ background: '#111111' }}>
                 <Advertisement />
                 <Grid container>
-                    <Grid item lg={2} sm={12} xs={12} sx={{ marginBottom: '20px', marginTop: { lg: '180px' }, p: 1 }}>
+                    <Grid item lg={2} sm={12} xs={12} sx={{ marginBottom: '20px', marginTop: { lg: '180px' }, p: 1, order: { lg: 1, md: 2, sm: 2, xs: 2 } }}>
                         <Twitterfeed />
                     </Grid>
-                    <Grid item lg={8} sm={12} xs={12}>
-                        <Box sx={{ minHeight: 'calc(100vh - 72px)' }}>
+                    <Grid item lg={8} sm={12} xs={12} sx={{ order: { lg: 2, md: 1, sm: 1, xs: 1 } }}>
+                        <Box>
                             {children && children}
                             {!children && <Outlet />}
                         </Box>
                     </Grid>
-                    <Grid item lg={2} sm={12} xs={12} sx={{ marginTop: { lg: '180px' }, p: 1 }}>
+                    <Grid item lg={2} sm={12} xs={12} sx={{ marginTop: { lg: '180px' }, p: 1, order: 3 }}>
                         <RecentBets />
                     </Grid>
                 </Grid>

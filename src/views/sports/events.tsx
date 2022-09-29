@@ -13,7 +13,7 @@ import config, { BASE_URL } from 'config';
 import { initEvents, MarketProps, OddTypes, SportsEventProps, SportsListProps } from 'types/sports';
 
 import Axios from 'utils/axios';
-import { addRemoveBetslip, checkActive, convertBetslipData, convertHandicap, formatData, getIsLock } from 'utils/sports';
+import { addRemoveBetslip, checkActive, convertBetslipData, convertHandicap, eventsNotAvailable, formatData, getIsLock } from 'utils/sports';
 
 import { useDispatch, useSelector } from 'store';
 import { setBetslip } from 'store/reducers/sports';
@@ -93,7 +93,7 @@ const EventsPage = () => {
         };
     }, [getSportOddsTimer]);
     if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '8px', boxShadow }} />;
-    if (!markets.length) return <Typography>Events are currently not available</Typography>;
+    if (!markets.length) return eventsNotAvailable();
     return (
         <Transitions in direction="up" type="slide">
             <EventBreadcrumbs theme={theme}>
