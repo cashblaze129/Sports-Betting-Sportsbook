@@ -29,8 +29,8 @@ export default function Twitterfeed() {
             >
                 Twitter Feed
             </Typography>
-            <Grid>
-                <a className="twitter-timeline" style={{ minHeight: "850" }} href="https://twitter.com/wagbois?ref_src=twsrc%5Etfw">Tweets by Boibook</a>
+            <Grid sx={{ minHeight: "800px" }}>
+                <a className="twitter-timeline" href="https://twitter.com/wagbois?ref_src=twsrc%5Etfw">Tweets by Boibook</a>
             </Grid>
         </Card>
     )
