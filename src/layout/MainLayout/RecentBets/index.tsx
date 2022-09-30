@@ -79,9 +79,6 @@ export default function RecentBets() {
                 Recent Bets
             </Typography>
             <Grid item>
-                <Stack direction="row" justifyContent="center" sx={{ p: 2 }}>
-                    <Pagination count={5} onChange={handlePageChange} size={'small'} />
-                </Stack>
                 {recentBets?.map((rBet: any, key: number) => {
                     return (
                         <Transitions key={key} in direction="left" type="slide">
