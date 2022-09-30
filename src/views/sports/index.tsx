@@ -264,86 +264,88 @@ const SportsPage = () => {
     if (!sportsLists.length) return eventsNotAvailable();
 
     return (
-        <Transitions in direction="up" type="slide">
-            <Box className="sports-items" sx={{ overflow: 'auto' }}>
-                <PerfectScrollbar aria-setsize={1}>
-                    <Stack
-                        direction="row"
-                        spacing={2}
-                        sx={{
-                            display: 'flex',
-                            justifyContent: isMobile === true ? 'normal' : 'center'
-                        }}
-                    >
-                        {sportsLists.map((item, key) => (
-                            <SportsItem
-                                key={key}
-                                index={key % 5}
-                                theme={theme}
-                                active={activeSports === item.SportId}
-                                bgcolor={item.color}
-                                onClick={() => activeSportsHandler(item.SportId)}
-                            >
-                                <Box className="warraper">
-                                    <Box className="cover">
-                                        <Box className="back" />
-                                        <i className={`sportsicons sportsicon-${item.SportId}`} />
+        <Box sx={{ p: 1 }}>
+            <Transitions in direction="up" type="slide">
+                <Box className="sports-items" sx={{ overflow: 'auto' }}>
+                    <PerfectScrollbar aria-setsize={1}>
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: isMobile === true ? 'normal' : 'center'
+                            }}
+                        >
+                            {sportsLists.map((item, key) => (
+                                <SportsItem
+                                    key={key}
+                                    index={key % 5}
+                                    theme={theme}
+                                    active={activeSports === item.SportId}
+                                    bgcolor={item.color}
+                                    onClick={() => activeSportsHandler(item.SportId)}
+                                >
+                                    <Box className="warraper">
+                                        <Box className="cover">
+                                            <Box className="back" />
+                                            <i className={`sportsicons sportsicon-${item.SportId}`} />
+                                        </Box>
                                     </Box>
-                                </Box>
-                            </SportsItem>
-                        ))}
-                    </Stack>
-                </PerfectScrollbar>
-            </Box>
-            <Tabs
-                value={activeTab?.index || 0}
-                onChange={tabChangeHandler}
-                aria-label="icon"
-                variant="scrollable"
-                scrollButtons="auto"
-                sx={{
-                    ml: 2,
-                    mt: 1,
-                    minHeight: '45px',
-                    width: 'calc(100% - 32px)',
-                    '& .MuiTabs-indicator': {
-                        background: '#fff'
-                    }
-                }}
-            >
-                {tabs.map((item, key) => (
-                    <Tab
-                        key={key}
-                        icon={item.icon}
-                        label={formatMessage({ id: item.title })}
-                        iconPosition="start"
-                        sx={{
-                            minHeight: '45px',
-                            opacity: '0.5',
-                            color: '#fff',
-                            fontWeight: '600',
-                            '& svg': {
-                                mt: -0.2,
-                                mr: 0.5
-                            },
-                            '&.Mui-selected': {
+                                </SportsItem>
+                            ))}
+                        </Stack>
+                    </PerfectScrollbar>
+                </Box>
+                <Tabs
+                    value={activeTab?.index || 0}
+                    onChange={tabChangeHandler}
+                    aria-label="icon"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    sx={{
+                        ml: 2,
+                        mt: 1,
+                        minHeight: '45px',
+                        width: 'calc(100% - 32px)',
+                        '& .MuiTabs-indicator': {
+                            background: '#fff'
+                        }
+                    }}
+                >
+                    {tabs.map((item, key) => (
+                        <Tab
+                            key={key}
+                            icon={item.icon}
+                            label={formatMessage({ id: item.title })}
+                            iconPosition="start"
+                            sx={{
+                                minHeight: '45px',
+                                opacity: '0.5',
                                 color: '#fff',
-                                opacity: '1'
-                            }
-                        }}
-                    />
-                ))}
-            </Tabs>
-            <Card
-                sx={{
-                    p: { xs: 1, sm: 3 },
-                    borderRadius: '8px',
-                    boxShadow
-                }}
-            >
-                <Stack spacing={{ xs: 1, sm: 2 }}>{renderMatchs()}</Stack>
-            </Card>
-        </Transitions>
+                                fontWeight: '600',
+                                '& svg': {
+                                    mt: -0.2,
+                                    mr: 0.5
+                                },
+                                '&.Mui-selected': {
+                                    color: '#fff',
+                                    opacity: '1'
+                                }
+                            }}
+                        />
+                    ))}
+                </Tabs>
+                <Card
+                    sx={{
+                        p: { xs: 1, sm: 3 },
+                        borderRadius: '8px',
+                        boxShadow
+                    }}
+                >
+                    <Stack spacing={{ xs: 1, sm: 2 }}>{renderMatchs()}</Stack>
+                </Card>
+            </Transitions>
+        </Box>
     );
 };
 
