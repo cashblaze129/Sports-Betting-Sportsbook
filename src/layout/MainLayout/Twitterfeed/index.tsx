@@ -1,6 +1,7 @@
 import {
     Typography,
     Card,
+    Grid,
 } from '@mui/material';
 import useConfig from 'hooks/useConfig';
 
@@ -28,7 +29,9 @@ export default function Twitterfeed() {
             >
                 Twitter Feed
             </Typography>
-            <a className="twitter-timeline" style={{ minHeight: "850" }} href="https://twitter.com/wagbois?ref_src=twsrc%5Etfw">Tweets by Boibook</a>
+            <Grid>
+                <a className="twitter-timeline" style={{ minHeight: "850" }} href="https://twitter.com/wagbois?ref_src=twsrc%5Etfw">Tweets by Boibook</a>
+            </Grid>
         </Card>
     )
 }
