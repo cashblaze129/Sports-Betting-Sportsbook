@@ -55,7 +55,8 @@ export default function RecentBets() {
 
     useEffect(() => {
         if (allRecentBets.length > 0) {
-            setRecentBets(allRecentBets.slice(page > 0 ? (page - 1) * 6 : 0, page > 0 ? page * 6 - 1 : 5));
+            const currentRBets = allRecentBets.slice(page > 0 ? (page - 1) * 5 : 0, page > 0 ? page * 5 : 5);
+            setRecentBets(currentRBets);
         }
     }, [page, allRecentBets])
 

@@ -66,6 +66,13 @@ const App = () => {
         [network]
     );
 
+    const getRecentHistories = () => {
+        Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+            console.log(data)
+            dispatch(setRecentBets(data))
+        });
+    }
+
     useEffect(() => {
         let socket = io(BASE_URL);
         if (isLoggedIn) {
@@ -83,9 +90,7 @@ const App = () => {
                 }
             });
             socket.on('bet', () => {
-                Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-                    dispatch(setRecentBets(data))
-                });
+                getRecentHistories();
             });
         }
         return () => {
@@ -113,9 +118,7 @@ const App = () => {
     }, [pathname, dispatch]);
 
     useEffect(() => {
-        Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-            dispatch(setRecentBets(data))
-        });
+        getRecentHistories();
     }, [])
 
     return (
