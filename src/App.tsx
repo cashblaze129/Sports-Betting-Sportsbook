@@ -68,7 +68,6 @@ const App = () => {
 
     const getRecentHistories = () => {
         Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-            console.log(data)
             dispatch(setRecentBets(data))
         });
     }

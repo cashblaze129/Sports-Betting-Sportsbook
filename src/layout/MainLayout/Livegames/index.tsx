@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import useConfig from 'hooks/useConfig';
 
-export default function Twitterfeed() {
+export default function Livegames() {
 
     const { boxShadow } = useConfig();
 
@@ -13,7 +13,6 @@ export default function Twitterfeed() {
         <Card
             sx={{
                 p: 1,
-                // width: '20%',
                 borderRadius: '8px',
                 boxShadow
             }}
@@ -27,10 +26,10 @@ export default function Twitterfeed() {
                     color: '#fff'
                 }}
             >
-                Twitter Feed
+                Live Matches
             </Typography>
-            <Grid sx={{ height: "800px" }}>
-                <a className="twitter-timeline" href="https://twitter.com/wagbois?ref_src=twsrc%5Etfw">Tweets by Boibook</a>
+            <Grid>
+
             </Grid>
         </Card>
     )
