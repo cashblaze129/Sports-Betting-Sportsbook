@@ -25,6 +25,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { TwitterShareButton, FacebookShareButton, TelegramShareButton, FacebookIcon, TelegramIcon, TwitterIcon } from 'react-share';
+import { setRecentBets } from 'store/reducers/sports';
 
 import config, { BASE_URL } from 'config';
 import { BetslipProps } from 'types/sports';
@@ -44,6 +45,8 @@ import Transitions from 'ui-component/extended/Transitions';
 import { MultiIcon, SingleIcon } from 'ui-component/SvgIcon';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import OddNum from 'views/sports/component/OddNum';
+
+import Axios from 'utils/axios';
 
 const BetTabs = () => {
     const Api = useApi();
@@ -209,6 +212,9 @@ const BetTabs = () => {
                 setIsbet(true);
                 setLoading(false);
                 snackbar(formatMessage({ id: 'Submit successfully!' }));
+                Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+                    dispatch(setRecentBets(data))
+                });
             })
             .catch(() => {
                 setLoading(false);
