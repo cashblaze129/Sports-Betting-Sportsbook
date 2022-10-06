@@ -169,6 +169,7 @@ export interface BetslipProps {
 
 export interface SportsProps {
     betslipData: BetslipProps[];
+    liveMatches: any[];
     recentBets: any[];
     betAmount: number;
     betslipOpen: boolean;

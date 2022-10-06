@@ -3,6 +3,7 @@ import { SportsProps } from 'types/sports';
 
 const initialState: SportsProps = {
     betslipData: [],
+    liveMatches: [],
     recentBets: [],
     betAmount: 0,
     betslipOpen: false,
@@ -25,6 +26,10 @@ const sports = createSlice({
             state.betslipData = [];
         },
 
+        setLiveMatches(state, action) {
+            state.liveMatches = action.payload;
+        },
+
         setRecentBets(state, action) {
             state.recentBets = action.payload;
         },
@@ -45,4 +50,4 @@ const sports = createSlice({
 
 export default sports.reducer;
 
-export const { setBetslip, setRecentBets, setBetAmount, clearAll, openBetslip, updateSearch } = sports.actions;
+export const { setBetslip, setRecentBets, setLiveMatches, setBetAmount, clearAll, openBetslip, updateSearch } = sports.actions;

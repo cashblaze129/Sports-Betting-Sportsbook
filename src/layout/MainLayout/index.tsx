@@ -18,7 +18,7 @@ import Auth from '../AuthLayout';
 import Betslip from 'views/sports/component/Betslip';
 import Advertisement from './Advertisement';
 import RecentBets from './RecentBets';
-import Livegames from './Livegames';
+import LiveMatches from './LiveMatches';
 
 const MainLayout = ({ children }: any) => {
     const theme = useTheme();
@@ -64,7 +64,7 @@ const MainLayout = ({ children }: any) => {
                 <Advertisement />
                 <Grid container>
                     <Grid item lg={2} sm={12} xs={12} sx={{ marginBottom: '20px', marginTop: { lg: '180px' }, p: 1, order: { lg: 1, md: 3, sm: 3, xs: 3 } }}>
-                        <Livegames />
+                        <LiveMatches />
                     </Grid>
                     <Grid item lg={8} sm={12} xs={12} sx={{ order: { lg: 2, md: 1, sm: 1, xs: 1 } }}>
                         <Box>
