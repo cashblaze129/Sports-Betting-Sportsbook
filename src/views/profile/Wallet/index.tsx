@@ -3,6 +3,14 @@ import { Divider, Grid, Typography } from '@mui/material';
 
 import { FormattedMessage } from 'react-intl';
 
+// Tx Result
+// import axios from 'axios';
+// import {
+//     LAMPORTS_PER_SOL,
+//     clusterApiUrl,
+// } from "@solana/web3.js";
+// Tx Result
+
 import useApi from 'hooks/useApi';
 import { gridSpacing } from 'store/constant';
 import { TransactionsProps } from 'types/payment';
@@ -24,7 +32,23 @@ const Wallet = () => {
             });
     };
 
+    // const getTxnResult = async () => {
+    //     const param = "mainnet-beta";
+    //     const URL = clusterApiUrl(param);
+    //     const res = await axios(URL, {
+    //         method: "POST",
+    //         headers: { "content-type": "application/json" },
+    //         data: {
+    //             jsonrpc: "2.0",
+    //             id: "get-transaction",
+    //             method: "getTransaction",
+    //             params: ["signature"],
+    //         },
+    //     });
+    // };
+
     useEffect(() => {
+        // getTxnResult();
         getTransactions();
         // eslint-disable-next-line
     }, []);
