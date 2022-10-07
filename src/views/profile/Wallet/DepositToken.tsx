@@ -60,6 +60,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         Api.depositToken({
             from: publicKey?.toString(),
             address: currency.tokenMintAccount,
+            amount: Number(amount),
             signature
         })
             .then(({ data }) => {

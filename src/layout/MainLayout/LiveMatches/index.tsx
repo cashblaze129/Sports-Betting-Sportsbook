@@ -45,11 +45,6 @@ export default function LiveMatches() {
         }
     };
 
-    const colorEffect = (num: any) => {
-        const color = Number(num) >= 3 ? Number(num) >= 10 ? "#70bf3d" : "#ffab00" : "#fff";
-        return color;
-    }
-
     return (
         <Card
             sx={{
@@ -70,7 +65,7 @@ export default function LiveMatches() {
                 Live Matches
             </Typography>
             <Grid item>
-                {allLiveMatches?.map((sport: any, key: number) => {
+                {allLiveMatches.length > 0 ? allLiveMatches?.map((sport: any, key: number) => {
                     return (
                         <Transitions key={key} in direction="left" type="slide">
                             <Card
@@ -122,42 +117,67 @@ export default function LiveMatches() {
                                             {(sport.leagues as any[]).map((league, index) => (
                                                 <Stack key={index}>
                                                     <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                                                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
                                                         <Typography variant="body2">
                                                             {league.LeagueName}
                                                         </Typography>
+                                                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
                                                     </Stack>
                                                     {league.events.map((event: any, eventIndex: any) => {
+                                                        var scores = event.scores;
+                                                        scores = scores[Object.keys(scores)[Object.keys(scores).length - 1]];
+                                                        var cHomeScore = scores.home;
+                                                        var cAwayScore = scores.away;
                                                         return (
                                                             <Stack
-                                                                direction="row"
-                                                                justifyContent="space-around"
-                                                                alignItems="center"
-                                                                spacing={1}
-                                                                onClick={() => navigate(`/events/${event.id}`)}
                                                                 key={eventIndex}
-                                                                m={1}
+                                                                sx={{ cursor: 'pointer' }}
+                                                                onClick={() => navigate(`/events/${event.id}`)}
                                                             >
-                                                                <Tooltip TransitionComponent={Zoom} title={event.home?.name} placement="top">
-                                                                    <TeamAvatar
-                                                                        alt={event.home?.name}
-                                                                        src={`${BASE_URL}/${event.home?.image_id}.png`}
-                                                                    />
-                                                                </Tooltip>
-                                                                <Typography
-                                                                    sx={{ pt: 0.5, cursor: 'pointer' }}
+                                                                {eventIndex != 0 && <Divider sx={{ my: 1 }} />}
+                                                                <Stack
+                                                                    direction="row"
+                                                                    justifyContent="space-around"
+                                                                    alignItems="center"
+                                                                    spacing={1}
+                                                                    m={1}
                                                                 >
-                                                                    vs
-                                                                </Typography>
-                                                                <Tooltip TransitionComponent={Zoom} title={event.away?.name} placement="top">
-                                                                    <TeamAvatar
-                                                                        alt={event.away?.name}
-                                                                        src={`${BASE_URL}/${event.away?.image_id}.png`}
-                                                                    />
-                                                                </Tooltip>
+                                                                    <Tooltip TransitionComponent={Zoom} title={event.home?.name} placement="top">
+                                                                        <TeamAvatar
+                                                                            alt={event.home?.name}
+                                                                            src={`${BASE_URL}/${event.home?.image_id}.png`}
+                                                                        />
+                                                                    </Tooltip>
+                                                                    <Typography>
+                                                                        vs
+                                                                    </Typography>
+                                                                    <Tooltip TransitionComponent={Zoom} title={event.away?.name} placement="top">
+                                                                        <TeamAvatar
+                                                                            alt={event.away?.name}
+                                                                            src={`${BASE_URL}/${event.away?.image_id}.png`}
+                                                                        />
+                                                                    </Tooltip>
+                                                                </Stack>
+                                                                <Stack
+                                                                    direction="row"
+                                                                    justifyContent="space-around"
+                                                                    alignItems="center"
+                                                                    spacing={1}
+                                                                    m={1}
+                                                                >
+                                                                    <Typography>
+                                                                        {cHomeScore}
+                                                                    </Typography>
+                                                                    <Typography>
+                                                                        -
+                                                                    </Typography>
+                                                                    <Typography>
+                                                                        {cAwayScore}
+                                                                    </Typography>
+                                                                </Stack>
                                                             </Stack>
                                                         )
                                                     })}
-                                                    <Divider sx={{ my: 1 }} />
                                                 </Stack>
                                             ))}
                                         </Transitions>
@@ -166,7 +186,19 @@ export default function LiveMatches() {
                             </Card>
                         </Transitions>
                     )
-                })}
+                }) : (
+                    <Typography
+                        sx={{
+                            fontWeight: '500',
+                            fontSize: '0.9rem',
+                            marginBottom: '8px',
+                            textAlign: 'center',
+                            color: '#fff'
+                        }}
+                    >
+                        There is no in-play events
+                    </Typography>
+                )}
             </Grid>
         </Card>
     )
