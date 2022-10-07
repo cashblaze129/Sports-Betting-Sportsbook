@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Badge, Box, Card, CircularProgress, IconButton, Stack, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
@@ -25,6 +26,7 @@ import {
     // NexthoursIcon 
 } from 'ui-component/SvgIcon';
 import Event from './component/Event';
+import { setLiveMatches } from 'store/reducers/sports';
 
 const tabs = [
     {
@@ -54,6 +56,7 @@ const tabs = [
 ];
 
 const SportsPage = () => {
+    const dispatch = useDispatch();
     const theme = useTheme();
     const { boxShadow } = useConfig();
     const { formatMessage } = useIntl();
@@ -105,6 +108,33 @@ const SportsPage = () => {
         }
     };
 
+    const getLiveMatchesTimer = () => {
+        Axios.post('api/v1/sports/lists', {})
+            .then(({ data }) => {
+                const sportsList = data;
+                Axios.post('api/v2/sports/live-matches').then(({ data }) => {
+                    const sportsMatches = data;
+                    var sportsDt: any[] = [];
+                    for (let i = 0; i < sportsList.length; i++) {
+                        for (let j = 0; j < sportsMatches.length; j++) {
+                            if (sportsList[i].SportId === sportsMatches[j].events[0].sport_id) {
+                                const cIndex = sportsDt.findIndex(item => item.SportId === sportsMatches[j].events[0].sport_id)
+                                if (cIndex === -1) {
+                                    sportsDt.push({
+                                        ...sportsList[i],
+                                        leagues: [sportsMatches[j]],
+                                    })
+                                } else {
+                                    sportsDt[cIndex].leagues.push(sportsMatches[j])
+                                }
+                            }
+                        }
+                    }
+                    dispatch(setLiveMatches(sportsDt))
+                });
+            })
+    }
+
     const getSportsList = () => {
         setPageLoading(true);
         Axios.post('api/v1/sports/lists', {})
@@ -152,18 +182,9 @@ const SportsPage = () => {
     useEffect(() => {
         let unmounted = false;
         if (!unmounted) {
-            getSportsList();
-        }
-        return () => {
-            unmounted = true;
-        };
-        // eslint-disable-next-line
-    }, []);
-
-    useEffect(() => {
-        let unmounted = false;
-        if (!unmounted) {
             getSportMatchs();
+            getSportsList();
+            getLiveMatchesTimer();
         }
         return () => {
             unmounted = true;
@@ -175,6 +196,7 @@ const SportsPage = () => {
         let unmounted = false;
         const timer = setInterval(() => {
             if (!unmounted) {
+                getLiveMatchesTimer();
                 getSportMatchsTimer();
                 getSportsListsTimer();
             }

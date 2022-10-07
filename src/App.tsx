@@ -66,33 +66,6 @@ const App = () => {
         [network]
     );
 
-    const getLiveMatches = () => {
-        Axios.post('api/v1/sports/lists', {})
-            .then(({ data }) => {
-                const sportsList = data;
-                Axios.post('api/v2/sports/live-matches').then(({ data }) => {
-                    const sportsMatches = data;
-                    var sportsDt: any[] = [];
-                    for (let i = 0; i < sportsList.length; i++) {
-                        for (let j = 0; j < sportsMatches.length; j++) {
-                            if (sportsList[i].SportId === sportsMatches[j].events[0].sport_id) {
-                                const cIndex = sportsDt.findIndex(item => item.SportId === sportsMatches[j].events[0].sport_id)
-                                if (cIndex === -1) {
-                                    sportsDt.push({
-                                        ...sportsList[i],
-                                        leagues: [sportsMatches[j]],
-                                    })
-                                } else {
-                                    sportsDt[cIndex].leagues.push(sportsMatches[j])
-                                }
-                            }
-                        }
-                    }
-                    dispatch(setLiveMatches(sportsDt))
-                });
-            })
-    }
-
     const getRecentHistories = () => {
         Axios.post('api/v2/sports/recents-history').then(({ data }) => {
             dispatch(setRecentBets(data))
@@ -114,9 +87,6 @@ const App = () => {
                 if (data.balance !== balance) {
                     dispatch(UpdateBalance(data.balance));
                 }
-            });
-            socket.on('live-match', () => {
-                getLiveMatches();
             });
             socket.on('bet', () => {
                 getRecentHistories();
@@ -147,7 +117,6 @@ const App = () => {
     }, [pathname, dispatch]);
 
     useEffect(() => {
-        getLiveMatches();
         getRecentHistories();
     }, [])
 
