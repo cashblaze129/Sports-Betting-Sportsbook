@@ -187,15 +187,7 @@ export default function LiveMatches() {
                         </Transitions>
                     )
                 }) : (
-                    <Typography
-                        sx={{
-                            fontWeight: '500',
-                            fontSize: '0.9rem',
-                            marginBottom: '8px',
-                            textAlign: 'center',
-                            color: '#fff'
-                        }}
-                    >
+                    <Typography variant="body2" textAlign="center">
                         There is no in-play events
                     </Typography>
                 )}
