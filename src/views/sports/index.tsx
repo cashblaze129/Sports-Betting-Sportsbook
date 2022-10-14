@@ -287,7 +287,7 @@ const SportsPage = () => {
 
     return (
         <Box sx={{ p: 1 }}>
-            <Transitions in direction="up" type="slide">
+            <Transitions in direction="left" type="slide">
                 <Box className="sports-items" sx={{ overflow: 'auto' }}>
                     <PerfectScrollbar aria-setsize={1}>
                         <Stack

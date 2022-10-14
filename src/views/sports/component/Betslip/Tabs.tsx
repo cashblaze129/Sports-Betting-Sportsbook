@@ -15,8 +15,16 @@ import {
     Tab,
     Tabs,
     Typography,
+    FormGroup,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Checkbox,
     useTheme
 } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share';
@@ -65,6 +73,13 @@ const BetTabs = () => {
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [isbet, setIsbet] = useState<boolean>(false);
+
+    const [teaser, setTeaser] = useState<boolean>(false);
+    const [teaserOption, setTeaserOptions] = useState('');
+
+    const handleTeaserOptionChange = (event: SelectChangeEvent) => {
+        setTeaserOptions(event.target.value as string);
+    };
 
     const tabChangeHandler = (event: React.SyntheticEvent, index: number) => {
         setActiveTab(index);
@@ -173,7 +188,9 @@ const BetTabs = () => {
             }
         } else if (stake <= maxBet && stake >= minBet) {
             // eslint-disable-next-line
-            const betslip = betslipData.map((item: any) => item.eventId).reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
+            const betslip = betslipData
+                .map((item: any) => item.eventId)
+                .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
             if (potential > betLimit) {
                 setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
                 return;
@@ -213,7 +230,7 @@ const BetTabs = () => {
                 setLoading(false);
                 snackbar(formatMessage({ id: 'Submit successfully!' }));
                 Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-                    dispatch(setRecentBets(data))
+                    dispatch(setRecentBets(data));
                 });
             })
             .catch(() => {
@@ -384,6 +401,37 @@ const BetTabs = () => {
                             padding: '0 14px'
                         }}
                     >
+                        {/* {activeTab === 1 && (
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            onChange={(e) => {
+                                                setTeaser(Boolean(e.target.checked));
+                                            }}
+                                        />
+                                    }
+                                    label="Teaser Bet"
+                                />
+                                {teaser === true && (
+                                    <FormControl fullWidth sx={{ mb: 2 }}>
+                                        <InputLabel id="teaser-select-label">Teaser Options</InputLabel>
+                                        <Select
+                                            labelId="teaser-select-label"
+                                            id="teaser-select"
+                                            value={teaserOption}
+                                            label="Teaser"
+                                            onChange={handleTeaserOptionChange}
+                                        >
+                                            <MenuItem value={10}>Ten</MenuItem>
+                                            <MenuItem value={20}>Twenty</MenuItem>
+                                            <MenuItem value={30}>Thirty</MenuItem>
+                                            <MenuItem value={40}>Firty</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                )}
+                            </FormGroup>
+                        )} */}
                         {betslipData.map((item, key) => (
                             <Transitions key={key} in direction="left" type="slide">
                                 <Card
