@@ -401,7 +401,7 @@ const BetTabs = () => {
                             padding: '0 14px'
                         }}
                     >
-                        {/* {activeTab === 1 && (
+                        {activeTab === 1 && (
                             <FormGroup>
                                 <FormControlLabel
                                     control={
@@ -431,7 +431,7 @@ const BetTabs = () => {
                                     </FormControl>
                                 )}
                             </FormGroup>
-                        )} */}
+                        )}
                         {betslipData.map((item, key) => (
                             <Transitions key={key} in direction="left" type="slide">
                                 <Card

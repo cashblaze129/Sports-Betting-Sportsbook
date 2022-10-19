@@ -124,6 +124,7 @@ const Header = () => {
             signUpAddress(publicKeyAsString as string)
                 .then(({ data }: any) => {
                     snackbar(data);
+                    solanaLogin();
                 })
                 .catch((error) => {
                     setLoading(false);
