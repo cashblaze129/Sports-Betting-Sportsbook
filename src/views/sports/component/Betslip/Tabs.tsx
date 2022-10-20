@@ -57,6 +57,8 @@ import OddNum from 'views/sports/component/OddNum';
 import Axios from 'utils/axios';
 
 const BetTabs = () => {
+    const teaserTypes = [6, 6.5, 7, 10];
+
     const Api = useApi();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -188,18 +190,18 @@ const BetTabs = () => {
             }
         } else if (stake <= maxBet && stake >= minBet) {
             // eslint-disable-next-line
-            const betslip = betslipData
-                .map((item: any) => item.eventId)
-                .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
-            if (potential > betLimit) {
-                setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
-                return;
-            }
-            const betslipdata = Object.values(betslip) as any;
-            if (betslipdata.find((e: number) => e > 1)) {
-                setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
-                return;
-            }
+            // const betslip = betslipData
+            //     .map((item: any) => item.eventId)
+            //     .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
+            // if (potential > betLimit) {
+            //     setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
+            //     return;
+            // }
+            // const betslipdata = Object.values(betslip) as any;
+            // if (betslipdata.find((e: number) => e > 1)) {
+            //     setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
+            //     return;
+            // }
             betData = {
                 bets: betslipData,
                 odds,
@@ -423,10 +425,11 @@ const BetTabs = () => {
                                             label="Teaser"
                                             onChange={handleTeaserOptionChange}
                                         >
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                            <MenuItem value={40}>Firty</MenuItem>
+                                            {teaserTypes.map((type, index) => (
+                                                <MenuItem key={index} value={type}>
+                                                    {type}
+                                                </MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                 )}
