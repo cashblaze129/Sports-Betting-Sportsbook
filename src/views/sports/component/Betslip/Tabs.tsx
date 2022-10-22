@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Alert,
@@ -36,14 +36,14 @@ import { TwitterShareButton, FacebookShareButton, TelegramShareButton, FacebookI
 import { setRecentBets } from 'store/reducers/sports';
 
 import config, { BASE_URL } from 'config';
-import { BetslipProps } from 'types/sports';
+import { BetslipProps, SelectOddProps } from 'types/sports';
 
 import useApi from 'hooks/useApi';
 import useConfig from 'hooks/useConfig';
 
 import snackbar from 'utils/snackbar';
 import { toNumber } from 'utils/number';
-import { abbreviate, addRemoveBetslip } from 'utils/sports';
+import { abbreviate, addRemoveBetslip, convertHandicap, getTeaserData } from 'utils/sports';
 
 import { useDispatch, useSelector } from 'store';
 // import { ChangePage } from 'store/reducers/menu';
@@ -57,7 +57,12 @@ import OddNum from 'views/sports/component/OddNum';
 import Axios from 'utils/axios';
 
 const BetTabs = () => {
-    const teaserTypes = [6, 6.5, 7, 10];
+    const allTeaserTypes = {
+        AmericanFootball: [6, 6.5, 7],
+        Basketball: [4, 4.5, 5]
+    };
+
+    const teaserData: any = getTeaserData();
 
     const Api = useApi();
     const theme = useTheme();
@@ -67,6 +72,8 @@ const BetTabs = () => {
     const { boxShadow } = useConfig();
     const { betslipData } = useSelector((state) => state.sports);
     const { user, currency, isLoggedIn, balance } = useSelector((state) => state.auth);
+    const [teaserTypes, setTeaserTypes] = useState<any>(allTeaserTypes.AmericanFootball);
+    const [teaserFg, setTeaserFg] = useState<boolean>(false);
     const [result, setResult] = useState<any>([]);
     const [activeTab, setActiveTab] = useState<number>(0);
     const [amount, setAmount] = useState<number>(0);
@@ -78,6 +85,38 @@ const BetTabs = () => {
 
     const [teaser, setTeaser] = useState<boolean>(false);
     const [teaserOption, setTeaserOptions] = useState('');
+
+    const getOddName = (HomeTeam: string, AwayTeam: string, odd: any, oddType: any, teaserPoint: string) => {
+        let tPoint = Number(teaserPoint);
+        let oddName = '';
+        const marketId = odd.marketId;
+        const pt = Number(convertHandicap(odd.handicap, true)) + tPoint;
+        if (marketId.indexOf('_1') !== -1 || marketId === '1_8' || marketId === '18_4' || marketId === '18_7' || marketId === '3_4') {
+            if (oddType === 'home') {
+                oddName = HomeTeam;
+            } else if (oddType === 'away') {
+                oddName = AwayTeam;
+            } else if (oddType === 'draw') {
+                oddName = 'Draw';
+            }
+        } else if (marketId.indexOf('_2') !== -1 || marketId === '1_5' || marketId === '18_5' || marketId === '18_8') {
+            if (oddType === 'home') {
+                oddName = `${HomeTeam} (${pt > 0 ? `+${pt}` : `-${pt}`})`;
+            } else if (oddType === 'away') {
+                oddName = `${AwayTeam} (${pt > 0 ? `+${pt}` : `-${pt}`})`;
+            }
+        } else if (
+            marketId.indexOf('_3') !== -1 ||
+            marketId === '1_4' ||
+            marketId === '1_6' ||
+            marketId === '1_7' ||
+            marketId === '18_6' ||
+            marketId === '18_9'
+        ) {
+            oddName = `${oddType} (${pt > 0 ? `+${pt}` : `-${pt}`})`;
+        }
+        return oddName;
+    };
 
     const handleTeaserOptionChange = (event: SelectChangeEvent) => {
         setTeaserOptions(event.target.value as string);
@@ -149,38 +188,74 @@ const BetTabs = () => {
     const betLimit = currency?.betLimit || 0;
     const odds = activeTab === 0 ? totalOdds : multiplyOdds;
     const stake = activeTab === 0 ? totalStake : amount;
-    const potential = activeTab === 0 ? totalPayout : multiplyMany;
     const isBet = balance > 0 && balance >= stake;
+    let potential = activeTab === 0 ? totalPayout : multiplyMany;
 
     const betHandler = () => {
         setError('');
         setAError('');
         if (!betslipData.length) return;
+
+        let betslipDt: any[] = [];
+        let newBetSlipData: any = [];
+        if (teaser === true && teaserFg === true) {
+            if (betslipData.length === 2) {
+                setAError(`Bad teaser option!`);
+                return;
+            }
+
+            // Teaser Bet
+            for (let i = 0; i < betslipData.length; i++) {
+                const np = Number(betslipData[i].oddData.handicap) + Number(teaserOption);
+                newBetSlipData.push({
+                    ...betslipData[i],
+                    oddData: {
+                        ...betslipData[i].oddData,
+                        handicap: np > 0 ? `+${np}` : `-${np}`
+                    },
+                    oddName: getOddName(
+                        betslipData[i].HomeTeam,
+                        betslipData[i].AwayTeam,
+                        betslipData[i].oddData,
+                        betslipData[i].oddType,
+                        teaserOption
+                    )
+                });
+            }
+            betslipDt = newBetSlipData;
+        } else {
+            betslipDt = betslipData;
+        }
+
+        const teasers = teaserData[teaserData.findIndex((item: any) => item.point === Number(teaserOption))].teaser;
+        let teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
+        potential = (amount * teaserPointPayout) / 100;
+
         let betData = [] as any;
         const userId = user._id;
         const currencyId = currency?._id;
         const symbol = currency?.symbol;
         const type = activeTab === 0 ? 'single' : 'multi';
         if (activeTab === 0) {
-            for (const i in betslipData) {
-                if (betslipData[i].stake <= maxBet && betslipData[i].stake >= minBet) {
-                    const perPotential = Number(betslipData[i].odds) * Number(betslipData[i].stake);
+            for (const i in betslipDt) {
+                if (betslipDt[i].stake <= maxBet && betslipDt[i].stake >= minBet) {
+                    const perPotential = Number(betslipDt[i].odds) * Number(betslipDt[i].stake);
                     if (perPotential > betLimit) {
                         setAError(
-                            `Your bet exceeds the maximum in ${betslipData[i].oddName} odd. Maximum ${symbol} Bet Limit is ${abbreviate(
+                            `Your bet exceeds the maximum in ${betslipDt[i].oddName} odd. Maximum ${symbol} Bet Limit is ${abbreviate(
                                 betLimit
                             )} ${symbol}.`
                         );
                         return;
                     }
                     betData.push({
-                        bets: [betslipData[i]],
-                        odds: betslipData[i].odds,
-                        stake: betslipData[i].stake,
+                        bets: [betslipDt[i]],
+                        odds: betslipDt[i].odds,
+                        stake: betslipDt[i].stake,
                         potential: perPotential,
                         userId,
                         currency: currencyId,
-                        betType: betslipData[i].SportId,
+                        betType: betslipDt[i].SportId,
                         type
                     });
                 } else {
@@ -190,20 +265,20 @@ const BetTabs = () => {
             }
         } else if (stake <= maxBet && stake >= minBet) {
             // eslint-disable-next-line
-            // const betslip = betslipData
+            // const betslip = betslipDt
             //     .map((item: any) => item.eventId)
             //     .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
             // if (potential > betLimit) {
             //     setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
             //     return;
             // }
-            // const betslipdata = Object.values(betslip) as any;
-            // if (betslipdata.find((e: number) => e > 1)) {
+            // const betslipDt = Object.values(betslip) as any;
+            // if (betslipDt.find((e: number) => e > 1)) {
             //     setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
             //     return;
             // }
             betData = {
-                bets: betslipData,
+                bets: betslipDt,
                 odds,
                 stake,
                 potential,
@@ -239,6 +314,40 @@ const BetTabs = () => {
                 setLoading(false);
             });
     };
+
+    const checkTeaserBet = () => {
+        if (betslipData.length >= 2 && betslipData.length <= 10) {
+            let iNum = 0;
+            let perSportsNum: { AmericanFootball: number; Basketball: number } = { AmericanFootball: 0, Basketball: 0 };
+            for (let i = 0; i < betslipData.length; i++) {
+                if (betslipData[i].SportName === 'American Football') {
+                    perSportsNum.AmericanFootball++;
+                } else if (betslipData[i].SportName === 'Basketball') {
+                    perSportsNum.Basketball++;
+                }
+                if (
+                    betslipData[i].marketId.indexOf('_2') !== -1 &&
+                    (betslipData[i].SportName === 'American Football' || betslipData[i].SportName === 'Basketball') &&
+                    betslipData[i].marketId.indexOf('_2') !== -1
+                )
+                    iNum++;
+            }
+            if (perSportsNum.AmericanFootball === 0) {
+                setTeaserTypes(allTeaserTypes.Basketball);
+                return betslipData.length === iNum;
+            } else if (perSportsNum.Basketball === 0) {
+                setTeaserTypes(allTeaserTypes.AmericanFootball);
+                return betslipData.length === iNum;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    };
+
+    useEffect(() => {
+        setTeaserFg(checkTeaserBet());
+    }, [betslipData]);
 
     return (
         <>
@@ -403,7 +512,7 @@ const BetTabs = () => {
                             padding: '0 14px'
                         }}
                     >
-                        {activeTab === 1 && (
+                        {(activeTab === 1 && teaserFg === true && (
                             <FormGroup>
                                 <FormControlLabel
                                     control={
@@ -415,7 +524,7 @@ const BetTabs = () => {
                                     }
                                     label="Teaser Bet"
                                 />
-                                {teaser === true && (
+                                {teaser === true && teaserTypes.length > 0 && (
                                     <FormControl fullWidth sx={{ mb: 2 }}>
                                         <InputLabel id="teaser-select-label">Teaser Options</InputLabel>
                                         <Select
@@ -425,16 +534,30 @@ const BetTabs = () => {
                                             label="Teaser"
                                             onChange={handleTeaserOptionChange}
                                         >
-                                            {teaserTypes.map((type, index) => (
-                                                <MenuItem key={index} value={type}>
-                                                    {type}
-                                                </MenuItem>
-                                            ))}
+                                            {teaserTypes.map((type: any, index: number) => {
+                                                const teasers = teaserData[teaserData.findIndex((item: any) => item.point === type)].teaser;
+                                                let teaserPointPayout = 0;
+                                                if (betslipData.length > 1) {
+                                                    teaserPointPayout =
+                                                        teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
+                                                }
+                                                return (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={type}
+                                                        sx={{ display: 'flex', justifyContent: 'space-between' }}
+                                                    >
+                                                        <Stack>{type}&nbsp;-&nbsp;Point Teaser</Stack>
+                                                        <Stack>{teaserPointPayout > 0 ? `+${teaserPointPayout}` : teaserPointPayout}</Stack>
+                                                    </MenuItem>
+                                                );
+                                            })}
                                         </Select>
                                     </FormControl>
                                 )}
                             </FormGroup>
-                        )}
+                        )) ||
+                            (activeTab === 1 && betslipData.length > 0 && <Stack sx={{ my: 2 }}>Not available teaser.</Stack>)}
                         {betslipData.map((item, key) => (
                             <Transitions key={key} in direction="left" type="slide">
                                 <Card
@@ -473,7 +596,9 @@ const BetTabs = () => {
                                         </Typography>
                                         <Stack direction="row" justifyContent="space-between">
                                             <Typography variant="body2" color="white">
-                                                {item.oddName}
+                                                {teaserFg === true && teaser === true
+                                                    ? getOddName(item.HomeTeam, item.AwayTeam, item.oddData, item.oddType, teaserOption)
+                                                    : item.oddName}
                                             </Typography>
                                             <OddNum odd={item.odds} color="white" />
                                         </Stack>
