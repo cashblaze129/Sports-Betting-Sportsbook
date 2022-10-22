@@ -235,7 +235,7 @@ const BetTabs = () => {
         const userId = user._id;
         const currencyId = currency?._id;
         const symbol = currency?.symbol;
-        const type = activeTab === 0 ? 'single' : 'multi';
+        const type = activeTab === 0 ? 'single' : teaserSetted() ? 'teaser' : 'multi';
         if (activeTab === 0) {
             for (const i in betslipDt) {
                 if (betslipDt[i].stake <= maxBet && betslipDt[i].stake >= minBet) {
@@ -298,7 +298,7 @@ const BetTabs = () => {
         Api.betSport(betData, type, stake)
             .then(({ data }) => {
                 clearAllHandler();
-                if (data.data.type === 'multi') {
+                if (data.data.type === 'multi' || data.data.type === 'teaser') {
                     setResult([data.data.data]);
                 } else {
                     setResult(data.data.data);

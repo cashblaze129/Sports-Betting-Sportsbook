@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Grid,
-    IconButton,
-    Pagination,
-    Stack,
-    Typography
-} from '@mui/material';
+import { Card, CardContent, CardHeader, Divider, Grid, IconButton, Pagination, Stack, Typography } from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -25,7 +15,6 @@ import Transitions from 'ui-component/extended/Transitions';
 import OddNum from 'views/sports/component/OddNum';
 
 export default function RecentBets() {
-
     const navigate = useNavigate();
     const { boxShadow } = useConfig();
     const [activeOdds, setActiveOdds] = useState<string[]>([]);
@@ -45,9 +34,9 @@ export default function RecentBets() {
     };
 
     const colorEffect = (num: any) => {
-        const color = Number(num) >= 3 ? Number(num) >= 10 ? "#70bf3d" : "#ffab00" : "#fff";
+        const color = Number(num) >= 3 ? (Number(num) >= 10 ? '#70bf3d' : '#ffab00') : '#fff';
         return color;
-    }
+    };
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -58,7 +47,7 @@ export default function RecentBets() {
             const currentRBets = allRecentBets.slice(page > 0 ? (page - 1) * 5 : 0, page > 0 ? page * 5 : 5);
             setRecentBets(currentRBets);
         }
-    }, [page, allRecentBets])
+    }, [page, allRecentBets]);
 
     return (
         <Card
@@ -106,7 +95,7 @@ export default function RecentBets() {
                                     title={
                                         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                                             <Stack direction="row" alignItems="center" spacing={1}>
-                                                {rBet.type === 'multi' ? (
+                                                {rBet.type === 'multi' || rBet.type === 'teaser' ? (
                                                     <MultibetIcon />
                                                 ) : (
                                                     <i
@@ -119,7 +108,12 @@ export default function RecentBets() {
                                                 <Typography variant="body2" color="primary">
                                                     Bet:&nbsp;
                                                 </Typography>
-                                                <Typography variant="body2" className="text-ellipse" color={colorEffect(toNumber(rBet.stake))} sx={{ maxWidth: '100px' }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    className="text-ellipse"
+                                                    color={colorEffect(toNumber(rBet.stake))}
+                                                    sx={{ maxWidth: '100px' }}
+                                                >
                                                     {toNumber(rBet.stake)}
                                                 </Typography>
                                                 <img width="16px" src={rBet.currency.icon} alt="icon" />
@@ -195,12 +189,12 @@ export default function RecentBets() {
                                 </CardContent>
                             </Card>
                         </Transitions>
-                    )
+                    );
                 })}
                 <Stack direction="row" justifyContent="center" sx={{ p: 2 }}>
                     <Pagination count={5} onChange={handlePageChange} size={'small'} />
                 </Stack>
             </Grid>
         </Card>
-    )
+    );
 }

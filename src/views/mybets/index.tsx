@@ -93,7 +93,7 @@ const MybetsActive = () => {
                                 title={
                                     <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                                         <Stack direction="row" alignItems="center" spacing={1}>
-                                            {item.type === 'multi' ? (
+                                            {item.type === 'multi' || item.type === 'teaser' ? (
                                                 <MultibetIcon />
                                             ) : (
                                                 <i
