@@ -277,8 +277,13 @@ const BetTabs = () => {
             //     setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
             //     return;
             // }
-            const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
-            const oddNum = teaserSetted() ? teaserPointPayout / 100 : odds;
+            let oddNum: number;
+            if (teaserSetted()) {
+                const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
+                oddNum = teaserPointPayout / 100;
+            } else {
+                oddNum = odds;
+            }
             betData = {
                 bets: betslipDt,
                 odds: oddNum,
@@ -364,8 +369,8 @@ const BetTabs = () => {
         return tOdds;
     };
 
-    const teaserSetted = () => {
-        return teaser === true && teaserFg === true && teaserOption;
+    const teaserSetted = (): boolean => {
+        return Boolean(teaser === true && teaserFg === true && teaserOption);
     };
 
     useEffect(() => {
