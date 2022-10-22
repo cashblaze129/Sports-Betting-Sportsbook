@@ -200,7 +200,6 @@ const BetTabs = () => {
 
         let betslipDt: any[] = [];
         let newBetSlipData: any = [];
-        let teasers: any = [];
         if (teaserSetted()) {
             if (betslipData.length === 2) {
                 setAError(`Bad teaser option!`);
@@ -278,9 +277,11 @@ const BetTabs = () => {
             //     setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
             //     return;
             // }
+            const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
+            const oddNum = teaserSetted() ? teaserPointPayout / 100 : odds;
             betData = {
                 bets: betslipDt,
-                odds,
+                odds: oddNum,
                 stake,
                 potential,
                 currency: currencyId,
@@ -293,27 +294,28 @@ const BetTabs = () => {
             return;
         }
         if (error || aError) return;
-        setLoading(true);
-        Api.betSport(betData, type, stake)
-            .then(({ data }) => {
-                clearAllHandler();
-                if (data.data.type === 'multi') {
-                    setResult([data.data.data]);
-                } else {
-                    setResult(data.data.data);
-                }
-                setBetsId(data.betsId);
-                setAmount(0);
-                setIsbet(true);
-                setLoading(false);
-                snackbar(formatMessage({ id: 'Submit successfully!' }));
-                Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-                    dispatch(setRecentBets(data));
-                });
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+        // setLoading(true);
+        console.log(betData);
+        // Api.betSport(betData, type, stake)
+        //     .then(({ data }) => {
+        //         clearAllHandler();
+        //         if (data.data.type === 'multi') {
+        //             setResult([data.data.data]);
+        //         } else {
+        //             setResult(data.data.data);
+        //         }
+        //         setBetsId(data.betsId);
+        //         setAmount(0);
+        //         setIsbet(true);
+        //         setLoading(false);
+        //         snackbar(formatMessage({ id: 'Submit successfully!' }));
+        //         Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+        //             dispatch(setRecentBets(data));
+        //         });
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //     });
     };
 
     const checkTeaserBet = () => {
