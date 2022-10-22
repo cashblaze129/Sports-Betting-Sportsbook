@@ -198,6 +198,7 @@ const BetTabs = () => {
 
         let betslipDt: any[] = [];
         let newBetSlipData: any = [];
+        let teasers: any = [];
         if (teaser === true && teaserFg === true) {
             if (betslipData.length === 2) {
                 setAError(`Bad teaser option!`);
@@ -223,13 +224,13 @@ const BetTabs = () => {
                 });
             }
             betslipDt = newBetSlipData;
+
+            teasers = teaserData[teaserData.findIndex((item: any) => item.point === Number(teaserOption))].teaser;
+            let teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
+            potential = (amount * teaserPointPayout) / 100;
         } else {
             betslipDt = betslipData;
         }
-
-        const teasers = teaserData[teaserData.findIndex((item: any) => item.point === Number(teaserOption))].teaser;
-        let teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
-        potential = (amount * teaserPointPayout) / 100;
 
         let betData = [] as any;
         const userId = user._id;
