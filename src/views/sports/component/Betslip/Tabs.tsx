@@ -294,28 +294,27 @@ const BetTabs = () => {
             return;
         }
         if (error || aError) return;
-        // setLoading(true);
-        console.log(betData);
-        // Api.betSport(betData, type, stake)
-        //     .then(({ data }) => {
-        //         clearAllHandler();
-        //         if (data.data.type === 'multi') {
-        //             setResult([data.data.data]);
-        //         } else {
-        //             setResult(data.data.data);
-        //         }
-        //         setBetsId(data.betsId);
-        //         setAmount(0);
-        //         setIsbet(true);
-        //         setLoading(false);
-        //         snackbar(formatMessage({ id: 'Submit successfully!' }));
-        //         Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-        //             dispatch(setRecentBets(data));
-        //         });
-        //     })
-        //     .catch(() => {
-        //         setLoading(false);
-        //     });
+        setLoading(true);
+        Api.betSport(betData, type, stake)
+            .then(({ data }) => {
+                clearAllHandler();
+                if (data.data.type === 'multi') {
+                    setResult([data.data.data]);
+                } else {
+                    setResult(data.data.data);
+                }
+                setBetsId(data.betsId);
+                setAmount(0);
+                setIsbet(true);
+                setLoading(false);
+                snackbar(formatMessage({ id: 'Submit successfully!' }));
+                Axios.post('api/v2/sports/recents-history').then(({ data }) => {
+                    dispatch(setRecentBets(data));
+                });
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     };
 
     const checkTeaserBet = () => {
