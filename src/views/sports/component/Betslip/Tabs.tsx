@@ -333,11 +333,11 @@ const BetTabs = () => {
                     perSportsNum.Basketball++;
                 }
                 if (
-                    betslipData[i].marketId.indexOf('_2') !== -1 &&
                     (betslipData[i].SportName === 'American Football' || betslipData[i].SportName === 'Basketball') &&
-                    betslipData[i].marketId.indexOf('_2') !== -1
-                )
+                    (betslipData[i].marketId.indexOf('_2') !== -1 || betslipData[i].marketId.indexOf('_3') !== -1)
+                ) {
                     iNum++;
+                }
             }
             if (perSportsNum.AmericanFootball === 0) {
                 setTeaserTypes(allTeaserTypes.Basketball);
