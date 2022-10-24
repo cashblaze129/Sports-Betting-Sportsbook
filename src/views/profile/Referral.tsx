@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Divider, Grid, IconButton, InputAdornment, Skeleton, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -17,6 +20,7 @@ import snackbar from 'utils/snackbar';
 import { toNumberTag } from 'utils/number';
 
 import SubCard from 'ui-component/cards/SubCard';
+import { UpdateInfo } from 'store/reducers/auth';
 
 const initReferral = { rewards: 0, invited: 0 };
 
@@ -26,12 +30,14 @@ interface ReferralProps {
 }
 
 const Referral = () => {
+    const dispatch = useDispatch();
     const Api = useApi();
     const { boxShadow } = useConfig();
     const { formatMessage } = useIntl();
     const { user }: any = useSelector((state) => state.auth);
     const [loading, setLoading] = useState<boolean>(false);
     const [referral, setReferral] = useState<ReferralProps>(initReferral);
+    const [iReferral, setIReferral] = useState<string>(user.iReferral);
 
     const getReferral = () => {
         setLoading(true);
@@ -45,15 +51,20 @@ const Referral = () => {
             });
     };
 
+    const saveIReferral = () => {
+        Api.updateUserInfo({
+            iReferral,
+            update: false
+        }).then(({ data }) => {
+            dispatch(UpdateInfo(data));
+            snackbar(formatMessage({ id: 'Success!' }));
+        });
+    };
+
     useEffect(() => {
         getReferral();
         // eslint-disable-next-line
     }, []);
-
-    useEffect(() => {
-        console.log(user);
-        // eslint-disable-next-line
-    }, [user]);
 
     if (loading) return <Skeleton variant="rectangular" height={300} sx={{ borderRadius: '8px', boxShadow }} />;
 
@@ -113,12 +124,12 @@ const Referral = () => {
                                 fullWidth
                                 label={formatMessage({ id: 'Your Referral Link' })}
                                 type="text"
-                                value={`${BASE_URL}?c=${user.iReferral}`}
+                                value={`${BASE_URL}?c=${iReferral}`}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <CopyToClipboard
-                                                text={`${BASE_URL}?c=${user.iReferral}`}
+                                                text={`${BASE_URL}?c=${iReferral}`}
                                                 onCopy={() => snackbar(formatMessage({ id: 'Copied' }))}
                                             >
                                                 <Tooltip title="Copy">
@@ -136,11 +147,38 @@ const Referral = () => {
                             <TextField
                                 label={formatMessage({ id: 'Your Referral Code' })}
                                 type="text"
-                                value={user.iReferral}
+                                value={iReferral}
+                                onChange={(e: any) => setIReferral(e.target.value)}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <CopyToClipboard text={user.iReferral} onCopy={() => snackbar(formatMessage({ id: 'Copied' }))}>
+                                            {iReferral !== user.iReferral && (
+                                                <>
+                                                    <Tooltip title="Save">
+                                                        <IconButton
+                                                            aria-label="Save your custom referral code"
+                                                            edge="end"
+                                                            size="large"
+                                                            onClick={() => {
+                                                                saveIReferral();
+                                                            }}
+                                                        >
+                                                            <SaveIcon sx={{ fontSize: '1.3rem' }} />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                    <Tooltip title="Close">
+                                                        <IconButton
+                                                            aria-label="Close"
+                                                            edge="end"
+                                                            size="large"
+                                                            onClick={() => setIReferral(user.iReferral)}
+                                                        >
+                                                            <CancelIcon sx={{ fontSize: '1.3rem' }} />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </>
+                                            )}
+                                            <CopyToClipboard text={iReferral} onCopy={() => snackbar(formatMessage({ id: 'Copied' }))}>
                                                 <Tooltip title="Copy">
                                                     <IconButton aria-label="Copy from another element" edge="end" size="large">
                                                         <ContentCopyTwoToneIcon sx={{ fontSize: '1.1rem' }} />
