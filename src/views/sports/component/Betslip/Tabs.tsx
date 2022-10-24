@@ -373,6 +373,16 @@ const BetTabs = () => {
         return Boolean(teaser === true && teaserFg === true && teaserOption);
     };
 
+    const renderValue = (value: string) => {
+        return value;
+    };
+
+    const [age, setAge] = useState('');
+
+    const handleSSChange = (event: SelectChangeEvent) => {
+        setAge(event.target.value as string);
+    };
+
     useEffect(() => {
         setTeaserFg(checkTeaserBet());
     }, [betslipData]);
@@ -557,8 +567,9 @@ const BetTabs = () => {
                                         <InputLabel id="teaser-select-label">Teaser Options</InputLabel>
                                         <Select
                                             labelId="teaser-select-label"
-                                            id="teaser-select"
+                                            id="teaser-select-123123"
                                             value={teaserOption}
+                                            renderValue={() => renderValue(teaserOption)}
                                             label="Teaser"
                                             onChange={handleTeaserOptionChange}
                                         >
