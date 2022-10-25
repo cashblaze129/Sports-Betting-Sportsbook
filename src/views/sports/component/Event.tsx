@@ -107,67 +107,67 @@ const Event = ({ event, activeSports, isLive }: EventProps) => {
     };
 
     const MarketTwo = () => {
-        if (isNaN(marketTwo.home_od) || isNaN(marketTwo.away_od)) {
+        if (marketTwo) {
+            if (isNaN(marketTwo.home_od) || isNaN(marketTwo.away_od)) {
+                return <Lock />;
+            }
+            return (
+                <>
+                    <OddWarraper
+                        gridColumn="span 6"
+                        update={marketTwo?.update1}
+                        onClick={() => betHandler(marketTwo, OddTypes.Home)}
+                        active={checkActive(betslipData, marketTwo.id, OddTypes.Home)}
+                    >
+                        <Typography className="odd-attr">Spread ({convertHandicap(marketTwo?.handicap, true)})</Typography>
+                        <OddNum odd={marketTwo.home_od} />
+                    </OddWarraper>
+                    <OddWarraper
+                        gridColumn="span 6"
+                        update={marketTwo?.update2}
+                        onClick={() => betHandler(marketTwo, OddTypes.Away)}
+                        active={checkActive(betslipData, marketTwo.id, OddTypes.Away)}
+                    >
+                        <Typography className="odd-attr">Spread ({convertHandicap(marketTwo?.handicap, false)})</Typography>
+                        <OddNum odd={marketTwo.away_od} />
+                    </OddWarraper>
+                </>
+            );
+        } else {
             return <Lock />;
         }
-        return (
-            <>
-                {marketTwo && (
-                    <>
-                        <OddWarraper
-                            gridColumn="span 6"
-                            update={marketTwo?.update1}
-                            onClick={() => betHandler(marketTwo, OddTypes.Home)}
-                            active={checkActive(betslipData, marketTwo.id, OddTypes.Home)}
-                        >
-                            <Typography className="odd-attr">Spread ({convertHandicap(marketTwo?.handicap, true)})</Typography>
-                            <OddNum odd={marketTwo.home_od} />
-                        </OddWarraper>
-                        <OddWarraper
-                            gridColumn="span 6"
-                            update={marketTwo?.update2}
-                            onClick={() => betHandler(marketTwo, OddTypes.Away)}
-                            active={checkActive(betslipData, marketTwo.id, OddTypes.Away)}
-                        >
-                            <Typography className="odd-attr">Spread ({convertHandicap(marketTwo?.handicap, false)})</Typography>
-                            <OddNum odd={marketTwo.away_od} />
-                        </OddWarraper>
-                    </>
-                )}
-            </>
-        );
     };
 
     const MarketThree = () => {
-        if (isNaN(marketThree.over_od) || isNaN(marketThree.under_od)) {
+        if (marketThree) {
+            if (isNaN(marketThree.over_od) || isNaN(marketThree.under_od)) {
+                return <Lock />;
+            }
+            return (
+                <>
+                    <OddWarraper
+                        gridColumn="span 6"
+                        update={marketThree?.update1}
+                        onClick={() => betHandler(marketThree, OddTypes.Over)}
+                        active={checkActive(betslipData, marketThree.id, OddTypes.Over)}
+                    >
+                        <Typography className="odd-attr">Over {marketThree?.handicap}</Typography>
+                        <OddNum odd={marketThree?.over_od} />
+                    </OddWarraper>
+                    <OddWarraper
+                        gridColumn="span 6"
+                        update={marketThree?.update2}
+                        onClick={() => betHandler(marketThree, OddTypes.Under)}
+                        active={checkActive(betslipData, marketThree.id, OddTypes.Under)}
+                    >
+                        <Typography className="odd-attr">Under {marketThree?.handicap}</Typography>
+                        <OddNum odd={marketThree?.under_od} />
+                    </OddWarraper>
+                </>
+            );
+        } else {
             return <Lock />;
         }
-        return (
-            <>
-                {marketThree && (
-                    <>
-                        <OddWarraper
-                            gridColumn="span 6"
-                            update={marketThree?.update1}
-                            onClick={() => betHandler(marketThree, OddTypes.Over)}
-                            active={checkActive(betslipData, marketThree.id, OddTypes.Over)}
-                        >
-                            <Typography className="odd-attr">Over {marketThree?.handicap}</Typography>
-                            <OddNum odd={marketThree?.over_od} />
-                        </OddWarraper>
-                        <OddWarraper
-                            gridColumn="span 6"
-                            update={marketThree?.update2}
-                            onClick={() => betHandler(marketThree, OddTypes.Under)}
-                            active={checkActive(betslipData, marketThree.id, OddTypes.Under)}
-                        >
-                            <Typography className="odd-attr">Under {marketThree?.handicap}</Typography>
-                            <OddNum odd={marketThree?.under_od} />
-                        </OddWarraper>
-                    </>
-                )}
-            </>
-        );
     };
 
     if (isMobile) {
