@@ -49,6 +49,14 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
         return res;
     };
 
+    const signInSolana = async (publicAddress: string, signature: string) => {
+        const res = await axios.post('api/v2/users/s-signin', {
+            publicAddress,
+            signature
+        });
+        return res;
+    };
+
     const signUpAddress = async (publicAddress: string) => {
         const params = { publicAddress, rReferral: code };
         const res = await axios.post('api/v2/users/a-signup', params);
@@ -148,6 +156,7 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
                 forgotPassword,
                 checkAddress,
                 signInAddress,
+                signInSolana,
                 signUpAddress,
                 changePassword,
                 resetPassword,

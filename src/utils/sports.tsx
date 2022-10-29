@@ -454,7 +454,7 @@ export const getTeaserData = () => {
         {
             point: 4,
             teaser: [
-                { team: 2, calc: 1 / 1, payout: -120 },
+                { team: 2, calc: 1 / 1, payout: 120 },
                 { team: 3, calc: 9 / 5, payout: 180 },
                 { team: 4, calc: 3 / 1, payout: 300 },
                 { team: 5, calc: 5 / 1, payout: 500 },
@@ -468,7 +468,7 @@ export const getTeaserData = () => {
         {
             point: 4.5,
             teaser: [
-                { team: 2, calc: 10 / 11, payout: -130 },
+                { team: 2, calc: 10 / 11, payout: 130 },
                 { team: 3, calc: 8 / 5, payout: 160 },
                 { team: 4, calc: 5 / 2, payout: 250 },
                 { team: 5, calc: 4 / 1, payout: 400 },
@@ -482,7 +482,7 @@ export const getTeaserData = () => {
         {
             point: 5,
             teaser: [
-                { team: 2, calc: 5 / 6, payout: -140 },
+                { team: 2, calc: 5 / 6, payout: 140 },
                 { team: 3, calc: 3 / 2, payout: 150 },
                 { team: 4, calc: 2 / 1, payout: 235 },
                 { team: 5, calc: 7 / 2, payout: 300 },
@@ -496,7 +496,7 @@ export const getTeaserData = () => {
         {
             point: 6,
             teaser: [
-                { team: 2, calc: 10 / 11, payout: -120 },
+                { team: 2, calc: 10 / 11, payout: 120 },
                 { team: 3, calc: 9 / 5, payout: 180 },
                 { team: 4, calc: 3 / 1, payout: 300 },
                 { team: 5, calc: 9 / 2, payout: 450 },
@@ -510,7 +510,7 @@ export const getTeaserData = () => {
         {
             point: 6.5,
             teaser: [
-                { team: 2, calc: 10 / 12, payout: -130 },
+                { team: 2, calc: 10 / 12, payout: 130 },
                 { team: 3, calc: 8 / 5, payout: 160 },
                 { team: 4, calc: 5 / 2, payout: 250 },
                 { team: 5, calc: 4 / 1, payout: 400 },
@@ -524,7 +524,7 @@ export const getTeaserData = () => {
         {
             point: 7,
             teaser: [
-                { team: 2, calc: 10 / 13, payout: -140 },
+                { team: 2, calc: 10 / 13, payout: 140 },
                 { team: 3, calc: 7 / 5, payout: 140 },
                 { team: 4, calc: 2 / 1, payout: 200 },
                 { team: 5, calc: 7 / 2, payout: 350 },

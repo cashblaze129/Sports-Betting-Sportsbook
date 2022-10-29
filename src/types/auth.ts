@@ -19,6 +19,7 @@ export type APIContextType = {
     logout: () => void;
     checkAddress: (publicAddress: string) => Promise<any>;
     signInAddress: (publicAddress: string, signature: string) => Promise<any>;
+    signInSolana: (publicAddress: string, signature: string) => Promise<any>;
     signUpAddress: (publicAddress: string) => Promise<any>;
     forgotPassword: (email: string, recaptcha: string) => Promise<any>;
     changePassword: (data: any) => Promise<any>;

@@ -68,9 +68,9 @@ const App = () => {
 
     const getRecentHistories = () => {
         Axios.post('api/v2/sports/recents-history').then(({ data }) => {
-            dispatch(setRecentBets(data))
+            dispatch(setRecentBets(data));
         });
-    }
+    };
 
     useEffect(() => {
         let socket = io(BASE_URL);
@@ -118,12 +118,12 @@ const App = () => {
 
     useEffect(() => {
         getRecentHistories();
-    }, [])
+    }, []);
 
     return (
         <ThemeCustomization>
             <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets}>
+                <WalletProvider wallets={wallets} autoConnect>
                     <Locales>
                         <NavigationScroll>
                             <APIProvider>

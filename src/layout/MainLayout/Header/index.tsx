@@ -7,7 +7,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { IconWallet } from '@tabler/icons';
 import { FormattedMessage } from 'react-intl';
 import bs58 from 'bs58';
-import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+// import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 
 import useApi from 'hooks/useApi';
@@ -20,6 +20,7 @@ import { toNumber } from 'utils/number';
 
 import { useDispatch, useSelector } from 'store';
 import { ChangePage } from 'store/reducers/menu';
+import AnimateButton from 'ui-component/extended/AnimateButton';
 
 import Logo1Img from 'assets/images/logo/logo.png';
 import Logo2Img from 'assets/images/logo/200xlogo.png';
@@ -47,7 +48,6 @@ const Header = () => {
 
     const [publicKeyAsString, setPublicKeyAsString] = useState('');
     // const { connection } = useConnection();
-    const { publicKey, connected } = useWallet();
 
     const onLogin = (userInfo: any) => {
         dispatch(Login(userInfo));
@@ -67,91 +67,16 @@ const Header = () => {
         }
     };
 
-    const handleAuthenticate = (publicAddress: PublicKey, signature: []) => {
-        signInAddress(publicAddress.toBase58(), bs58.encode(signature))
-            .then(({ data }) => {
-                setLoading(false);
-                onLogin(data);
-            })
-            .catch((error) => {
-                setLoading(false);
-            });
-    };
-
-    const handleSignMessage = async ({ publicAddress, nonce }: any) => {
-        try {
-            const provider = window.solana; // see "Detecting the Provider"
-            const encodedMessage = new TextEncoder().encode(`boibook: ${nonce}`);
-            const signRequestResult = await provider.signMessage(encodedMessage, 'utf8');
-            const pubKey = signRequestResult.publicKey;
-            const signature = signRequestResult.signature;
-            handleAuthenticate(pubKey, signature);
-        } catch (error) {
-            setLoading(false);
-        }
-    };
-
-    const solanaLogin = async () => {
-        let pubString = '';
-        if (publicKeyAsString) {
-            pubString = publicKeyAsString || '';
-        } else if (connected) {
-            pubString = publicKey?.toString() || '';
-        }
-        if (pubString) {
-            setLoading(true);
-            checkAddress(pubString as string)
-                .then(({ data }: any) => {
-                    if (data.status) {
-                        handleSignMessage(data.user);
-                    } else {
-                        setTimeout(() => {
-                            solanaRegister();
-                        }, 2000);
-                    }
-                })
-                .catch((error) => {
-                    setTimeout(() => {
-                        solanaRegister();
-                    }, 2000);
-                    setLoading(false);
-                });
-        }
-    };
-
-    const solanaRegister = () => {
-        if (publicKeyAsString) {
-            signUpAddress(publicKeyAsString as string)
-                .then(({ data }: any) => {
-                    snackbar(data);
-                    solanaLogin();
-                })
-                .catch((error) => {
-                    setLoading(false);
-                });
-        }
-    };
-
-    const logoutFunc = () => {
-        logout();
-        localStorage.clear();
-        if (window) {
-            // @ts-ignore
-            window?.location.reload();
-        }
-    };
-
-    useEffect(() => {
-        if (publicKeyAsString) {
-            if (publicKey?.toString() !== publicKeyAsString) {
-                logoutFunc();
-            }
-        }
-        if (publicKey && !isLoggedIn) {
-            setPublicKeyAsString(publicKey.toString());
-        }
-        // eslint-disable-next-line
-    }, [publicKey]);
+    // const handleAuthenticate = (publicAddress: PublicKey, signature: []) => {
+    //     signInAddress(publicAddress.toBase58(), bs58.encode(signature))
+    //         .then(({ data }) => {
+    //             setLoading(false);
+    //             onLogin(data);
+    //         })
+    //         .catch((error) => {
+    //             setLoading(false);
+    //         });
+    // };
 
     // useEffect(() => {
     //     if (isLoggedIn && !connected) {
@@ -159,13 +84,6 @@ const Header = () => {
     //     }
     //     // eslint-disable-next-line
     // }, [isLoggedIn]);
-
-    useEffect(() => {
-        if (publicKeyAsString) {
-            solanaLogin();
-        }
-        // eslint-disable-next-line
-    }, [publicKeyAsString]);
 
     useEffect(() => {
         if (code && code !== '' && !isInitialized) {
@@ -248,47 +166,23 @@ const Header = () => {
                     <ProfileSection />
                 </>
             ) : (
-                <WalletModalProvider>
-                    <Box
-                        sx={{
-                            '& button': {
-                                backgroundColor: config.dark2,
-                                color: 'white',
-                                border: `1px solid ${config.grey2}`
-                            }
-                        }}
-                    >
-                        {publicKeyAsString || connected ? (
-                            <LoadingButton
-                                loading={loading}
-                                sx={{ backgroundColor: config.dark2, color: 'white', border: `1px solid ${config.grey2}` }}
-                                variant="outlined"
-                                onClick={() => solanaLogin()}
-                            >
-                                <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
-                                <FormattedMessage id="Sign Wallet" />
-                            </LoadingButton>
-                        ) : (
-                            <Box
-                                sx={{
-                                    '& button': { height: '40px', fontSize: '0.875rem' },
-                                    '& img': { width: '20px !important', height: '20px !important' }
-                                }}
-                            >
-                                <WalletMultiButton />
-                            </Box>
-                        )}
-                    </Box>
-                </WalletModalProvider>
-                // <LoadingButton
-                //     loading={loading}
-                //     sx={{ backgroundColor: config.dark2, color: 'white', border: `1px solid ${config.grey2}` }}
-                //     variant="outlined"
-                //     onClick={() => handleLogin()}
-                // >
-                //     <img src={PhantomLogo} alt="" style={{ marginRight: '0.5rem', width: '20px' }} />
-                //     <FormattedMessage id="Select Wallet" />
-                // </LoadingButton>
+                <>
+                    <AnimateButton>
+                        <Button
+                            onClick={() => dispatch(ChangePage('login'))}
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                mr: 2,
+                                ':hover': {
+                                    boxShadow: 'none'
+                                }
+                            }}
+                        >
+                            <FormattedMessage id="Connect Boibook" />
+                        </Button>
+                    </AnimateButton>
+                </>
             )}
         </>
     );
