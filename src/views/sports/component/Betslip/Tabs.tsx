@@ -226,7 +226,7 @@ const BetTabs = () => {
             }
             betslipDt = newBetSlipData;
             const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
-            potential = (amount * teaserPointPayout) / 100;
+            potential = amount * teaserPointPayout;
         } else {
             betslipDt = betslipData;
         }
@@ -280,7 +280,7 @@ const BetTabs = () => {
             let oddNum: number;
             if (teaserSetted()) {
                 const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
-                oddNum = teaserPointPayout / 100;
+                oddNum = teaserPointPayout;
             } else {
                 oddNum = odds;
             }
@@ -356,7 +356,7 @@ const BetTabs = () => {
         const teasers = teaserData[teaserData.findIndex((item: any) => item.point === type)].teaser;
         let teaserPointPayout = 0;
         if (betslipData.length > 1) {
-            teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
+            teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].calc;
         }
         return teaserPointPayout;
     };
@@ -364,7 +364,7 @@ const BetTabs = () => {
     const oddCalcFunc = (tOdds: string) => {
         if (teaserSetted() && teaserOption) {
             const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
-            return teaserPointPayout / 100;
+            return teaserPointPayout;
         }
         return tOdds;
     };
@@ -729,9 +729,7 @@ const BetTabs = () => {
                             </Typography>
                             <Stack direction="row" alignItems="center" spacing={0.5}>
                                 <Typography className="text-ellipse" variant="body2" color="#fff" sx={{ maxWidth: '100px' }}>
-                                    {teaserSetted()
-                                        ? toNumber((amount * teaserPayoutCalc(Number(teaserOption))) / 100)
-                                        : toNumber(potential)}
+                                    {teaserSetted() ? toNumber(amount * teaserPayoutCalc(Number(teaserOption))) : toNumber(potential)}
                                 </Typography>
                                 <img width="16px" src={currency?.icon} alt="icon" />
                             </Stack>
