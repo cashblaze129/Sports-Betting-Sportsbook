@@ -40,7 +40,7 @@ const App = () => {
 
     let network: any;
 
-    if (BASE_URL?.indexOf('localhost') !== -1) {
+    if (BASE_URL?.indexOf('localhost') !== -1 || BASE_URL?.indexOf('test') !== -1) {
         network = WalletAdapterNetwork.Testnet;
     } else {
         network = WalletAdapterNetwork.Mainnet;
@@ -123,7 +123,7 @@ const App = () => {
     return (
         <ThemeCustomization>
             <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets} autoConnect>
+                <WalletProvider wallets={wallets}>
                     <Locales>
                         <NavigationScroll>
                             <APIProvider>
