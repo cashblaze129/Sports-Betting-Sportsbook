@@ -706,7 +706,7 @@ const BetTabs = () => {
                                         <FormattedMessage id="Total Odds" />
                                     </Typography>
                                     <Typography className="text-ellipse" variant="body2" color="primary" sx={{ maxWidth: '100px' }}>
-                                        {oddCalcFunc(toNumber(totalOdds))}
+                                        {oddCalcFunc(toNumber(multiplyOdds))}
                                     </Typography>
                                 </Stack>
                             </>
