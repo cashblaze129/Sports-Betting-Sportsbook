@@ -16,6 +16,7 @@ import {
 
 import PersonIcon from '@mui/icons-material/Person';
 import { IconLogout, IconReceipt, IconUser, IconWallet } from '@tabler/icons';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -27,14 +28,16 @@ import Transitions from 'ui-component/extended/Transitions';
 
 const ProfileSection = () => {
     const theme = useTheme();
+    const { disconnect } = useWallet();
+
     const { borderRadius } = useConfig();
     const navigate = useNavigate();
-
     const { logout } = useApi();
     const [open, setOpen] = useState(false);
     const anchorRef = useRef<any>(null);
     const handleLogout = async () => {
         try {
+            disconnect();
             await logout();
         } catch (err) {
             console.error(err);

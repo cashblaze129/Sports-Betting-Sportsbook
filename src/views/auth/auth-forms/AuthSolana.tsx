@@ -15,13 +15,13 @@ import useApi from 'hooks/useApi';
 import snackbar from 'utils/snackbar';
 
 import PhantomLogo from 'assets/images/icons/phantom-logo.png';
+import { Box, CircularProgress } from '@mui/material';
 
-const AuthSolana = () => {
+const AuthSolana = ({ loading, setLoading }: any) => {
     const dispatch = useDispatch();
     const [publicKeyAsString, setPublicKeyAsString] = useState('');
     const { code, isLoggedIn, isInitialized } = useSelector((state) => state.auth);
     const { logout, signInSolana, checkAddress, signUpAddress } = useApi();
-    const [loading, setLoading] = useState(false);
 
     const { publicKey, connected } = useWallet();
 
@@ -125,12 +125,13 @@ const AuthSolana = () => {
         // eslint-disable-next-line
     }, [publicKey]);
 
-    // useEffect(() => {
-    //     if (publicKeyAsString) {
-    //         solanaLogin();
-    //     }
-    //     // eslint-disable-next-line
-    // }, [publicKeyAsString]);
+    useEffect(() => {
+        console.log(isLoggedIn, connected, publicKeyAsString);
+        if (!isLoggedIn && connected && publicKeyAsString) {
+            solanaLogin();
+        }
+        // eslint-disable-next-line
+    }, [isLoggedIn, connected, publicKeyAsString]);
 
     useEffect(() => {
         if (code && code !== '' && !isInitialized) {
@@ -141,14 +142,34 @@ const AuthSolana = () => {
 
     return (
         <WalletModalProvider>
-            {publicKeyAsString || connected ? (
-                <LoadingButton loading={loading} sx={{ color: 'white' }} variant="outlined" onClick={() => solanaLogin()}>
-                    <img src={PhantomLogo} alt="" style={{ width: '26px', height: '26px' }} />
-                </LoadingButton>
+            {loading ? (
+                <Box sx={{ position: 'relative', width: '36px', height: '36px' }}>
+                    <CircularProgress size={36} />
+                    <img
+                        src={PhantomLogo}
+                        alt="coinbase"
+                        width={26}
+                        height={26}
+                        style={{
+                            position: 'absolute',
+                            transform: 'translate(-50%, -50%)',
+                            top: '50%',
+                            left: '50%'
+                        }}
+                    />
+                </Box>
             ) : (
-                <WalletMultiButton>
-                    <img src={PhantomLogo} alt="" style={{ width: '26px', height: '26px' }} />
-                </WalletMultiButton>
+                <>
+                    {publicKeyAsString || connected ? (
+                        <LoadingButton loading={loading} sx={{ color: 'white' }} variant="outlined" onClick={() => solanaLogin()}>
+                            <img src={PhantomLogo} alt="" style={{ width: '26px', height: '26px' }} />
+                        </LoadingButton>
+                    ) : (
+                        <WalletMultiButton>
+                            <img src={PhantomLogo} alt="" style={{ width: '26px', height: '26px' }} />
+                        </WalletMultiButton>
+                    )}
+                </>
             )}
         </WalletModalProvider>
     );

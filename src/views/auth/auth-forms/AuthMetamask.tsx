@@ -249,13 +249,13 @@ const AuthMetamask = () => {
                             borderColor: 'transparent'
                         },
                         '& button': {
-                            width: '100%',
-                            height: '100%',
+                            width: '100% !important',
+                            height: '100% !important',
                             justifyContent: 'space-around'
                         }
                     }}
                 >
-                    <AuthSolana />
+                    <AuthSolana loading={loading} setLoading={setLoading} />
                 </Button>
             </Grid>
         </Grid>
