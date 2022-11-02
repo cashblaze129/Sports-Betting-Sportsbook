@@ -374,7 +374,18 @@ const BetTabs = () => {
     };
 
     const renderValue = (value: string) => {
-        return value;
+        // return `${value} - Point Teaser`;
+        const teasers = teaserData[teaserData.findIndex((item: any) => item.point === value)].teaser;
+        let teaserPointPayout = 0;
+        if (betslipData.length > 1) {
+            teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
+        }
+        return (
+            <Stack direction={'row'} justifyContent={'space-between'}>
+                <Stack>{value}&nbsp;-&nbsp;Point Teaser</Stack>
+                <Stack>{teaserPointPayout > 0 ? `+${teaserPointPayout}` : teaserPointPayout}</Stack>
+            </Stack>
+        );
     };
 
     const [age, setAge] = useState('');
@@ -567,7 +578,7 @@ const BetTabs = () => {
                                         <InputLabel id="teaser-select-label">Teaser Options</InputLabel>
                                         <Select
                                             labelId="teaser-select-label"
-                                            id="teaser-select-123123"
+                                            id="teaser-select-label"
                                             value={teaserOption}
                                             renderValue={() => renderValue(teaserOption)}
                                             label="Teaser"
@@ -706,7 +717,7 @@ const BetTabs = () => {
                                         <FormattedMessage id="Total Odds" />
                                     </Typography>
                                     <Typography className="text-ellipse" variant="body2" color="primary" sx={{ maxWidth: '100px' }}>
-                                        {oddCalcFunc(toNumber(totalOdds))}
+                                        {oddCalcFunc(toNumber(multiplyOdds))}
                                     </Typography>
                                 </Stack>
                             </>
