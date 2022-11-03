@@ -84,7 +84,7 @@ const BetTabs = () => {
     const [isbet, setIsbet] = useState<boolean>(false);
 
     const [teaser, setTeaser] = useState<boolean>(false);
-    const [teaserOption, setTeaserOptions] = useState('');
+    const [teaserOption, setTeaserOption] = useState('');
 
     const getOddName = (HomeTeam: string, AwayTeam: string, odd: any, oddType: any, teaserPoint: string) => {
         let tPoint = Number(teaserPoint);
@@ -121,7 +121,7 @@ const BetTabs = () => {
     };
 
     const handleTeaserOptionChange = (event: SelectChangeEvent) => {
-        setTeaserOptions(event.target.value as string);
+        setTeaserOption(event.target.value as string);
     };
 
     const tabChangeHandler = (event: React.SyntheticEvent, index: number) => {
@@ -323,7 +323,7 @@ const BetTabs = () => {
     };
 
     const checkTeaserBet = () => {
-        if (betslipData.length >= 2 && betslipData.length <= 10) {
+        if (betslipData.length >= 2 && betslipData.length <= 7) {
             let iNum = 0;
             let perSportsNum: { AmericanFootball: number; Basketball: number } = { AmericanFootball: 0, Basketball: 0 };
             for (let i = 0; i < betslipData.length; i++) {
@@ -370,14 +370,14 @@ const BetTabs = () => {
     };
 
     const teaserSetted = (): boolean => {
-        return Boolean(teaser === true && teaserFg === true && teaserOption);
+        return Boolean(teaser === true && teaserFg === true && teaserOption && betslipData.length >= 2 && betslipData.length <= 7);
     };
 
     const renderValue = (value: string) => {
         // return `${value} - Point Teaser`;
         const teasers = teaserData[teaserData.findIndex((item: any) => item.point === value)].teaser;
         let teaserPointPayout = 0;
-        if (betslipData.length > 1) {
+        if (teaserSetted()) {
             teaserPointPayout = teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
         }
         return (
@@ -388,15 +388,15 @@ const BetTabs = () => {
         );
     };
 
-    const [age, setAge] = useState('');
-
-    const handleSSChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
-    };
-
     useEffect(() => {
         setTeaserFg(checkTeaserBet());
     }, [betslipData]);
+
+    useEffect(() => {
+        if (teaserTypes.indexOf(teaserOption) === -1) {
+            setTeaserOption(teaserTypes[0]);
+        }
+    }, [teaserTypes]);
 
     return (
         <>
@@ -566,6 +566,7 @@ const BetTabs = () => {
                                 <FormControlLabel
                                     control={
                                         <Checkbox
+                                            checked={teaser}
                                             onChange={(e) => {
                                                 setTeaser(Boolean(e.target.checked));
                                             }}
@@ -587,7 +588,7 @@ const BetTabs = () => {
                                             {teaserTypes.map((type: any, index: number) => {
                                                 const teasers = teaserData[teaserData.findIndex((item: any) => item.point === type)].teaser;
                                                 let teaserPointPayout = 0;
-                                                if (betslipData.length > 1) {
+                                                if (teaserSetted()) {
                                                     teaserPointPayout =
                                                         teasers[teasers.findIndex((item: any) => item.team === betslipData.length)].payout;
                                                 }
