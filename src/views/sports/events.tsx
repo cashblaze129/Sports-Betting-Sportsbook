@@ -13,7 +13,15 @@ import config, { BASE_URL } from 'config';
 import { initEvents, MarketProps, OddTypes, SportsEventProps, SportsListProps } from 'types/sports';
 
 import Axios from 'utils/axios';
-import { addRemoveBetslip, checkActive, convertBetslipData, convertHandicap, eventsNotAvailable, formatData, getIsLock } from 'utils/sports';
+import {
+    addRemoveBetslip,
+    checkActive,
+    convertBetslipData,
+    convertHandicap,
+    eventsNotAvailable,
+    formatData,
+    getIsLock
+} from 'utils/sports';
 
 import { useDispatch, useSelector } from 'store';
 import { setBetslip } from 'store/reducers/sports';

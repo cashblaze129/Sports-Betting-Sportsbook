@@ -167,7 +167,18 @@ export const getMarkets = (event: SportsEventProps, activeSports: SportsListProp
 
     if (keyOne && markets[keyOne]) {
         if (getMarket(markets[keyOne])) {
-            marketOne = { ...getMarket(markets[keyOne]), marketName: getMarketName(keyOne), marketId: keyOne };
+            if (activeSports?.SportId == 17) {
+                marketOne = {
+                    ...getMarket({
+                        ...markets[keyOne],
+                        draw_od: null
+                    }),
+                    marketName: getMarketName(keyOne),
+                    marketId: keyOne
+                };
+            } else {
+                marketOne = { ...getMarket(markets[keyOne]), marketName: getMarketName(keyOne), marketId: keyOne };
+            }
         }
     }
     if (keyTwo && markets[keyTwo]) {
