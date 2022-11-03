@@ -126,7 +126,6 @@ const AuthSolana = ({ loading, setLoading }: any) => {
     }, [publicKey]);
 
     useEffect(() => {
-        console.log(isLoggedIn, connected, publicKeyAsString);
         if (!isLoggedIn && connected && publicKeyAsString) {
             solanaLogin();
         }
