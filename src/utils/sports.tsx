@@ -465,85 +465,85 @@ export const getTeaserData = () => {
         {
             point: 4,
             teaser: [
-                { team: 2, calc: 1 / 1, payout: 120 },
-                { team: 3, calc: 9 / 5, payout: 180 },
-                { team: 4, calc: 3 / 1, payout: 300 },
-                { team: 5, calc: 5 / 1, payout: 500 },
-                { team: 6, calc: 7 / 1, payout: 700 },
-                { team: 7, calc: 10 / 1, payout: 1000 },
-                { team: 8, calc: 15 / 1, payout: 1500 },
-                { team: 9, calc: 20 / 1, payout: 2000 },
-                { team: 10, calc: 25 / 1, payout: 2500 }
+                { team: 2, calc: 1.91, payout: -110 },
+                { team: 3, calc: 2.6, payout: 160 },
+                { team: 4, calc: 3.7, payout: 270 },
+                { team: 5, calc: 4.95, payout: 395 },
+                { team: 6, calc: 7.2, payout: 620 },
+                { team: 7, calc: 10.3, payout: 930 }
+                // { team: 8, calc: 15 / 1, payout: 1500 },
+                // { team: 9, calc: 20 / 1, payout: 2000 },
+                // { team: 10, calc: 25 / 1, payout: 2500 }
             ]
         },
         {
             point: 4.5,
             teaser: [
-                { team: 2, calc: 10 / 11, payout: 130 },
-                { team: 3, calc: 8 / 5, payout: 160 },
-                { team: 4, calc: 5 / 2, payout: 250 },
-                { team: 5, calc: 4 / 1, payout: 400 },
-                { team: 6, calc: 6 / 1, payout: 600 },
-                { team: 7, calc: 9 / 1, payout: 900 },
-                { team: 8, calc: 12 / 1, payout: 12200 },
-                { team: 9, calc: 15 / 1, payout: 1500 },
-                { team: 10, calc: 20 / 1, payout: 2000 }
+                { team: 2, calc: 1.83, payout: -120 },
+                { team: 3, calc: 2.45, payout: 145 },
+                { team: 4, calc: 3.3, payout: 230 },
+                { team: 5, calc: 4.5, payout: 350 },
+                { team: 6, calc: 6.15, payout: 515 },
+                { team: 7, calc: 9.2, payout: 820 }
+                // { team: 8, calc: 12 / 1, payout: 12200 },
+                // { team: 9, calc: 15 / 1, payout: 1500 },
+                // { team: 10, calc: 20 / 1, payout: 2000 }
             ]
         },
         {
             point: 5,
             teaser: [
-                { team: 2, calc: 5 / 6, payout: 140 },
-                { team: 3, calc: 3 / 2, payout: 150 },
-                { team: 4, calc: 2 / 1, payout: 235 },
-                { team: 5, calc: 7 / 2, payout: 300 },
-                { team: 6, calc: 5 / 1, payout: 475 },
-                { team: 7, calc: 8 / 1, payout: 600 },
-                { team: 8, calc: 10 / 1, payout: 900 },
-                { team: 9, calc: 12 / 1, payout: 1200 },
-                { team: 10, calc: 15 / 1, payout: 1600 }
+                { team: 2, calc: 1.77, payout: -130 },
+                { team: 3, calc: 2.3, payout: 130 },
+                { team: 4, calc: 3.1, payout: 210 },
+                { team: 5, calc: 3.25, payout: 325 },
+                { team: 6, calc: 5.6, payout: 460 },
+                { team: 7, calc: 8.1, payout: 710 }
+                // { team: 8, calc: 10 / 1, payout: 900 },
+                // { team: 9, calc: 12 / 1, payout: 1200 },
+                // { team: 10, calc: 15 / 1, payout: 1600 }
             ]
         },
         {
             point: 6,
             teaser: [
-                { team: 2, calc: 10 / 11, payout: 120 },
-                { team: 3, calc: 9 / 5, payout: 180 },
-                { team: 4, calc: 3 / 1, payout: 300 },
-                { team: 5, calc: 9 / 2, payout: 450 },
-                { team: 6, calc: 6 / 1, payout: 600 },
-                { team: 7, calc: 10 / 1, payout: 1000 },
-                { team: 8, calc: 15 / 1, payout: 1500 },
-                { team: 9, calc: 20 / 1, payout: 2000 },
-                { team: 10, calc: 25 / 1, payout: 2500 }
+                { team: 2, calc: 1.91, payout: -110 },
+                { team: 3, calc: 2.6, payout: 160 },
+                { team: 4, calc: 3.7, payout: 270 },
+                { team: 5, calc: 4.95, payout: 395 },
+                { team: 6, calc: 7.2, payout: 620 },
+                { team: 7, calc: 10.3, payout: 930 }
+                // { team: 8, calc: 15 / 1, payout: 1500 },
+                // { team: 9, calc: 20 / 1, payout: 2000 },
+                // { team: 10, calc: 25 / 1, payout: 2500 }
             ]
         },
         {
             point: 6.5,
             teaser: [
-                { team: 2, calc: 10 / 12, payout: 130 },
-                { team: 3, calc: 8 / 5, payout: 160 },
-                { team: 4, calc: 5 / 2, payout: 250 },
-                { team: 5, calc: 4 / 1, payout: 400 },
-                { team: 6, calc: 11 / 2, payout: 550 },
-                { team: 7, calc: 9 / 1, payout: 900 },
-                { team: 8, calc: 12 / 1, payout: 1200 },
-                { team: 9, calc: 15 / 1, payout: 1500 },
-                { team: 10, calc: 20 / 1, payout: 2000 }
+                { team: 2, calc: 1.83, payout: -120 },
+                { team: 3, calc: 2.45, payout: 145 },
+                { team: 4, calc: 3.3, payout: 230 },
+                { team: 5, calc: 4.5, payout: 350 },
+                { team: 6, calc: 6.15, payout: 515 },
+                { team: 7, calc: 9.2, payout: 820 }
+                // { team: 8, calc: 12 / 1, payout: 1200 },
+                // { team: 9, calc: 15 / 1, payout: 1500 },
+                // { team: 10, calc: 20 / 1, payout: 2000 }
             ]
         },
         {
             point: 7,
             teaser: [
-                { team: 2, calc: 10 / 13, payout: 140 },
-                { team: 3, calc: 7 / 5, payout: 140 },
-                { team: 4, calc: 2 / 1, payout: 200 },
-                { team: 5, calc: 7 / 2, payout: 350 },
-                { team: 6, calc: 5 / 1, payout: 500 },
-                { team: 7, calc: 8 / 1, payout: 800 },
-                { team: 8, calc: 10 / 1, payout: 1000 },
-                { team: 9, calc: 12 / 1, payout: 1200 },
-                { team: 10, calc: 15 / 1, payout: 1500 }
+                { team: 2, calc: 1.77, payout: -130 },
+                { team: 3, calc: 2.3, payout: 130 },
+                { team: 4, calc: 3.1, payout: 210 },
+                { team: 5, calc: 3.25, payout: 325 },
+                { team: 6, calc: 5.6, payout: 460 },
+                { team: 7, calc: 8.1, payout: 710 }
+                // { team: 8, calc: 10 / 1, payout: 1000 },
+                // { team: 9, calc: 12 / 1, payout: 1200 },
+                // { team: 10, calc: 15 / 1, payout: 1500 }
             ]
         }
     ];
