@@ -114,8 +114,13 @@ const BetTabs = () => {
             marketId === '18_6' ||
             marketId === '18_9'
         ) {
-            const pt = Number(convertHandicap(odd.handicap, true)) + tPoint;
-            oddName = `${oddType} (${pt > 0 ? `+${pt}` : pt})`;
+            if (oddType === 'over' || oddType === 'under') {
+                const pt = Number(convertHandicap(odd.handicap, true)) - tPoint;
+                oddName = `${oddType} (${pt > 0 ? `+${pt}` : pt})`;
+            } else {
+                const pt = Number(convertHandicap(odd.handicap, true)) + tPoint;
+                oddName = `${oddType} (${pt > 0 ? `+${pt}` : pt})`;
+            }
         }
         return oddName;
     };
@@ -205,10 +210,13 @@ const BetTabs = () => {
                 setAError(`Bad teaser option!`);
                 return;
             }
-
             // Teaser Bet
             for (let i = 0; i < betslipData.length; i++) {
-                const np = Number(betslipData[i].oddData.handicap) + Number(teaserOption);
+                let np: Number;
+                np = Number(betslipData[i].oddData.handicap) + Number(teaserOption);
+                if (betslipData[i].oddType === 'over' || betslipData[i].oddType === 'under') {
+                    np = Number(betslipData[i].oddData.handicap) - Number(teaserOption);
+                }
                 newBetSlipData.push({
                     ...betslipData[i],
                     oddData: {
@@ -327,13 +335,15 @@ const BetTabs = () => {
             let iNum = 0;
             let perSportsNum: { AmericanFootball: number; Basketball: number } = { AmericanFootball: 0, Basketball: 0 };
             for (let i = 0; i < betslipData.length; i++) {
-                if (betslipData[i].SportName === 'American Football') {
+                // American Football 12
+                // Basketball 18
+                if (betslipData[i].SportId === 12) {
                     perSportsNum.AmericanFootball++;
-                } else if (betslipData[i].SportName === 'Basketball') {
+                } else if (betslipData[i].SportId === 18) {
                     perSportsNum.Basketball++;
                 }
                 if (
-                    (betslipData[i].SportName === 'American Football' || betslipData[i].SportName === 'Basketball') &&
+                    (betslipData[i].SportId === 12 || betslipData[i].SportId === 18) &&
                     (betslipData[i].marketId.indexOf('_2') !== -1 || betslipData[i].marketId.indexOf('_3') !== -1)
                 ) {
                     iNum++;
@@ -647,7 +657,7 @@ const BetTabs = () => {
                                         </Typography>
                                         <Stack direction="row" justifyContent="space-between">
                                             <Typography variant="body2" color="white">
-                                                {teaserFg === true && teaser === true
+                                                {teaserSetted()
                                                     ? getOddName(item.HomeTeam, item.AwayTeam, item.oddData, item.oddType, teaserOption)
                                                     : item.oddName}
                                             </Typography>
