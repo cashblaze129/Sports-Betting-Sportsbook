@@ -81,7 +81,9 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         if (!acurrency.deposit) {
             snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
         } else {
-            setDepositOpen(true);
+            functions.onDepositMVisible();
+            // functions.onDepositVisible();
+            // setDepositOpen(true);
         }
     };
 
