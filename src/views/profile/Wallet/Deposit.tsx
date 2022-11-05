@@ -66,6 +66,25 @@ const CurrencyList = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
                                 </Button>
                             </AnimateButton>
                         </Grid>
+                        <Grid item xs={12}>
+                            <AnimateButton>
+                                <Button
+                                    onClick={SolanaWallet}
+                                    disableElevation
+                                    fullWidth
+                                    size="large"
+                                    variant="outlined"
+                                    sx={{
+                                        color: 'grey.700',
+                                        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
+                                        borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 20 : theme.palette.grey[100]
+                                    }}
+                                >
+                                    <img src={SolIcon} alt="metamask" width={20} height={20} style={{ marginRight: '1rem' }} />
+                                    <FormattedMessage id="Ethereum Wallet" />
+                                </Button>
+                            </AnimateButton>
+                        </Grid>
                         {/* <Grid item xs={12}>
                             <AnimateButton>
                                 <Button

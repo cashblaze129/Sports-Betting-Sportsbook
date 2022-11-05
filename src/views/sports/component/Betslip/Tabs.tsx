@@ -206,10 +206,6 @@ const BetTabs = () => {
         let betslipDt: any[] = [];
         let newBetSlipData: any = [];
         if (teaserSetted()) {
-            if (betslipData.length === 2) {
-                setAError(`Bad teaser option!`);
-                return;
-            }
             // Teaser Bet
             for (let i = 0; i < betslipData.length; i++) {
                 let np: Number;
