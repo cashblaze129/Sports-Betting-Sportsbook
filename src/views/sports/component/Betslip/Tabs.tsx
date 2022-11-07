@@ -203,7 +203,7 @@ const BetTabs = () => {
         setAError('');
         if (!betslipData.length) return;
 
-        let betslipDt: any[] = [];
+        let betslipinfo: any[] = [];
         let newBetSlipData: any = [];
         if (teaserSetted()) {
             // Teaser Bet
@@ -228,11 +228,11 @@ const BetTabs = () => {
                     )
                 });
             }
-            betslipDt = newBetSlipData;
+            betslipinfo = newBetSlipData;
             const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
             potential = amount * teaserPointPayout;
         } else {
-            betslipDt = betslipData;
+            betslipinfo = betslipData;
         }
 
         let betData = [] as any;
@@ -241,25 +241,25 @@ const BetTabs = () => {
         const symbol = currency?.symbol;
         const type = activeTab === 0 ? 'single' : teaserSetted() ? 'teaser' : 'multi';
         if (activeTab === 0) {
-            for (const i in betslipDt) {
-                if (betslipDt[i].stake <= maxBet && betslipDt[i].stake >= minBet) {
-                    const perPotential = Number(betslipDt[i].odds) * Number(betslipDt[i].stake);
+            for (const i in betslipinfo) {
+                if (betslipinfo[i].stake <= maxBet && betslipinfo[i].stake >= minBet) {
+                    const perPotential = Number(betslipinfo[i].odds) * Number(betslipinfo[i].stake);
                     if (perPotential > betLimit) {
                         setAError(
-                            `Your bet exceeds the maximum in ${betslipDt[i].oddName} odd. Maximum ${symbol} Bet Limit is ${abbreviate(
+                            `Your bet exceeds the maximum in ${betslipinfo[i].oddName} odd. Maximum ${symbol} Bet Limit is ${abbreviate(
                                 betLimit
                             )} ${symbol}.`
                         );
                         return;
                     }
                     betData.push({
-                        bets: [betslipDt[i]],
-                        odds: betslipDt[i].odds,
-                        stake: betslipDt[i].stake,
+                        bets: [betslipinfo[i]],
+                        odds: betslipinfo[i].odds,
+                        stake: betslipinfo[i].stake,
                         potential: perPotential,
                         userId,
                         currency: currencyId,
-                        betType: betslipDt[i].SportId,
+                        betType: betslipinfo[i].SportId,
                         type
                     });
                 } else {
@@ -269,18 +269,18 @@ const BetTabs = () => {
             }
         } else if (stake <= maxBet && stake >= minBet) {
             // eslint-disable-next-line
-            // const betslip = betslipDt
-            //     .map((item: any) => item.eventId)
-            //     .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
+            const betslip = betslipinfo
+                .map((item: any) => item.eventId)
+                .reduce((a, c) => ((a[c] = (a[c] || 0) + 1), a), Object.create(null));
             // if (potential > betLimit) {
             //     setAError(`Your bet exceeds the maximum. Maximum ${symbol} Bet Limit is ${abbreviate(betLimit)} ${symbol}.`);
             //     return;
             // }
-            // const betslipDt = Object.values(betslip) as any;
-            // if (betslipDt.find((e: number) => e > 1)) {
-            //     setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
-            //     return;
-            // }
+            const betslipDt = Object.values(betslip) as any;
+            if (betslipDt.find((e: number) => e > 1)) {
+                setError(formatMessage({ id: 'Multiple selections from some event cannot be combined into a Multibet.' }));
+                return;
+            }
             let oddNum: number;
             if (teaserSetted()) {
                 const teaserPointPayout = teaserPayoutCalc(Number(teaserOption));
@@ -289,7 +289,7 @@ const BetTabs = () => {
                 oddNum = odds;
             }
             betData = {
-                bets: betslipDt,
+                bets: betslipinfo,
                 odds: oddNum,
                 stake,
                 potential,
