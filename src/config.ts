@@ -20,7 +20,8 @@ const config: ConfigProps = {
     timer1: 5000,
     timer2: 900000,
     RECAPTCHA_SITE_KEY: '6LeRhsIeAAAAADY6KUkpQaIqPTKsXy2sa7u4JBAb',
-    adminWallet: '8Myhky6nWVJFeNkcBH3FE9i29KqV4qsD8reook3AUqYk'
+    adminSolanaWallet: '8Myhky6nWVJFeNkcBH3FE9i29KqV4qsD8reook3AUqYk',
+    adminMetamaskWallet: '0xaE6DA5F0Aee84F79586e61DB145f685c77D7a7eD'
 };
 
 export default config;

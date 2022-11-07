@@ -16,7 +16,7 @@ import Metamask from 'assets/images/icons/metamask.svg';
 import Coinbase from 'assets/images/icons/coinbase.svg';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
-const ConnectSolana = () => {
+const ConnectWallet = () => {
     const Api = useApi();
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const ConnectSolana = () => {
 
     const handleClick = async (params: any) => {
         if (!active) {
-            await switchNetwork(true);
+            // await switchNetwork('ethereum', true);
             setLoading(true);
             activate(params, undefined, true).catch((error) => {
                 if (error instanceof UnsupportedChainIdError) {
@@ -210,4 +210,4 @@ const ConnectSolana = () => {
     );
 };
 
-export default ConnectSolana;
+export default ConnectWallet;

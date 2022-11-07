@@ -134,7 +134,7 @@ const AuthRegister = ({ ...others }) => {
 
     const handleClick = async (params: any) => {
         setIsLogin(true);
-        await switchNetwork();
+        // await switchNetwork('ethereum');
         if (!active) {
             activate(params, undefined, true).catch((error) => {
                 if (error instanceof UnsupportedChainIdError) {

@@ -16,7 +16,8 @@ export type ConfigProps = {
     timer1: number;
     timer2: number;
     RECAPTCHA_SITE_KEY: string;
-    adminWallet: string;
+    adminSolanaWallet: string;
+    adminMetamaskWallet: string;
 };
 
 export type CustomizationProps = {

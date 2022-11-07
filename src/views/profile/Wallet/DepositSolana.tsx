@@ -43,7 +43,7 @@ const opts: any = {
     preflightCommitment: 'processed'
 };
 
-const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Ref<HTMLDivElement>) => {
+const DepositSolana = forwardRef(({ modalStyle, functions }: Props, ref: React.Ref<HTMLDivElement>) => {
     const Api = useApi();
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -56,8 +56,8 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     const { publicKey, wallet, connected, signTransaction }: any = useWallet();
     const { connection } = useConnection();
 
-    const depositToken = (signature: string) => {
-        Api.depositToken({
+    const depositSolana = (signature: string) => {
+        Api.depositSolana({
             from: publicKey?.toString(),
             address: currency.tokenMintAccount,
             amount: Number(amount),
@@ -89,7 +89,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
 
         const instructions: solWeb3.TransactionInstruction[] = [];
 
-        const dest = config.adminWallet;
+        const dest = config.adminSolanaWallet;
         const destPublicKey = new solWeb3.PublicKey(dest);
 
         const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
@@ -143,7 +143,7 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
             const txWallet: any = wallet?.adapter;
 
             // I have hardcoded my secondary wallet address here. You can take this address either from user input or your DB or wherever
-            const recieverWallet = new solWeb3.PublicKey(config.adminWallet);
+            const recieverWallet = new solWeb3.PublicKey(config.adminSolanaWallet);
 
             // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
             const transaction = new solWeb3.Transaction().add(
@@ -189,14 +189,14 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
         } else {
             setLoading(true);
             let signature: any;
-            if (currency.symbol === 'SOL') {
+            if (currency.tokenMintAccount === 'basic') {
                 signature = await transferSOL();
             } else {
                 signature = await handleTransferToken(currency.tokenMintAccount);
                 setLoading(false);
             }
             if (signature) {
-                depositToken(signature);
+                depositSolana(signature);
             }
         }
     };
@@ -335,4 +335,4 @@ const DepositToken = forwardRef(({ modalStyle, functions }: Props, ref: React.Re
     );
 });
 
-export default DepositToken;
+export default DepositSolana;

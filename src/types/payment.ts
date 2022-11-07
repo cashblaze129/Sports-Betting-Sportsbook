@@ -11,6 +11,7 @@ export interface CurrencyProps {
     status?: boolean;
     deposit?: boolean;
     withdrawal?: boolean;
+    network?: string;
     tokenMintAccount?: string;
 }
 

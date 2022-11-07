@@ -16,6 +16,9 @@ import { setRecentBets, setLiveMatches } from 'store/reducers/sports';
 import Locales from 'ui-component/Locales';
 import Snackbar from 'ui-component/extended/Snackbar';
 import NavigationScroll from 'layout/NavigationScroll';
+import getLibrary from 'utils/getlibrary';
+
+import { Web3ReactProvider } from '@web3-react/core';
 
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -122,20 +125,22 @@ const App = () => {
 
     return (
         <ThemeCustomization>
-            <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets}>
-                    <Locales>
-                        <NavigationScroll>
-                            <APIProvider>
-                                <>
-                                    <Routes />
-                                    <Snackbar />
-                                </>
-                            </APIProvider>
-                        </NavigationScroll>
-                    </Locales>
-                </WalletProvider>
-            </ConnectionProvider>
+            <Web3ReactProvider getLibrary={getLibrary}>
+                <ConnectionProvider endpoint={endpoint}>
+                    <WalletProvider wallets={wallets}>
+                        <Locales>
+                            <NavigationScroll>
+                                <APIProvider>
+                                    <>
+                                        <Routes />
+                                        <Snackbar />
+                                    </>
+                                </APIProvider>
+                            </NavigationScroll>
+                        </Locales>
+                    </WalletProvider>
+                </ConnectionProvider>
+            </Web3ReactProvider>
         </ThemeCustomization>
     );
 };
