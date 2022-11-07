@@ -103,7 +103,12 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
         return res;
     };
 
-    const depositToken = async (transaction: any) => {
+    const depositSolana = async (transaction: any) => {
+        const res = await axios.post('api/v2/payments/s-deposit', { userId, balanceId, currencyId, ...transaction });
+        return res;
+    };
+
+    const depositMetamask = async (transaction: any) => {
         const res = await axios.post('api/v2/payments/m-deposit', { userId, balanceId, currencyId, ...transaction });
         return res;
     };
@@ -168,7 +173,8 @@ export const APIProvider = ({ children }: { children: React.ReactElement }) => {
                 addCurrency,
                 changeCurrency,
                 deposit,
-                depositToken,
+                depositSolana,
+                depositMetamask,
                 withdrawal,
                 cancelWithdrawal,
                 betSport,

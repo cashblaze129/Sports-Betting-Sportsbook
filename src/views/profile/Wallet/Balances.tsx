@@ -19,7 +19,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Deposit from './Deposit';
 import Withdrawal from './Withdrawal';
 import CurrencyList from './CurrencyList';
-import DepositToken from './DepositToken';
+import DepositSolana from './DepositSolana';
+import DepositMetamask from './DepositMetamask';
 import DepositCoinpayment from './DepositCoinpayment';
 
 function getModalStyle() {
@@ -44,6 +45,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
     const [currencyOpen, setCurrencyOpen] = useState<boolean>(false);
     const [withdrawal, setWithdrawalOpen] = useState<boolean>(false);
     const [depositMOpen, setDepositMOpen] = useState<boolean>(false);
+    const [depositSOpen, setDepositSOpen] = useState<boolean>(false);
     const [depositCOpen, setDepositCOpen] = useState<boolean>(false);
     const [depositAddress, setDepositAddress] = useState<string>('');
 
@@ -80,10 +82,10 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
     const onDeposit = (acurrency: CurrencyProps) => {
         if (!acurrency.deposit) {
             snackbar(formatMessage({ id: 'Deposit disabled!' }), 'error');
-        } else {
-            functions.onDepositMVisible();
-            // functions.onDepositVisible();
-            // setDepositOpen(true);
+        } else if (acurrency.network === 'ethereum' || acurrency.network === 'binance') {
+            setDepositMOpen(true);
+        } else if (acurrency.network === 'solana') {
+            setDepositSOpen(true);
         }
     };
 
@@ -113,6 +115,7 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
         onDepositVisible: () => setDepositOpen(!depositOpen),
         onWithdrawalVisible: () => setWithdrawalOpen(!withdrawal),
         onDepositMVisible: () => setDepositMOpen(!depositMOpen),
+        onDepositSVisible: () => setDepositSOpen(!depositSOpen),
         onDepositCoinPayment: () => onDepositCoinPayment(),
         onDepositCVisible: () => setDepositCOpen(!depositCOpen)
     };
@@ -212,8 +215,11 @@ const Balances = ({ getTransactions }: { getTransactions: Function }) => {
             <Modal open={withdrawal} onClose={functions.onWithdrawalVisible}>
                 <Withdrawal modalStyle={modalStyle} functions={functions} getTransactions={getTransactions} getBalances={getBalances} />
             </Modal>
+            <Modal open={depositSOpen} onClose={functions.onDepositSVisible}>
+                <DepositSolana modalStyle={modalStyle} functions={functions} />
+            </Modal>
             <Modal open={depositMOpen} onClose={functions.onDepositMVisible}>
-                <DepositToken modalStyle={modalStyle} functions={functions} />
+                <DepositMetamask modalStyle={modalStyle} functions={functions} />
             </Modal>
             <Modal open={depositCOpen} onClose={functions.onDepositCVisible}>
                 <DepositCoinpayment modalStyle={modalStyle} depositAddress={depositAddress} handleClose={functions.onDepositCVisible} />
