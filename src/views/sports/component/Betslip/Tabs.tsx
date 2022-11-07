@@ -101,10 +101,10 @@ const BetTabs = () => {
         } else if (marketId.indexOf('_2') !== -1 || marketId === '1_5' || marketId === '18_5' || marketId === '18_8') {
             if (oddType === 'home') {
                 const pt = Number(convertHandicap(odd.handicap, true)) + tPoint;
-                oddName = `${HomeTeam} (${pt > 0 ? `+${pt}` : pt})`;
+                oddName = `${HomeTeam} (${pt > 0 ? `${pt}` : pt})`;
             } else if (oddType === 'away') {
                 const pt = Number(convertHandicap(odd.handicap, false)) + tPoint;
-                oddName = `${AwayTeam} (${pt > 0 ? `+${pt}` : pt})`;
+                oddName = `${AwayTeam} (${pt > 0 ? `${pt}` : pt})`;
             }
         } else if (
             marketId.indexOf('_3') !== -1 ||
@@ -116,10 +116,10 @@ const BetTabs = () => {
         ) {
             if (oddType === 'over' || oddType === 'under') {
                 const pt = Number(convertHandicap(odd.handicap, true)) - tPoint;
-                oddName = `${oddType} (${pt > 0 ? `+${pt}` : pt})`;
+                oddName = `${oddType} (${pt > 0 ? `${pt}` : pt})`;
             } else {
                 const pt = Number(convertHandicap(odd.handicap, true)) + tPoint;
-                oddName = `${oddType} (${pt > 0 ? `+${pt}` : pt})`;
+                oddName = `${oddType} (${pt > 0 ? `${pt}` : pt})`;
             }
         }
         return oddName;
@@ -217,7 +217,7 @@ const BetTabs = () => {
                     ...betslipData[i],
                     oddData: {
                         ...betslipData[i].oddData,
-                        handicap: np > 0 ? `+${np}` : `-${np}`
+                        handicap: np > 0 ? `${np}` : `-${np}`
                     },
                     oddName: getOddName(
                         betslipData[i].HomeTeam,
@@ -389,7 +389,7 @@ const BetTabs = () => {
         return (
             <Stack direction={'row'} justifyContent={'space-between'}>
                 <Stack>{value}&nbsp;-&nbsp;Point Teaser</Stack>
-                <Stack>{teaserPointPayout > 0 ? `+${teaserPointPayout}` : teaserPointPayout}</Stack>
+                <Stack>{teaserPointPayout > 0 ? `${teaserPointPayout}` : teaserPointPayout}</Stack>
             </Stack>
         );
     };
@@ -605,7 +605,7 @@ const BetTabs = () => {
                                                         sx={{ display: 'flex', justifyContent: 'space-between' }}
                                                     >
                                                         <Stack>{type}&nbsp;-&nbsp;Point Teaser</Stack>
-                                                        <Stack>{teaserPointPayout > 0 ? `+${teaserPointPayout}` : teaserPointPayout}</Stack>
+                                                        <Stack>{teaserPointPayout > 0 ? `${teaserPointPayout}` : teaserPointPayout}</Stack>
                                                     </MenuItem>
                                                 );
                                             })}
