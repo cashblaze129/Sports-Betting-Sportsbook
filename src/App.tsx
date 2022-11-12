@@ -43,11 +43,11 @@ const App = () => {
 
     let network: any;
 
-    // if (BASE_URL?.indexOf('localhost') !== -1 || BASE_URL?.indexOf('test') !== -1) {
-    //     network = WalletAdapterNetwork.Testnet;
-    // } else {
-    network = WalletAdapterNetwork.Mainnet;
-    // }
+    if (BASE_URL?.indexOf('localhost') !== -1 || BASE_URL?.indexOf('test') !== -1) {
+        network = WalletAdapterNetwork.Testnet;
+    } else {
+        network = WalletAdapterNetwork.Mainnet;
+    }
 
     // You can also provide a custom RPC endpoint
     // const endpoint = 'https://blue-delicate-wildflower.solana-mainnet.quiknode.pro/2f054b4c3a7d3f8841b584875204e3aa7c42d8ab/';
