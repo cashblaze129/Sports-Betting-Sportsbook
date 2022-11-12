@@ -53,7 +53,7 @@ const App = () => {
     // const endpoint = 'https://blue-delicate-wildflower.solana-mainnet.quiknode.pro/2f054b4c3a7d3f8841b584875204e3aa7c42d8ab/';
     // const endpoint = clusterApiUrl(network);
     // let endpoint = 'https://solana-api.projectserum.com';
-    let endpoint = 'https://rpc.ankr.com/solana';
+    let endpoint = 'https://hidden-wandering-aura.solana-mainnet.quiknode.pro/e0a0b8715ea82e2abccff89f6ceed40bd68f9875/';
     // let endpoint = 'https://ethereum.publicnode.com';
     // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
     // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
