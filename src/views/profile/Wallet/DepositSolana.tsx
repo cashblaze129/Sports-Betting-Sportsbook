@@ -66,7 +66,7 @@ const DepositSolana = forwardRef(({ modalStyle, functions }: Props, ref: React.R
             .then(({ data }) => {
                 snackbar(formatMessage({ id: 'Success! Please wait for a minute.' }), 'success');
                 setLoading(false);
-                functions.onDepositMVisible();
+                functions.onDepositSVisible();
             })
             .catch(() => {
                 setLoading(false);
@@ -246,7 +246,7 @@ const DepositSolana = forwardRef(({ modalStyle, functions }: Props, ref: React.R
                 title={`${formatMessage({ id: 'Deposit' })} ${currency.name}`}
                 content={false}
                 secondary={
-                    <IconButton onClick={functions.onDepositMVisible}>
+                    <IconButton onClick={functions.onDepositSVisible}>
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 }
