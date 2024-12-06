@@ -99,8 +99,6 @@ BoiBook integrates multiple industry-standard APIs for seamless betting experien
 ## 🎯 Conclusion
 BoiBook Sportsbook is a trailblazing partnership project combining innovation, community-driven initiatives, and top-tier features. Join us to be a part of a growing project and reap the rewards of a collaborative effort.
 
-💡 **Let’s make bets, grow the treasury, and build a stronger community together!**
-
 ## 🔒 Supported Blockchains
 BoiBook Sportsbook leverages blockchain technology for secure and transparent operations.
 
@@ -128,4 +126,4 @@ For inquiries, collaborations, or support, feel free to reach out:
 - 💼 LinkedIn: [Keyvel Bitcoin Solana](https://www.linkedin.com/in/keyvel-bitcoin-solana)
 
 ---
-### Let’s make bets, grow the treasury, and build a stronger community together! 🎉
+### 💡 Let’s make bets, grow the treasury, and build a stronger community together! 🎉
