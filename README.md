@@ -68,7 +68,8 @@ BoiBook integrates multiple industry-standard APIs for seamless betting experien
   - 🧩 REST APIs
 - Development Tools:
   - 🧪 API Testing with **Insomnia**
-- Projects Developed:
+
+## Additional Projects
   - 🌟 Frontend
   - 🛡️ Admin Dashboard
   - ⚙️ Backend APIs
