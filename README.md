@@ -1,5 +1,14 @@
 # Sportsbook - **_BoiBook_** (1st Affiliate Sportsbook Partnership)
 
+## 📞 Contact
+For inquiries, collaborations, or support, feel free to reach out:
+- 🐦 X (formerly Twitter): [@cashblaze127](https://x.com/cashblaze127)
+- 🎮 Discord: `cashblaze127`
+- 📱 Telegram: @cashblaze127
+- 💼 LinkedIn: [Keyvel Bitcoin Solana](https://www.linkedin.com/in/keyvel-bitcoin-solana)
+
+---
+
 ### 📝 Overview
 
 BoiBook is the first affiliate sportsbook partnership project, offering a unique and lucrative opportunity for participants to earn through referral bonuses and community initiatives. With advanced features and APIs integrated into the frontend, BoiBook is a top-ranked sportsbook project delivering a seamless and rewarding betting experience.
@@ -118,12 +127,4 @@ We are ready to expand BoiBook to support Bitcoin-based wallets, enhancing flexi
 
 These integrations will ensure compatibility with a wide range of wallets and platforms, enabling us to deliver an even more robust decentralized experience.
 
-## 📞 Contact
-For inquiries, collaborations, or support, feel free to reach out:
-- 🐦 X (formerly Twitter): [@cashblaze127](https://x.com/cashblaze127)
-- 🎮 Discord: `cashblaze127`
-- 📱 Telegram: @cashblaze127
-- 💼 LinkedIn: [Keyvel Bitcoin Solana](https://www.linkedin.com/in/keyvel-bitcoin-solana)
-
----
 ### 💡 Let’s make bets, grow the treasury, and build a stronger community together! 🎉
