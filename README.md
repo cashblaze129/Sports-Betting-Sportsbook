@@ -2,7 +2,6 @@
 
 ## 📞 Contact
 For inquiries, collaborations, or support, feel free to reach out:
-- 🐦 X (formerly Twitter): [@cashblaze127](https://x.com/cashblaze127)
 - 🎮 Discord: `cashblaze127`
 - 📱 Telegram: @cashblaze127
 - 💼 LinkedIn: [Keyvel Bitcoin Solana](https://www.linkedin.com/in/keyvel-bitcoin-solana)
