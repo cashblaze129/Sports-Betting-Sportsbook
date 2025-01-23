@@ -1,4 +1,4 @@
-# Sportsbook - **_BoiBook_** (1st Affiliate Sportsbook Partnership)
+# Sports Betting Sportsbook - **_BoiBook_** (1st Affiliate Sportsbook Partnership)
 
 ## 📞 Contact
 For inquiries, collaborations, or support, feel free to reach out:
