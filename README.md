@@ -1,10 +1,20 @@
 # Sports Betting Sportsbook - **_BoiBook_** (1st Affiliate Sportsbook Partnership)
 
-## 📞 Contact
-For inquiries, collaborations, or support, feel free to reach out:
-- 🎮 Discord: `cashblaze127`
-- 📱 Telegram: @cashblaze127
-- 💼 LinkedIn: [Keyvel Bitcoin Solana](https://www.linkedin.com/in/keyvel-bitcoin-solana)
+---
+
+## 📞 Contact Me
+For business inquiries, technical support, or collaboration, reach out to us:
+
+### **Telegram:** [Cash Blaze](https://t.me/cashblaze127)
+
+## Screenshots
+![WhatsApp Image 2025-01-21 at 12 01 32 AM](https://github.com/user-attachments/assets/80c60661-62dd-4eb0-bd2b-69a5ad54e72d)
+![WhatsApp Image 2025-01-21 at 7 16 19 AM](https://github.com/user-attachments/assets/962c025e-4af9-4344-87d3-64a0a71ebaa1)
+![WhatsApp Image 2025-01-21 at 6 04 47 AM](https://github.com/user-attachments/assets/4da633b0-f69f-4987-a9a4-d78cae57a315)
+![WhatsApp Image 2025-01-21 at 4 58 26 AM](https://github.com/user-attachments/assets/50021312-a0d1-4c7b-a188-7ef03e4fdb1e)
+![WhatsApp Image 2025-01-21 at 4 54 34 AM](https://github.com/user-attachments/assets/aecd435a-50c8-4c3f-8c70-840cbe1ee5f0)
+![HomePage](https://github.com/user-attachments/assets/d93fc24c-14c0-45e3-aff5-d620282fcfac)
+
 
 ---
 
