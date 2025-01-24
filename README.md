@@ -2,10 +2,11 @@
 
 ---
 
-## 📞 Contact Me
-For business inquiries, technical support, or collaboration, reach out to us:
+## 📩 Contact Me on Telegram
 
-### **Telegram:** [Cash Blaze](https://t.me/cashblaze127)
+For inquiries, collaborations, or support, feel free to reach out:
+
+[![Telegram Contact](https://img.shields.io/badge/Telegram-Contact%20Me-blue?logo=telegram&style=for-the-badge)](https://t.me/cashblaze127)
 
 ## Screenshots
 ![WhatsApp Image 2025-01-21 at 12 01 32 AM](https://github.com/user-attachments/assets/80c60661-62dd-4eb0-bd2b-69a5ad54e72d)
